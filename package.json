@@ -7,9 +7,19 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "content-guard": "tsx scripts/content-guard.ts",
+    "prebuild": "tsx scripts/content-guard.ts",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:push": "drizzle-kit push",
+    "db:seed": "tsx src/db/seed.ts"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^1.1.0",
+    "drizzle-orm": "^0.45.2",
     "next": "^15.5.20",
     "react": "19.0.0",
     "react-dom": "19.0.0"
@@ -19,8 +29,12 @@
     "@types/react": "^19.0.7",
     "@types/react-dom": "^19.0.3",
     "autoprefixer": "^10.4.20",
+    "dotenv": "^17.4.2",
+    "drizzle-kit": "^0.31.10",
     "postcss": "^8.5.1",
     "tailwindcss": "^3.4.17",
-    "typescript": "^5.7.3"
+    "tsx": "^4.23.1",
+    "typescript": "^5.7.3",
+    "vitest": "^4.1.10"
   }
 }

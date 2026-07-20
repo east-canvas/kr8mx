@@ -1,5 +1,12 @@
 import type { Metadata, Viewport } from "next";
+import { cookies } from "next/headers";
 import { fontVariables } from "@/lib/fonts";
+import { AgeGate } from "@/components/compliance/AgeGate";
+import { Footer } from "@/components/site/Footer";
+import {
+  AGE_GATE_COOKIE,
+  isAgeConfirmedValue,
+} from "@/lib/compliance/age-gate";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,15 +25,27 @@ export const viewport: Viewport = {
   initialScale: 1,
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Read the age-gate cookie server-side so confirmed visitors never see a flash.
+  const cookieStore = await cookies();
+  const ageConfirmed = isAgeConfirmedValue(
+    cookieStore.get(AGE_GATE_COOKIE)?.value,
+  );
+
   return (
     // The site shell is the precision (light) theme by default.
     <html lang="en" data-theme="precision" className={fontVariables}>
-      <body>{children}</body>
+      <body>
+        <div className="flex min-h-screen flex-col">
+          <div className="flex-1">{children}</div>
+          <Footer />
+        </div>
+        <AgeGate initiallyConfirmed={ageConfirmed} />
+      </body>
     </html>
   );
 }
