@@ -127,14 +127,14 @@ async function main() {
       {
         code: "drinkscoa",
         label: "Drinks pack — COA QR",
-        targetUrl: "https://kr8mx.com/coa/drinks",
+        targetUrl: "https://www.kr8mx.com/coa/drinks",
         category: "drinks",
         active: true,
       },
       {
         code: "tabletscoa",
         label: "Tablets pack — COA QR",
-        targetUrl: "https://kr8mx.com/coa/tablets",
+        targetUrl: "https://www.kr8mx.com/coa/tablets",
         category: "tablets",
         active: true,
       },

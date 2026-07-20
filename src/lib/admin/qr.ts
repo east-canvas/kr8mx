@@ -1,16 +1,6 @@
 import "server-only";
 import QRCode from "qrcode";
 
-/** Base URL for encoded barcodes — override per-env if needed. */
-export function siteBaseUrl(): string {
-  return process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ?? "https://kr8mx.com";
-}
-
-/** Full scan URL for a dynamic-link code. */
-export function scanUrl(code: string): string {
-  return `${siteBaseUrl()}/q/${code}`;
-}
-
 /** Render a QR code as an inline SVG string (transparent — for the admin preview). */
 export async function generateQrSvg(text: string): Promise<string> {
   return QRCode.toString(text, {
