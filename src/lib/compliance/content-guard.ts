@@ -42,6 +42,7 @@ export const WHITELIST_PHRASES = ["energy drink"] as const;
 const EXCLUDE_PATTERNS: RegExp[] = [
   /\/legal\//,
   /\/compliance\//,
+  /\/admin\//, // internal console (Nature's Bridge), not public marketing
   /components\/site\/Footer\.tsx$/,
 ];
 

@@ -309,6 +309,72 @@ export const shippingRestrictions = pgTable(
   }),
 );
 
+/* ------------------------------------------------- COA + dynamic links ---- */
+
+export const coaStatusEnum = pgEnum("coa_status", ["draft", "published"]);
+
+/**
+ * Certificates of Analysis. Category-separated (drinks | tablets), each row
+ * points to a hosted lab-report file. Issued/managed under Nature's Bridge
+ * Group Inc via the admin.
+ */
+export const coaDocuments = pgTable(
+  "coa_documents",
+  {
+    id: serial("id").primaryKey(),
+    category: productCategoryEnum("category").notNull(),
+    flavor: flavorEnum("flavor"),
+    title: text("title").notNull(),
+    lotNumber: varchar("lot_number", { length: 48 }),
+    fileUrl: text("file_url").notNull(),
+    summary: text("summary"),
+    // headline analyte result surfaced on the COA card
+    resultLine: text("result_line").default(
+      "0 PPM 7-hydroxymitragynine (dry weight basis)",
+    ),
+    issuedBy: text("issued_by").notNull().default("Nature's Bridge Group Inc"),
+    issuedDate: timestamp("issued_date", { withTimezone: true }),
+    status: coaStatusEnum("status").notNull().default("draft"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => ({
+    categoryIdx: index("coa_documents_category_idx").on(t.category),
+    lotUnique: uniqueIndex("coa_documents_lot_unique").on(t.lotNumber),
+  }),
+);
+
+/**
+ * Dynamic barcodes. A QR printed on packaging encodes /q/{code}; the resolver
+ * 302-redirects to targetUrl. Because the code is fixed but the target is
+ * editable, packaging is re-pointable without a reprint.
+ */
+export const dynamicLinks = pgTable(
+  "dynamic_links",
+  {
+    id: serial("id").primaryKey(),
+    code: varchar("code", { length: 24 }).notNull().unique(),
+    label: text("label").notNull(),
+    targetUrl: text("target_url").notNull(),
+    category: productCategoryEnum("category"),
+    active: boolean("active").notNull().default(true),
+    scanCount: integer("scan_count").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => ({
+    codeUnique: uniqueIndex("dynamic_links_code_unique").on(t.code),
+  }),
+);
+
 /* ------------------------------------------------------------ inferred ---- */
 
 export type ProductLine = typeof productLines.$inferSelect;
@@ -321,6 +387,9 @@ export type Cart = typeof carts.$inferSelect;
 export type CartItem = typeof cartItems.$inferSelect;
 export type NotifyListEntry = typeof notifyList.$inferSelect;
 export type ShippingRestriction = typeof shippingRestrictions.$inferSelect;
+
+export type CoaDocument = typeof coaDocuments.$inferSelect;
+export type DynamicLink = typeof dynamicLinks.$inferSelect;
 
 export type Flavor = (typeof flavorEnum.enumValues)[number];
 export type VariantStatus = (typeof variantStatusEnum.enumValues)[number];

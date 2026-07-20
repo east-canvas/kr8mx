@@ -9,6 +9,8 @@ import {
   productVariants,
   inventory,
   shippingRestrictions,
+  coaDocuments,
+  dynamicLinks,
 } from "./schema";
 import { buildLines, buildProducts, buildVariants } from "./seed-data";
 import { buildShippingRestrictionRows } from "@/lib/compliance/shipping-restrictions";
@@ -91,6 +93,52 @@ async function main() {
   await db
     .insert(shippingRestrictions)
     .values(restrictionRows)
+    .onConflictDoNothing();
+
+  console.log("Seeding example COAs…");
+  await db
+    .insert(coaDocuments)
+    .values([
+      {
+        category: "drinks",
+        flavor: "grape",
+        title: "Energy Drink — Grape — Lot 24-0142",
+        lotNumber: "24-0142",
+        fileUrl: "https://example.com/coa/K8D-GRP-24-0142.pdf",
+        status: "published",
+        issuedDate: new Date("2026-05-01"),
+      },
+      {
+        category: "tablets",
+        flavor: "lemon",
+        title: "Tablets — Lemon — Lot T-24-0007",
+        lotNumber: "T-24-0007",
+        fileUrl: "https://example.com/coa/KR8-T100-10-LEM-0007.pdf",
+        status: "published",
+        issuedDate: new Date("2026-05-10"),
+      },
+    ])
+    .onConflictDoNothing();
+
+  console.log("Seeding example dynamic barcodes…");
+  await db
+    .insert(dynamicLinks)
+    .values([
+      {
+        code: "drinkscoa",
+        label: "Drinks pack — COA QR",
+        targetUrl: "https://kr8mx.com/coa/drinks",
+        category: "drinks",
+        active: true,
+      },
+      {
+        code: "tabletscoa",
+        label: "Tablets pack — COA QR",
+        targetUrl: "https://kr8mx.com/coa/tablets",
+        category: "tablets",
+        active: true,
+      },
+    ])
     .onConflictDoNothing();
 
   console.log(
