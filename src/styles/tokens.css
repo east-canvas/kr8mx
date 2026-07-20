@@ -1,0 +1,146 @@
+/* =============================================================================
+   KR8MX — Brand Design Tokens
+   One design language, two themes.
+   - performance : Energy Drinks (dark, obsidian + acid-lime scalpel accent)
+   - precision   : Tablets + site shell (light, soft neutrals + flavor accents)
+   Semantic role tokens (bg / surface / text / accent) share names across both
+   themes so Tailwind utilities (bg-surface, text-primary, accent) resolve per
+   [data-theme] scope. Raw brand palette values live on :root for reference.
+   ============================================================================= */
+
+:root {
+  /* ---- Raw brand palette (available in every scope) -------------------- */
+
+  /* performance line */
+  --brand-obsidian: #0b0b0d;
+  --brand-carbon: #161618;
+  --brand-platinum: #e5e7ea;
+  --brand-silver: #a7aaad;
+  --brand-acid-lime: #c6ff00;
+
+  /* precision line */
+  --brand-soft-white: #fafbfc;
+  --brand-mist-gray: #eef1f4;
+  --brand-satin-silver: #dde3e8;
+  --brand-graphite: #1e2528;
+
+  /* flavor accents */
+  --brand-blue-razz: #20b1c9;
+  --brand-grape: #8e6ccf;
+  --brand-lemon: #ffd34d;
+  --brand-peach: #ff9a4d;
+  --brand-strawberry: #eb4c5b;
+
+  /* ---- Typography -------------------------------------------------------- */
+  /* Font family variables are injected by next/font (see src/lib/fonts.ts).
+     Fallback stacks keep the type system legible if a face fails to load. */
+  --font-display: var(--font-archivo), "Arial Narrow", "Helvetica Neue", system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Type scale — restrained, editorial, generous leading */
+  --text-2xs: 0.6875rem; /* 11px */
+  --text-xs: 0.75rem; /* 12px */
+  --text-sm: 0.875rem; /* 14px */
+  --text-base: 1rem; /* 16px */
+  --text-lg: 1.125rem; /* 18px */
+  --text-xl: 1.375rem; /* 22px */
+  --text-2xl: 1.75rem; /* 28px */
+  --text-3xl: 2.25rem; /* 36px */
+  --text-4xl: 3rem; /* 48px */
+  --text-5xl: 4rem; /* 64px */
+  --text-6xl: 5.5rem; /* 88px */
+
+  --leading-tight: 1.02;
+  --leading-snug: 1.15;
+  --leading-normal: 1.6;
+  --leading-relaxed: 1.75;
+
+  --tracking-display: 0.06em; /* wide-tracked display */
+  --tracking-kicker: 0.28em; /* eyebrow / kicker labels */
+  --tracking-wide: 0.02em;
+
+  /* ---- Structure --------------------------------------------------------- */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 14px;
+
+  --hairline-width: 1px;
+
+  /* ---- Motion — subtle only: 150–250ms ease-out -------------------------- */
+  --motion-fast: 150ms;
+  --motion-base: 200ms;
+  --motion-slow: 250ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* ---- Default semantic roles (mirror precision, the site-shell base) ---- */
+  --color-bg: var(--brand-soft-white);
+  --color-surface: #ffffff;
+  --color-surface-raised: var(--brand-mist-gray);
+  --color-text-primary: var(--brand-graphite);
+  --color-text-secondary: #48545b;
+  --color-text-muted: #8b969d;
+  --color-hairline: var(--brand-satin-silver);
+  --color-accent: var(--brand-graphite);
+  --color-accent-contrast: var(--brand-soft-white);
+}
+
+/* =============================================================================
+   PRECISION — Tablets + site shell (light)
+   ============================================================================= */
+[data-theme="precision"] {
+  --color-bg: var(--brand-soft-white);
+  --color-surface: #ffffff;
+  --color-surface-raised: var(--brand-mist-gray);
+
+  --color-text-primary: var(--brand-graphite);
+  --color-text-secondary: #48545b;
+  --color-text-muted: #8b969d;
+
+  --color-hairline: var(--brand-satin-silver);
+
+  /* On the light shell the accent is a restrained graphite; flavor accents
+     (below) carry color and are applied sparingly, per-product. */
+  --color-accent: var(--brand-graphite);
+  --color-accent-contrast: var(--brand-soft-white);
+
+  /* flavor accents, exposed as roles for per-product theming */
+  --color-flavor-blue-razz: var(--brand-blue-razz);
+  --color-flavor-grape: var(--brand-grape);
+  --color-flavor-lemon: var(--brand-lemon);
+  --color-flavor-peach: var(--brand-peach);
+  --color-flavor-strawberry: var(--brand-strawberry);
+}
+
+/* =============================================================================
+   PERFORMANCE — Energy Drinks (dark)
+   Acid lime is a scalpel accent — for rules, ticks, small CTAs; never a large
+   fill. Large surfaces stay obsidian / carbon.
+   ============================================================================= */
+[data-theme="performance"] {
+  --color-bg: var(--brand-obsidian);
+  --color-surface: var(--brand-carbon);
+  --color-surface-raised: #1e1e21;
+
+  --color-text-primary: var(--brand-platinum);
+  --color-text-secondary: var(--brand-silver);
+  --color-text-muted: #6c6f73;
+
+  --color-hairline: #2a2a2e;
+
+  --color-accent: var(--brand-acid-lime);
+  --color-accent-contrast: var(--brand-obsidian);
+}
+
+/* Respect users who prefer reduced motion — collapse the subtle transitions. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
