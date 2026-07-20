@@ -11,13 +11,41 @@ export function scanUrl(code: string): string {
   return `${siteBaseUrl()}/q/${code}`;
 }
 
-/** Render a QR code as an inline SVG string (crisp at any print size). */
+/** Render a QR code as an inline SVG string (transparent — for the admin preview). */
 export async function generateQrSvg(text: string): Promise<string> {
   return QRCode.toString(text, {
     type: "svg",
     margin: 1,
     errorCorrectionLevel: "M",
     color: { dark: "#0b0b0d", light: "#00000000" },
+  });
+}
+
+/**
+ * Print-ready SVG: opaque white background, obsidian modules, a full quiet zone,
+ * and higher error correction so it scans reliably at any size / on any surface.
+ */
+export async function generateQrDownloadSvg(text: string): Promise<string> {
+  return QRCode.toString(text, {
+    type: "svg",
+    margin: 4,
+    errorCorrectionLevel: "Q",
+    color: { dark: "#0b0b0d", light: "#ffffff" },
+  });
+}
+
+/** High-resolution PNG buffer (default 1024px, clamped 256–4096). */
+export async function generateQrPng(
+  text: string,
+  size = 1024,
+): Promise<Buffer> {
+  const width = Math.min(4096, Math.max(256, Math.round(size)));
+  return QRCode.toBuffer(text, {
+    type: "png",
+    width,
+    margin: 4,
+    errorCorrectionLevel: "Q",
+    color: { dark: "#0b0b0d", light: "#ffffff" },
   });
 }
 

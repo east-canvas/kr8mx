@@ -132,6 +132,33 @@ export default async function AdminDashboard({
                   </p>
                   <span className="text-2xs text-muted">{l.scanCount} scans</span>
 
+                  <div className="flex flex-wrap items-center gap-2 pt-0.5">
+                    <span className="text-2xs uppercase tracking-wide text-muted">
+                      Download
+                    </span>
+                    <a
+                      href={`/admin/qr/${l.code}?fmt=svg`}
+                      download
+                      className="rounded-sm border border-hairline px-2 py-0.5 text-2xs uppercase tracking-wide text-primary hover:border-secondary"
+                    >
+                      SVG
+                    </a>
+                    <a
+                      href={`/admin/qr/${l.code}?fmt=png&size=1024`}
+                      download
+                      className="rounded-sm border border-hairline px-2 py-0.5 text-2xs uppercase tracking-wide text-primary hover:border-secondary"
+                    >
+                      PNG 1K
+                    </a>
+                    <a
+                      href={`/admin/qr/${l.code}?fmt=png&size=2048`}
+                      download
+                      className="rounded-sm border border-hairline px-2 py-0.5 text-2xs uppercase tracking-wide text-primary hover:border-secondary"
+                    >
+                      PNG 2K
+                    </a>
+                  </div>
+
                   <form action={updateLinkTargetAction} className="mt-1 flex gap-2">
                     <input type="hidden" name="id" value={l.id} />
                     <input
