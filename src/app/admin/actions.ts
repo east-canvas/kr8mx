@@ -83,6 +83,46 @@ export async function createCoaAction(formData: FormData) {
   redirect("/admin?ok=coa");
 }
 
+/**
+ * Records a COA row after the file has been uploaded to Blob (drag-and-drop
+ * flow). Publishes immediately so it goes live on /coa/{category}. Title
+ * defaults to the file name when not provided.
+ */
+export async function recordCoaUploadAction(formData: FormData) {
+  await assertAuthed();
+  const category = str(formData.get("category")) as ProductCategory;
+  const fileUrl = str(formData.get("fileUrl"));
+  const flavorRaw = str(formData.get("flavor"));
+  const lotNumber = str(formData.get("lotNumber")) || null;
+  let title = str(formData.get("title"));
+
+  if (!fileUrl || !category) {
+    redirect("/admin?error=coa_fields");
+  }
+  if (!title) {
+    const base = fileUrl.split("/").pop() ?? "COA";
+    title = decodeURIComponent(base.replace(/\.[a-z0-9]+$/i, "")).slice(0, 120);
+  }
+
+  try {
+    const db = getDb();
+    await db.insert(coaDocuments).values({
+      category,
+      flavor: flavorRaw ? (flavorRaw as Flavor) : null,
+      title,
+      fileUrl,
+      lotNumber,
+      issuedDate: new Date(),
+      status: "published",
+    });
+  } catch {
+    redirect("/admin?error=db");
+  }
+  revalidatePath("/admin");
+  revalidatePath(`/coa/${category}`);
+  redirect("/admin?ok=coa");
+}
+
 export async function createLinkAction(formData: FormData) {
   await assertAuthed();
   const label = str(formData.get("label"));

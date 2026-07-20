@@ -357,7 +357,8 @@ export const dynamicLinks = pgTable(
   "dynamic_links",
   {
     id: serial("id").primaryKey(),
-    code: varchar("code", { length: 24 }).notNull().unique(),
+    // uniqueness enforced by the codeUnique index below (avoid a duplicate)
+    code: varchar("code", { length: 24 }).notNull(),
     label: text("label").notNull(),
     targetUrl: text("target_url").notNull(),
     category: productCategoryEnum("category"),

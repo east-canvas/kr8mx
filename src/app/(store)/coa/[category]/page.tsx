@@ -103,7 +103,7 @@ export default async function CoaCategoryPage({
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 self-start rounded-sm border border-hairline px-4 py-2 text-xs uppercase tracking-wide text-primary transition-colors duration-base ease-out-brand hover:border-secondary sm:self-auto"
               >
-                View PDF
+                View COA
                 <ExternalIcon width={15} height={15} className="text-muted" />
               </a>
             </li>

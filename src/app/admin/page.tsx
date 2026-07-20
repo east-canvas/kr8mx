@@ -1,7 +1,6 @@
 import { cookies } from "next/headers";
 import { getAllCoas, getAllDynamicLinks } from "@/db/queries";
 import {
-  createCoaAction,
   createLinkAction,
   updateLinkTargetAction,
   toggleLinkAction,
@@ -10,7 +9,7 @@ import { ADMIN_COOKIE, isAuthed } from "@/lib/admin/auth";
 import { generateQrSvg, scanUrl, siteBaseUrl } from "@/lib/admin/qr";
 import { Badge } from "@/components/ui/Badge";
 import { HairlineRule } from "@/components/ui/HairlineRule";
-import { FLAVORS } from "@/db/seed-data";
+import { CoaUpload } from "@/components/admin/CoaUpload";
 
 const inputCls =
   "rounded-md border border-hairline bg-surface px-3 py-2 text-sm text-primary outline-none focus-visible:border-accent";
@@ -173,61 +172,7 @@ export default async function AdminDashboard({
           </p>
         </div>
 
-        <form
-          action={createCoaAction}
-          className="grid gap-3 rounded-lg border border-hairline p-5 sm:grid-cols-2"
-        >
-          <label className="flex flex-col gap-1.5">
-            <span className={labelCls}>Category</span>
-            <select name="category" required className={inputCls} defaultValue="drinks">
-              <option value="drinks">drinks</option>
-              <option value="tablets">tablets</option>
-            </select>
-          </label>
-          <label className="flex flex-col gap-1.5">
-            <span className={labelCls}>Flavor (optional)</span>
-            <select name="flavor" className={inputCls} defaultValue="">
-              <option value="">—</option>
-              {FLAVORS.map((f) => (
-                <option key={f} value={f}>
-                  {f}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="flex flex-col gap-1.5">
-            <span className={labelCls}>Title</span>
-            <input name="title" required className={inputCls} placeholder="Grape — Lot 24-0142" />
-          </label>
-          <label className="flex flex-col gap-1.5">
-            <span className={labelCls}>Lot number</span>
-            <input name="lotNumber" className={inputCls} placeholder="24-0142" />
-          </label>
-          <label className="flex flex-col gap-1.5 sm:col-span-2">
-            <span className={labelCls}>File URL (hosted PDF)</span>
-            <input name="fileUrl" required className={inputCls} placeholder="https://…/coa.pdf" />
-          </label>
-          <label className="flex flex-col gap-1.5 sm:col-span-2">
-            <span className={labelCls}>Result line</span>
-            <input
-              name="resultLine"
-              className={inputCls}
-              defaultValue="0 PPM 7-hydroxymitragynine (dry weight basis)"
-            />
-          </label>
-          <label className="flex flex-col gap-1.5">
-            <span className={labelCls}>Status</span>
-            <select name="status" className={inputCls} defaultValue="draft">
-              <option value="draft">draft</option>
-              <option value="published">published</option>
-            </select>
-          </label>
-          <div className="flex items-end">
-            <button className="rounded-sm border border-primary px-5 py-2.5 text-xs font-medium uppercase tracking-wide text-primary transition-colors hover:bg-primary hover:text-bg">
-              Add COA
-            </button>
-          </div>
-        </form>
+        <CoaUpload />
 
         {coas.length === 0 ? (
           <p className="text-sm text-muted">No COAs yet.</p>
