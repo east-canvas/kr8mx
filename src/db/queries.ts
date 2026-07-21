@@ -1,5 +1,5 @@
 import "server-only";
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, sql } from "drizzle-orm";
 import { getDb } from "./client";
 import { coaDocuments, dynamicLinks } from "./schema";
 import type { CoaDocument, DynamicLink, ProductCategory } from "./schema";
@@ -65,5 +65,18 @@ export async function getAllDynamicLinks(): Promise<DynamicLink[]> {
       .orderBy(desc(dynamicLinks.createdAt));
   } catch {
     return [];
+  }
+}
+
+/** Best-effort scan counter — never blocks the redirect. */
+export async function incrementScanCount(code: string): Promise<void> {
+  try {
+    const db = getDb();
+    await db
+      .update(dynamicLinks)
+      .set({ scanCount: sql`${dynamicLinks.scanCount} + 1` })
+      .where(eq(dynamicLinks.code, code));
+  } catch {
+    /* ignore */
   }
 }

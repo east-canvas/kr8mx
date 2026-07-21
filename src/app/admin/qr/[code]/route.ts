@@ -1,12 +1,11 @@
 import { cookies } from "next/headers";
 import { ADMIN_COOKIE, isAuthed } from "@/lib/admin/auth";
-import { getDynamicLink } from "@/db/queries";
-import { generateQrDownloadSvg, generateQrPng } from "@/lib/admin/qr";
+import { scanUrl, generateQrDownloadSvg, generateQrPng } from "@/lib/admin/qr";
 
 /**
- * Downloadable QR for a barcode. Admin-only. The QR encodes the link's
- * destination URL directly (exactly what was entered), so a scan goes straight
- * there — no redirect hop.
+ * Downloadable QR for a barcode. Admin-only. The QR encodes the permanent
+ * /q/{code} scan URL, so a scan resolves to the link's *current* target — the
+ * downloaded/printed art keeps working after the target is re-pointed.
  *   /admin/qr/{code}?fmt=svg           → vector SVG (scales to any print size)
  *   /admin/qr/{code}?fmt=png&size=2048 → high-resolution PNG
  */
@@ -20,11 +19,7 @@ export async function GET(
   }
 
   const { code } = await params;
-  const link = await getDynamicLink(code);
-  if (!link) {
-    return new Response("Not found", { status: 404 });
-  }
-  const target = link.targetUrl;
+  const target = scanUrl(code);
 
   const { searchParams } = new URL(req.url);
   const fmt = (searchParams.get("fmt") ?? "png").toLowerCase();

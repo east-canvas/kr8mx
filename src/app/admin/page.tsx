@@ -6,7 +6,7 @@ import {
   toggleLinkAction,
 } from "./actions";
 import { ADMIN_COOKIE, isAuthed } from "@/lib/admin/auth";
-import { generateQrSvg } from "@/lib/admin/qr";
+import { generateQrSvg, scanUrl } from "@/lib/admin/qr";
 import { Badge } from "@/components/ui/Badge";
 import { HairlineRule } from "@/components/ui/HairlineRule";
 import { CoaUpload } from "@/components/admin/CoaUpload";
@@ -47,7 +47,7 @@ export default async function AdminDashboard({
   const { ok, error } = await searchParams;
   const [coas, links] = await Promise.all([getAllCoas(), getAllDynamicLinks()]);
   const linkQrs = await Promise.all(
-    links.map((l) => generateQrSvg(l.targetUrl)),
+    links.map((l) => generateQrSvg(scanUrl(l.code))),
   );
 
   return (
@@ -57,11 +57,12 @@ export default async function AdminDashboard({
       {/* ---- Dynamic barcodes ---- */}
       <section className="flex flex-col gap-6">
         <div>
-          <h2 className="type-display text-primary text-xl">Barcodes</h2>
+          <h2 className="type-display text-primary text-xl">Dynamic Barcodes</h2>
           <p className="mt-1 text-sm text-secondary">
-            QR codes for packaging. Each QR encodes its destination URL directly
-            — a scan goes straight there, no redirect. Change the URL and
-            re-download to update.
+            QR codes for packaging. Each QR encodes a permanent scan link
+            (kr8mx.com/q/&hellip;) and redirects to the destination below —
+            change the destination anytime and printed packaging follows, no
+            reprint.
           </p>
         </div>
 
@@ -121,15 +122,18 @@ export default async function AdminDashboard({
                       {l.active ? "Active" : "Off"}
                     </Badge>
                   </div>
-                  <span className="type-kicker text-muted">Encodes</span>
                   <a
-                    href={l.targetUrl}
+                    href={scanUrl(l.code)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="truncate text-2xs text-secondary hover:text-primary"
+                    className="truncate text-2xs text-muted hover:text-primary"
                   >
-                    {l.targetUrl}
+                    {scanUrl(l.code)}
                   </a>
+                  <p className="truncate text-2xs text-secondary">
+                    &rarr; {l.targetUrl}
+                  </p>
+                  <span className="text-2xs text-muted">{l.scanCount} scans</span>
 
                   <div className="flex flex-wrap items-center gap-2 pt-0.5">
                     <span className="text-2xs uppercase tracking-wide text-muted">

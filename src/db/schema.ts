@@ -349,10 +349,9 @@ export const coaDocuments = pgTable(
 );
 
 /**
- * Barcodes. Each row backs a QR that encodes `targetUrl` directly, so a scan
- * goes straight to the destination (no redirect). `code` is a stable identifier
- * used for the admin download URL / filename. Editing targetUrl and re-exporting
- * the QR updates where a newly printed barcode points.
+ * Dynamic barcodes. A QR printed on packaging encodes /q/{code}; the resolver
+ * 302-redirects to targetUrl. Because the code is fixed but the target is
+ * editable, packaging is re-pointable without a reprint.
  */
 export const dynamicLinks = pgTable(
   "dynamic_links",

@@ -1,6 +1,32 @@
 import "server-only";
 import QRCode from "qrcode";
 
+/**
+ * Canonical site origin used to build barcode scan URLs. Hardened: we take only
+ * the ORIGIN of NEXT_PUBLIC_SITE_URL (so a stray path in that env var can never
+ * corrupt the QR again), and fall back to the production domain.
+ */
+export function siteOrigin(): string {
+  const raw = process.env.NEXT_PUBLIC_SITE_URL;
+  if (raw) {
+    try {
+      return new URL(raw).origin;
+    } catch {
+      /* ignore malformed env */
+    }
+  }
+  return "https://www.kr8mx.com";
+}
+
+/**
+ * Permanent scan URL a barcode encodes: {origin}/q/{code}. The code never
+ * changes, so a printed QR is re-pointable — the /q resolver 302s to the link's
+ * current target.
+ */
+export function scanUrl(code: string): string {
+  return `${siteOrigin()}/q/${code}`;
+}
+
 /** Render a QR code as an inline SVG string (transparent — for the admin preview). */
 export async function generateQrSvg(text: string): Promise<string> {
   return QRCode.toString(text, {
