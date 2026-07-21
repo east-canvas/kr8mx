@@ -17,12 +17,36 @@ import { canTransition } from "@/db/order-state";
 import { logAudit } from "@/lib/admin/audit";
 import { sendOrderEmail } from "@/lib/email/send";
 import { sendLaunchAnnouncement } from "@/lib/email/send";
+import { getEmailProvider } from "@/lib/email/providers";
+import { tabletsLaunchEmail } from "@/lib/email/templates";
+import { resolveBaseUrl } from "@/lib/seo";
 
 async function assertAuthed() {
   const store = await cookies();
   if (!isAuthed(store.get(ADMIN_COOKIE)?.value)) redirect("/admin");
 }
 const str = (v: FormDataEntryValue | null) => (v ?? "").toString().trim();
+
+/** Send a test email through the active provider (Resend when configured, else
+ *  the mock outbox) to verify delivery from the console. */
+export async function sendTestEmailAction(formData: FormData) {
+  await assertAuthed();
+  const to = str(formData.get("to"));
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(to)) {
+    redirect("/admin?error=test_email");
+  }
+  const provider = getEmailProvider();
+  const rendered = tabletsLaunchEmail(`${resolveBaseUrl()}/unsubscribe?token=test`);
+  const res = await provider.sendTransactional({
+    to,
+    template: "test",
+    subject: "KR8MX — test email",
+    html: rendered.html,
+  });
+  redirect(
+    `/admin?ok=test&provider=${provider.name}&result=${res.ok ? "sent" : "failed"}`,
+  );
+}
 
 /** Manual order transition via the state machine. Illegal edges are rejected
  *  server-side; every transition logs the admin actor to order_events. On
@@ -57,7 +81,10 @@ export async function transitionOrderAction(formData: FormData) {
       toStatus: to,
       payload: { actor: "admin", trackingNumber, carrier },
     });
-    if (to === "shipped") {
+    // Fire the matching email (idempotent; never blocks the transition).
+    if (to === "paid") {
+      await sendOrderEmail(orderId, "order_confirmation");
+    } else if (to === "shipped") {
       await sendOrderEmail(orderId, "shipping_notification", {
         tracking: { number: trackingNumber, carrier },
       });

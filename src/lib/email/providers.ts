@@ -48,7 +48,9 @@ export class ResendProvider implements EmailProvider {
   readonly name = "resend";
   constructor(
     private apiKey: string,
-    private from = "KR8MX <no-reply@kr8mx.com>",
+    // Sender must be on a Resend-verified domain (kr8mx.com). Override with
+    // RESEND_FROM, e.g. "KR8MX <hello@kr8mx.com>".
+    private from = process.env.RESEND_FROM || "KR8MX <no-reply@kr8mx.com>",
   ) {}
 
   async sendTransactional(args: SendArgs): Promise<SendResult> {

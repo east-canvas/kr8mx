@@ -5,6 +5,7 @@ import {
   updateLinkTargetAction,
   toggleLinkAction,
 } from "./actions";
+import { sendTestEmailAction } from "./ops-actions";
 import { ADMIN_COOKIE, isAuthed } from "@/lib/admin/auth";
 import { generateQrSvg, scanUrl } from "@/lib/admin/qr";
 import { Badge } from "@/components/ui/Badge";
@@ -38,13 +39,18 @@ function Flash({ ok, error }: { ok?: string; error?: string }) {
 export default async function AdminDashboard({
   searchParams,
 }: {
-  searchParams: Promise<{ ok?: string; error?: string }>;
+  searchParams: Promise<{
+    ok?: string;
+    error?: string;
+    provider?: string;
+    result?: string;
+  }>;
 }) {
   // Guard: never fetch admin data for an unauthed request.
   const store = await cookies();
   if (!isAuthed(store.get(ADMIN_COOKIE)?.value)) return null;
 
-  const { ok, error } = await searchParams;
+  const { ok, error, provider, result } = await searchParams;
   const [coas, links] = await Promise.all([getAllCoas(), getAllDynamicLinks()]);
   const linkQrs = await Promise.all(
     links.map((l) => generateQrSvg(scanUrl(l.code))),
@@ -52,7 +58,44 @@ export default async function AdminDashboard({
 
   return (
     <div className="flex flex-col gap-14">
-      <Flash ok={ok} error={error} />
+      <Flash ok={ok === "test" ? undefined : ok} error={error} />
+
+      {/* ---- Email test ---- */}
+      <section className="flex flex-col gap-3">
+        <div>
+          <h2 className="type-display text-primary text-xl">Email</h2>
+          <p className="mt-1 text-sm text-secondary">
+            Send a test through the active provider to verify delivery.
+          </p>
+        </div>
+        {ok === "test" ? (
+          <p
+            className={`rounded-md border px-4 py-2 text-sm ${
+              result === "sent"
+                ? "border-hairline text-secondary"
+                : "border-strawberry/40 text-strawberry"
+            }`}
+          >
+            Test via <span className="text-primary">{provider}</span>:{" "}
+            {result === "sent" ? "sent ✓" : "failed"}
+            {provider === "mock"
+              ? " (mock — set RESEND_API_KEY to send for real)"
+              : ""}
+          </p>
+        ) : null}
+        <form action={sendTestEmailAction} className="flex flex-wrap items-end gap-2">
+          <input
+            name="to"
+            type="email"
+            required
+            placeholder="you@email.com"
+            className={inputCls}
+          />
+          <button className="rounded-sm border border-primary px-4 py-2 text-2xs font-medium uppercase tracking-wide text-primary hover:bg-primary hover:text-bg">
+            Send test
+          </button>
+        </form>
+      </section>
 
       {/* ---- Dynamic barcodes ---- */}
       <section className="flex flex-col gap-6">
