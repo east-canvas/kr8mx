@@ -3,6 +3,7 @@ import Link from "next/link";
 import { SlashX } from "@/components/brand/SlashX";
 import { CanSilhouette } from "@/components/brand/CanSilhouette";
 import { HairlineRule } from "@/components/ui/HairlineRule";
+import { Reveal } from "@/components/ui/Reveal";
 import { getDrinksCatalog, flavorToSlug } from "@/lib/catalog";
 import { formatCents } from "@/db/money";
 
@@ -23,7 +24,7 @@ export default function DrinksCollectionPage() {
           <SlashX size={16} accent />
           <span className="type-kicker">The Performance Line</span>
         </div>
-        <h1 className="type-display mt-5 max-w-[16ch] text-primary text-4xl md:text-5xl">
+        <h1 className="type-display mt-5 max-w-[16ch] text-primary text-3xl sm:text-4xl md:text-5xl">
           Energy Drink
         </h1>
         <p className="mt-5 max-w-md text-sm text-secondary">
@@ -52,23 +53,26 @@ export default function DrinksCollectionPage() {
                   } 30%, ${item.hex}1f, transparent 60%)`,
                 }}
               >
-                <div className={flip ? "md:order-2" : ""}>
+                <Reveal className={flip ? "md:order-2" : ""}>
                   <CanSilhouette
                     accent={item.hex}
                     height={300}
                     idKey={item.flavor}
                     className="mx-auto transition-transform duration-slow ease-out-brand group-hover:-translate-y-1.5"
                   />
-                </div>
+                </Reveal>
 
-                <div className={`flex flex-col gap-5 ${flip ? "md:order-1" : ""}`}>
+                <Reveal
+                  delay={120}
+                  className={`flex flex-col gap-5 ${flip ? "md:order-1" : ""}`}
+                >
                   <span
                     className="type-kicker"
                     style={{ color: item.hex }}
                   >
                     {String(i + 1).padStart(2, "0")} / Flavor
                   </span>
-                  <h2 className="type-display text-primary text-4xl md:text-5xl">
+                  <h2 className="type-display text-primary text-3xl sm:text-4xl md:text-5xl">
                     {item.name}
                   </h2>
                   <p className="text-sm text-secondary">
@@ -81,7 +85,7 @@ export default function DrinksCollectionPage() {
                       &rarr;
                     </span>
                   </span>
-                </div>
+                </Reveal>
               </article>
             </Link>
           );

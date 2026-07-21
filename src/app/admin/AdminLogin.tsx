@@ -14,7 +14,7 @@ export function AdminLogin({ configured }: { configured: boolean }) {
       <div className="flex flex-col gap-2">
         <div className="flex items-center gap-2.5 text-muted">
           <SlashX size={14} accent />
-          <span className="type-kicker">Nature&rsquo;s Bridge Group Inc</span>
+          <span className="type-kicker">Admin</span>
         </div>
         <h1 className="type-display text-primary text-2xl">KR8MX Console</h1>
       </div>

@@ -2,7 +2,7 @@ import "server-only";
 import { createHash } from "node:crypto";
 
 /**
- * Minimal admin auth for the Nature's Bridge console. A single shared password
+ * Minimal admin auth for the KR8MX admin console. A single shared password
  * is provided via the ADMIN_PASSWORD env var (the only extra secret this app
  * needs beyond DATABASE_URL). The session cookie stores a hash of the password,
  * never the password itself — a valid cookie requires having known it.

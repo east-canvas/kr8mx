@@ -18,7 +18,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-hairline bg-bg/85 backdrop-blur-sm">
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-8 px-6">
-        <Wordmark height={20} priority />
+        <Wordmark height={20} priority sizeClassName="h-[22px] w-auto md:h-5" />
 
         <nav
           aria-label="Primary"

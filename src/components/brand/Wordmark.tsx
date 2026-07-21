@@ -8,6 +8,12 @@ type WordmarkProps = {
   /** Rendered height in px (width scales to the trimmed source ratio). */
   height?: number;
   className?: string;
+  /**
+   * Optional Tailwind size classes (e.g. "h-[22px] w-auto md:h-5"). When set,
+   * the mark is sized by CSS instead of a fixed px height — used for responsive
+   * sizing. `height` still sets the intrinsic aspect ratio.
+   */
+  sizeClassName?: string;
   /** Wrap in a link to a destination (defaults to home). Pass null to disable. */
   href?: string | null;
   priority?: boolean;
@@ -25,6 +31,7 @@ export function Wordmark({
   tone = "black",
   height = 28,
   className,
+  sizeClassName,
   href = "/",
   priority = false,
 }: WordmarkProps) {
@@ -44,9 +51,14 @@ export function Wordmark({
       unoptimized
       // Explicit px width (not "auto") so a flex parent's default
       // align-items: stretch can never distort the aspect ratio. shrink-0 +
-      // max-w-none keep it from being squeezed in tight containers.
-      className={cn("block max-w-none shrink-0 select-none", className)}
-      style={{ height, width }}
+      // max-w-none keep it from being squeezed in tight containers. When
+      // sizeClassName is set, CSS controls the size (responsive) instead.
+      className={cn(
+        "block max-w-none shrink-0 select-none",
+        sizeClassName,
+        className,
+      )}
+      style={sizeClassName ? undefined : { height, width }}
     />
   );
 

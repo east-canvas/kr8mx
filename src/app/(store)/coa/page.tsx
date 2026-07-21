@@ -7,7 +7,7 @@ import { HairlineRule } from "@/components/ui/HairlineRule";
 export const metadata: Metadata = {
   title: "Certificates of Analysis",
   description:
-    "KR8MX Certificates of Analysis, by category. Third-party lab testing issued under Nature's Bridge Group Inc.",
+    "KR8MX Certificates of Analysis, by category. Third-party lab testing for every lot.",
 };
 
 const CATEGORIES = [
@@ -28,8 +28,8 @@ export default function CoaIndexPage() {
     <div className="mx-auto max-w-4xl px-6 py-16">
       <SectionHeading kicker="Transparency" title="Certificates of Analysis" as="h1" />
       <p className="mt-5 max-w-prose text-sm text-secondary">
-        Third-party lab results by product category. Testing issued under{" "}
-        <span className="text-primary">Nature&rsquo;s Bridge Group Inc</span>.
+        Third-party lab results by product category. Every lot is tested and
+        published here.
       </p>
 
       <HairlineRule className="my-10" />

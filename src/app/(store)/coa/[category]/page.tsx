@@ -23,7 +23,7 @@ export async function generateMetadata({
   const label = category.charAt(0).toUpperCase() + category.slice(1);
   return {
     title: `${label} — Certificates of Analysis`,
-    description: `KR8MX ${label} lab results, issued under Nature's Bridge Group Inc.`,
+    description: `KR8MX ${label} lab results — third-party Certificates of Analysis.`,
   };
 }
 
@@ -59,7 +59,7 @@ export default async function CoaCategoryPage({
       </div>
 
       <SectionHeading
-        kicker="Nature's Bridge Group Inc"
+        kicker="KR8MX Lab Verified"
         title={`${label} Lab Results`}
         as="h1"
         className="mt-6"
@@ -94,7 +94,7 @@ export default async function CoaCategoryPage({
                   <span className="text-2xs text-muted">{coa.resultLine}</span>
                 ) : null}
                 <span className="text-2xs text-muted">
-                  Issued {fmtDate(coa.issuedDate)} · {coa.issuedBy}
+                  Issued {fmtDate(coa.issuedDate)}
                 </span>
               </div>
               <a

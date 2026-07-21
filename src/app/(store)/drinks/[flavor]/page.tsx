@@ -134,7 +134,7 @@ export default async function DrinkPdpPage({
                 Energy Drink
               </span>
             </div>
-            <h1 className="type-display text-primary text-4xl md:text-5xl">
+            <h1 className="type-display text-primary text-3xl sm:text-4xl md:text-5xl">
               {meta.name}
             </h1>
             <p className="max-w-prose text-sm text-secondary">

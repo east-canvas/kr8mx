@@ -8,6 +8,8 @@
   html {
     -webkit-text-size-adjust: 100%;
     text-rendering: optimizeLegibility;
+    /* never allow a stray element to trigger horizontal zoom on mobile */
+    overflow-x: hidden;
   }
 
   body {
@@ -15,11 +17,17 @@
     color: var(--color-text-primary);
     font-family: var(--font-body);
     line-height: var(--leading-normal);
+    overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition:
       background-color var(--motion-base) var(--ease-out),
       color var(--motion-base) var(--ease-out);
+  }
+
+  /* Break only genuinely over-long display words; never split ones that fit. */
+  .type-display {
+    overflow-wrap: break-word;
   }
 
   ::selection {
@@ -51,5 +59,47 @@
     letter-spacing: var(--tracking-kicker);
     font-size: var(--text-2xs);
     line-height: var(--leading-normal);
+  }
+}
+
+@layer utilities {
+  /* Scroll-reveal: subtle fade + rise, controlled by the <Reveal> component.
+     Visible by default so content is never lost if JS/observer is unavailable;
+     the component adds .reveal-hidden on mount, then removes it in view. */
+  .reveal-hidden {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  .reveal {
+    transition:
+      opacity 0.5s var(--ease-out),
+      transform 0.5s var(--ease-out);
+    will-change: opacity, transform;
+  }
+
+  /* One-shot entrance for above-the-fold content (plays on load). */
+  @keyframes kr8-rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .animate-rise {
+    animation: kr8-rise 0.6s var(--ease-out) both;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .reveal-hidden,
+    .animate-rise {
+      animation: none !important;
+      transition: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
   }
 }

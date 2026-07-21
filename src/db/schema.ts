@@ -315,8 +315,7 @@ export const coaStatusEnum = pgEnum("coa_status", ["draft", "published"]);
 
 /**
  * Certificates of Analysis. Category-separated (drinks | tablets), each row
- * points to a hosted lab-report file. Issued/managed under Nature's Bridge
- * Group Inc via the admin.
+ * points to a hosted lab-report file. Managed via the KR8MX admin console.
  */
 export const coaDocuments = pgTable(
   "coa_documents",
@@ -332,7 +331,7 @@ export const coaDocuments = pgTable(
     resultLine: text("result_line").default(
       "0 PPM 7-hydroxymitragynine (dry weight basis)",
     ),
-    issuedBy: text("issued_by").notNull().default("Nature's Bridge Group Inc"),
+    issuedBy: text("issued_by").notNull().default("KR8MX"),
     issuedDate: timestamp("issued_date", { withTimezone: true }),
     status: coaStatusEnum("status").notNull().default("draft"),
     createdAt: timestamp("created_at", { withTimezone: true })

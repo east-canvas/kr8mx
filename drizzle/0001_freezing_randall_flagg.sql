@@ -1,0 +1,1 @@
+ALTER TABLE "coa_documents" ALTER COLUMN "issued_by" SET DEFAULT 'KR8MX';

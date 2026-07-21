@@ -7,6 +7,7 @@ import { SlashX } from "@/components/brand/SlashX";
 import { Wordmark } from "@/components/brand/Wordmark";
 import { CanSilhouette } from "@/components/brand/CanSilhouette";
 import { QualityPillars } from "@/components/site/QualityPillars";
+import { Reveal } from "@/components/ui/Reveal";
 import { FLAVOR_META } from "@/lib/catalog";
 
 export const metadata: Metadata = {
@@ -18,17 +19,28 @@ export default function Home() {
   return (
     <>
       {/* ---- Hero — light, editorial ---- */}
-      <section className="mx-auto max-w-6xl px-6 pb-20 pt-20 md:pb-28 md:pt-28">
-        <div className="flex flex-col items-center gap-8 text-center">
-          <Wordmark height={44} href={null} priority />
-          <div className="flex items-center gap-3 text-muted">
+      <section className="mx-auto max-w-6xl px-5 pb-16 pt-14 sm:px-6 sm:pb-20 sm:pt-20 md:pb-28 md:pt-28">
+        <div className="flex flex-col items-center gap-6 text-center sm:gap-8">
+          <div className="animate-rise" style={{ animationDelay: "0ms" }}>
+            <Wordmark height={44} href={null} priority />
+          </div>
+          <div
+            className="flex animate-rise items-center gap-3 text-muted"
+            style={{ animationDelay: "80ms" }}
+          >
             <SlashX size={16} accent />
             <span className="type-kicker">Performance. Elevated.</span>
           </div>
-          <h1 className="type-display max-w-[14ch] text-primary text-5xl md:text-6xl">
+          <h1
+            className="type-display max-w-[14ch] animate-rise text-balance text-primary text-4xl sm:text-5xl md:text-6xl"
+            style={{ animationDelay: "150ms" }}
+          >
             Built for what&rsquo;s next.
           </h1>
-          <p className="max-w-md text-secondary">
+          <p
+            className="max-w-md animate-rise text-sm text-secondary sm:text-base"
+            style={{ animationDelay: "240ms" }}
+          >
             One brand, two worlds. A performance line and a precision line —
             engineered to a single, higher standard.
           </p>
@@ -40,17 +52,17 @@ export default function Home() {
         aria-label="Product lines"
         className="mx-auto max-w-6xl px-6 pb-24"
       >
-        <div className="grid gap-6 lg:grid-cols-2">
+        <Reveal className="grid gap-6 lg:grid-cols-2">
           {/* Drinks — dark performance vitrine, contained + framed */}
           <ThemeZone
             theme="performance"
             className="group relative overflow-hidden rounded-xl border border-hairline"
           >
-            <div className="flex min-h-[440px] flex-col justify-between gap-10 p-10">
+            <div className="flex min-h-[360px] flex-col justify-between gap-8 p-7 sm:min-h-[440px] sm:gap-10 sm:p-10">
               <div className="flex items-start justify-between">
                 <div className="flex flex-col gap-3">
                   <span className="type-kicker text-muted">The Performance Line</span>
-                  <h2 className="type-display text-primary text-3xl">
+                  <h2 className="type-display text-primary text-3xl sm:text-4xl">
                     Energy Drink
                   </h2>
                 </div>
@@ -72,7 +84,7 @@ export default function Home() {
           </ThemeZone>
 
           {/* Tablets — light precision panel, flavor gradient, premarket */}
-          <div className="relative flex min-h-[440px] flex-col justify-between gap-10 overflow-hidden rounded-xl border border-hairline bg-surface p-10">
+          <div className="relative flex min-h-[360px] flex-col justify-between gap-8 overflow-hidden rounded-xl border border-hairline bg-surface p-7 sm:min-h-[440px] sm:gap-10 sm:p-10">
             {/* soft flavor-gradient accents */}
             <div
               aria-hidden
@@ -89,10 +101,12 @@ export default function Home() {
               }}
             />
 
-            <div className="relative flex items-start justify-between">
+            <div className="relative flex flex-col-reverse items-start gap-3 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex flex-col gap-3">
                 <span className="type-kicker text-muted">The Precision Line</span>
-                <h2 className="type-display text-primary text-3xl">Tablets</h2>
+                <h2 className="type-display text-primary text-3xl sm:text-4xl">
+                  Tablets
+                </h2>
               </div>
               <Badge variant="outline">Premarket Preview</Badge>
             </div>
@@ -107,15 +121,17 @@ export default function Home() {
               </Button>
             </div>
           </div>
-        </div>
+        </Reveal>
       </section>
 
       {/* ---- Quality pillars ---- */}
-      <QualityPillars />
+      <Reveal>
+        <QualityPillars />
+      </Reveal>
 
       {/* ---- Standard callout ---- */}
-      <section className="mx-auto max-w-6xl px-6 py-24">
-        <div className="flex flex-col items-center gap-6 text-center">
+      <section className="mx-auto max-w-6xl px-6 py-16 sm:py-24">
+        <Reveal className="flex flex-col items-center gap-6 text-center">
           <span className="type-kicker text-muted">The Standard</span>
           <p className="type-display max-w-[20ch] text-primary text-2xl md:text-3xl">
             One standard. Every format.
@@ -126,7 +142,7 @@ export default function Home() {
           >
             How we build
           </Link>
-        </div>
+        </Reveal>
       </section>
     </>
   );
