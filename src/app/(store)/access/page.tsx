@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Badge } from "@/components/ui/Badge";
 import { HairlineRule } from "@/components/ui/HairlineRule";
+import { NotifyForm } from "@/components/site/NotifyForm";
 
 export const metadata: Metadata = {
   title: "Access",
@@ -19,21 +20,7 @@ export default function AccessPage() {
 
       <HairlineRule className="my-10" />
 
-      <form className="flex flex-col gap-3 sm:flex-row" aria-label="Join the list">
-        <input
-          type="email"
-          required
-          placeholder="you@email.com"
-          aria-label="Email address"
-          className="flex-1 rounded-md border border-hairline bg-surface px-4 py-3 text-sm text-primary outline-none focus-visible:border-accent"
-        />
-        <button
-          type="submit"
-          className="rounded-sm border border-primary px-6 py-3 text-xs font-medium uppercase tracking-wide text-primary transition-colors duration-base ease-out-brand hover:bg-primary hover:text-bg"
-        >
-          Join the list
-        </button>
-      </form>
+      <NotifyForm cta="Join the list" />
       <p className="mt-3 text-2xs text-muted">21+ only. No spam.</p>
     </div>
   );

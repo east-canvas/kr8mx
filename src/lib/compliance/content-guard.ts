@@ -46,7 +46,13 @@ const EXCLUDE_PATTERNS: RegExp[] = [
   /components\/site\/Footer\.tsx$/,
 ];
 
-const MARKETING_ROOTS = ["src/app", "src/components"];
+// Marketing surfaces. Email templates (src/lib/email, .ts) are included per
+// prompt 9 so their rendered copy is scanned too.
+const MARKETING_ROOTS: { dir: string; exts: string[] }[] = [
+  { dir: "src/app", exts: [".tsx"] },
+  { dir: "src/components", exts: [".tsx"] },
+  { dir: "src/lib/email", exts: [".ts", ".tsx"] },
+];
 
 export type Violation = {
   file: string;
@@ -115,12 +121,12 @@ export function scanText(text: string): Violation[] {
   return violations;
 }
 
-function walk(dir: string, acc: string[]): string[] {
+function walk(dir: string, acc: string[], exts: string[]): string[] {
   for (const entry of readdirSync(dir)) {
     const full = join(dir, entry);
     const st = statSync(full);
-    if (st.isDirectory()) walk(full, acc);
-    else if (entry.endsWith(".tsx")) acc.push(full);
+    if (st.isDirectory()) walk(full, acc, exts);
+    else if (exts.some((e) => entry.endsWith(e))) acc.push(full);
   }
   return acc;
 }
@@ -134,9 +140,9 @@ function isExcluded(relPath: string): boolean {
 export function scanRepo(rootDir: string = process.cwd()): Violation[] {
   const files: string[] = [];
   for (const root of MARKETING_ROOTS) {
-    const abs = join(rootDir, root);
+    const abs = join(rootDir, root.dir);
     try {
-      walk(abs, files);
+      walk(abs, files, root.exts);
     } catch {
       // root may not exist yet — skip
     }

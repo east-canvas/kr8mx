@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Badge } from "@/components/ui/Badge";
 import { HairlineRule } from "@/components/ui/HairlineRule";
+import { NotifyForm } from "@/components/site/NotifyForm";
 import { FLAVOR_META, DRINK_FLAVORS } from "@/lib/catalog";
 
 export const metadata: Metadata = {
@@ -55,9 +56,18 @@ export default function TabletsPage() {
         })}
       </ul>
 
-      <p className="mt-10 text-2xs text-muted">
-        Premarket preview — availability and pricing to be announced.
-      </p>
+      <HairlineRule className="my-10" />
+
+      <div className="max-w-md">
+        <span className="type-kicker text-muted">Be first in line</span>
+        <p className="mb-4 mt-2 text-sm text-secondary">
+          Join the list for launch updates and early access.
+        </p>
+        <NotifyForm cta="Notify me" />
+        <p className="mt-3 text-2xs text-muted">
+          Premarket preview — availability and pricing to be announced. 21+ only.
+        </p>
+      </div>
     </div>
   );
 }

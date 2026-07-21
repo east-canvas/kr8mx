@@ -270,6 +270,10 @@ export const notifyList = pgTable(
     email: text("email").notNull(),
     // optional interest in a specific variant
     variantId: integer("variant_id").references(() => productVariants.id),
+    // one-click unsubscribe flips this false (CAN-SPAM)
+    subscribed: boolean("subscribed").notNull().default(true),
+    // token for the signed unsubscribe URL
+    unsubscribeToken: varchar("unsubscribe_token", { length: 64 }),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
@@ -298,6 +302,8 @@ export const shippingRestrictions = pgTable(
     state: varchar("state", { length: 2 }).notNull(),
     allowed: boolean("allowed").notNull().default(true),
     reason: text("reason"),
+    // when counsel last confirmed this row (admin-editable)
+    lastVerified: timestamp("last_verified", { withTimezone: true }),
     updatedAt: timestamp("updated_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
@@ -308,6 +314,67 @@ export const shippingRestrictions = pgTable(
     ).on(t.category, t.state),
   }),
 );
+
+/* ------------------------------------------------- email + audit ---------- */
+
+/** Mock-provider outbox: rendered emails written here in dev instead of sending. */
+export const emailOutbox = pgTable("email_outbox", {
+  id: serial("id").primaryKey(),
+  toEmail: text("to_email").notNull(),
+  template: varchar("template", { length: 48 }).notNull(),
+  subject: text("subject").notNull(),
+  html: text("html").notNull(),
+  data: jsonb("data"),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+/**
+ * Idempotency + audit ledger for sends. Unique on (order_id, template) for
+ * order emails and (campaign, email) for announcements — a duplicate event
+ * inserts nothing, so the same email is never sent twice.
+ */
+export const sentEmails = pgTable(
+  "sent_emails",
+  {
+    id: serial("id").primaryKey(),
+    template: varchar("template", { length: 48 }).notNull(),
+    toEmail: text("to_email").notNull(),
+    orderId: integer("order_id").references(() => orders.id),
+    campaign: varchar("campaign", { length: 64 }),
+    providerMessageId: text("provider_message_id"),
+    status: varchar("status", { length: 24 }).notNull().default("sent"),
+    attempts: integer("attempts").notNull().default(1),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => ({
+    orderTemplateUnique: uniqueIndex("sent_emails_order_template_unique").on(
+      t.orderId,
+      t.template,
+    ),
+    campaignEmailUnique: uniqueIndex("sent_emails_campaign_email_unique").on(
+      t.campaign,
+      t.toEmail,
+    ),
+  }),
+);
+
+/** Admin audit trail — every manual change records actor + before/after. */
+export const auditLog = pgTable("audit_log", {
+  id: serial("id").primaryKey(),
+  actor: text("actor").notNull().default("admin"),
+  entity: varchar("entity", { length: 48 }).notNull(),
+  entityId: varchar("entity_id", { length: 64 }),
+  action: varchar("action", { length: 48 }).notNull(),
+  before: jsonb("before"),
+  after: jsonb("after"),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
 
 /* ------------------------------------------------- COA + dynamic links ---- */
 
@@ -390,6 +457,9 @@ export type ShippingRestriction = typeof shippingRestrictions.$inferSelect;
 
 export type CoaDocument = typeof coaDocuments.$inferSelect;
 export type DynamicLink = typeof dynamicLinks.$inferSelect;
+export type NotifyEntry = typeof notifyList.$inferSelect;
+export type SentEmail = typeof sentEmails.$inferSelect;
+export type AuditLogRow = typeof auditLog.$inferSelect;
 
 export type Flavor = (typeof flavorEnum.enumValues)[number];
 export type VariantStatus = (typeof variantStatusEnum.enumValues)[number];

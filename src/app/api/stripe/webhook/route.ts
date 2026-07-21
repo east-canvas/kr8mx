@@ -3,6 +3,7 @@ import { getDb } from "@/db/client";
 import { orders, orderEvents } from "@/db/schema";
 import { constructWebhookEvent } from "@/lib/payments/stripe";
 import { canTransition } from "@/db/order-state";
+import { sendOrderEmail } from "@/lib/email/send";
 
 /**
  * Stripe webhook — dormant until STRIPE_WEBHOOK_SECRET is set. On a completed
@@ -47,6 +48,8 @@ export async function POST(req: Request): Promise<Response> {
             toStatus: "paid",
             payload: { provider: "stripe", eventId: event.id },
           });
+          // Fire-and-record; never blocks the transition (idempotent).
+          await sendOrderEmail(order.id, "order_confirmation");
         }
       } catch {
         // Return 500 so Stripe retries.

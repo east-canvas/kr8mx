@@ -15,6 +15,13 @@
       "when": 1784615187227,
       "tag": "0001_freezing_randall_flagg",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1784657411106,
+      "tag": "0002_short_hairball",
+      "breakpoints": true
     }
   ]
 }
