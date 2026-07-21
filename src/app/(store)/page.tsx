@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { ThemeZone } from "@/components/ui/ThemeZone";
 import { Button } from "@/components/ui/Button";
@@ -109,6 +110,18 @@ export default function Home() {
                 </h2>
               </div>
               <Badge variant="outline">Premarket Preview</Badge>
+            </div>
+
+            <div className="relative -mx-1 overflow-hidden rounded-lg">
+              <div className="relative aspect-[16/9]">
+                <Image
+                  src="/brand/hero-home.png"
+                  alt="KR8MX tablet packs — Grape, Blue Razz, Peach"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 45vw"
+                  className="object-cover object-right"
+                />
+              </div>
             </div>
 
             <div className="relative flex flex-col gap-5">

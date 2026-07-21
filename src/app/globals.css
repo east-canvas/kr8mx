@@ -30,6 +30,24 @@
     overflow-wrap: break-word;
   }
 
+  /* Barely-there brand texture: fine diagonal "slash" lines echoing the X,
+     fixed behind all content, tinted by the active theme's ink color. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-image: repeating-linear-gradient(
+      135deg,
+      var(--color-text-primary) 0,
+      var(--color-text-primary) 1px,
+      transparent 1px,
+      transparent 28px
+    );
+    opacity: 0.022;
+  }
+
   ::selection {
     background-color: var(--color-accent);
     color: var(--color-accent-contrast);

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { SlashX } from "@/components/brand/SlashX";
 import { CanSilhouette } from "@/components/brand/CanSilhouette";
@@ -18,18 +19,33 @@ export default function DrinksCollectionPage() {
 
   return (
     <div>
-      {/* header */}
-      <section className="mx-auto max-w-6xl px-6 pb-14 pt-20">
-        <div className="flex items-center gap-3 text-muted">
-          <SlashX size={16} accent />
-          <span className="type-kicker">The Performance Line</span>
+      {/* cinematic hero */}
+      <section className="relative overflow-hidden">
+        <div className="relative aspect-[16/10] w-full sm:aspect-[16/7]">
+          <Image
+            src="/brand/drinks-hero.png"
+            alt="KR8MX Energy Drink can"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/40 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0">
+            <div className="mx-auto max-w-6xl px-6 pb-10">
+              <div className="flex items-center gap-3 text-muted">
+                <SlashX size={16} accent />
+                <span className="type-kicker">The Performance Line</span>
+              </div>
+              <h1 className="type-display mt-4 max-w-[16ch] text-primary text-4xl sm:text-5xl md:text-6xl">
+                Energy Drink
+              </h1>
+              <p className="mt-4 max-w-md text-sm text-secondary">
+                Five flavors. One standard. No noise.
+              </p>
+            </div>
+          </div>
         </div>
-        <h1 className="type-display mt-5 max-w-[16ch] text-primary text-3xl sm:text-4xl md:text-5xl">
-          Energy Drink
-        </h1>
-        <p className="mt-5 max-w-md text-sm text-secondary">
-          Five flavors. One standard. No noise.
-        </p>
       </section>
 
       <HairlineRule />
