@@ -7,18 +7,34 @@ import { HairlineRule } from "@/components/ui/HairlineRule";
 import { Reveal } from "@/components/ui/Reveal";
 import { getDrinksCatalog, flavorToSlug } from "@/lib/catalog";
 import { formatCents } from "@/db/money";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Drinks",
   description:
     "The KR8MX Energy Drink line — five flavors, one standard. Sharp, controlled, elevated.",
+  alternates: { canonical: "/drinks" },
+  openGraph: {
+    title: "KR8MX Energy Drink",
+    description: "Five flavors. One standard.",
+    url: "/drinks",
+    images: [{ url: "/brand/og-drinks.png", width: 1200, height: 630 }],
+  },
 };
 
 export default function DrinksCollectionPage() {
   const catalog = getDrinksCatalog();
+  const breadcrumb = breadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Drinks", path: "/drinks" },
+  ]);
 
   return (
     <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
       {/* cinematic hero */}
       <section className="relative overflow-hidden">
         <div className="relative aspect-[16/10] w-full sm:aspect-[16/7]">

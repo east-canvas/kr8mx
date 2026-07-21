@@ -60,7 +60,7 @@ export default function CartPage() {
             calculated at checkout.
           </p>
           <div className="mt-6">
-            <Button variant="solid" size="lg" className="w-full">
+            <Button href="/checkout" variant="solid" size="lg" className="w-full">
               Checkout
             </Button>
           </div>

@@ -8,6 +8,13 @@ export const metadata: Metadata = {
   title: "Tablets",
   description:
     "KR8MX Tablets — lighter format, higher standards. Premarket preview.",
+  alternates: { canonical: "/tablets" },
+  openGraph: {
+    title: "KR8MX Tablets",
+    description: "Lighter format. Higher standards. Premarket preview.",
+    url: "/tablets",
+    images: [{ url: "/brand/og-tablets.png", width: 1200, height: 630 }],
+  },
 };
 
 export default function TabletsPage() {

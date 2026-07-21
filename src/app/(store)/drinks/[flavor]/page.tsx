@@ -15,6 +15,7 @@ import {
 } from "@/lib/catalog";
 import { restrictedStatesFor } from "@/lib/compliance/shipping-restrictions";
 import { buildDrinkProductGroupJsonLd } from "@/lib/jsonld";
+import { breadcrumbJsonLd } from "@/lib/seo";
 import { cn } from "@/lib/cn";
 
 export function generateStaticParams() {
@@ -30,9 +31,17 @@ export async function generateMetadata({
   const flavor = slugToFlavor(slug);
   if (!flavor) return { title: "Drinks" };
   const meta = FLAVOR_META[flavor];
+  const path = `/drinks/${flavorToSlug(flavor)}`;
   return {
     title: `${meta.name} — Energy Drink`,
     description: `KR8MX Energy Drink — ${meta.name}. 6, 12, or 24 pack.`,
+    alternates: { canonical: path },
+    openGraph: {
+      title: `KR8MX Energy Drink — ${meta.name}`,
+      description: "6, 12, or 24 pack.",
+      url: path,
+      images: [{ url: "/brand/og-drinks.png", width: 1200, height: 630 }],
+    },
   };
 }
 
@@ -73,12 +82,21 @@ export default async function DrinkPdpPage({
   const variants = getDrinkVariants(flavor);
   const restricted = restrictedStatesFor("drinks");
   const jsonLd = buildDrinkProductGroupJsonLd(flavor);
+  const breadcrumb = breadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Drinks", path: "/drinks" },
+    { name: meta.name, path: `/drinks/${flavorToSlug(flavor)}` },
+  ]);
 
   return (
     <div className="mx-auto max-w-6xl px-6 py-14">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
       />
 
       {/* breadcrumb + flavor selector */}

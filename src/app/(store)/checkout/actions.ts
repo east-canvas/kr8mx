@@ -7,6 +7,7 @@ import { orders, orderItems, orderEvents } from "@/db/schema";
 import { buildOrderDraft, type OrderInputItem } from "@/lib/orders/build-order";
 import { generateOrderNumber } from "@/lib/orders/order-number";
 import { assertTransition } from "@/db/order-state";
+import { getVariantIdsBySku } from "@/db/queries";
 import { isStripeConfigured, createCheckoutSession } from "@/lib/payments/stripe";
 
 const US_STATE_RE = /^[A-Za-z]{2}$/;
@@ -43,6 +44,16 @@ export async function placeOrder(input: {
   const orderNumber = generateOrderNumber();
   const { lines, totals } = draft;
 
+  // Resolve variant FKs from SKUs (order_items.variant_id is NOT NULL).
+  const variantIds = await getVariantIdsBySku(lines.map((l) => l.sku));
+  const missing = lines.find((l) => !variantIds.get(l.sku));
+  if (missing) {
+    return {
+      ok: false,
+      error: "One or more items are unavailable. Please refresh your cart.",
+    };
+  }
+
   let orderId: number;
   try {
     const db = getDb();
@@ -64,7 +75,7 @@ export async function placeOrder(input: {
     await db.insert(orderItems).values(
       lines.map((l) => ({
         orderId,
-        variantId: 0, // resolved from SKU; variant FK backfilled at fulfillment
+        variantId: variantIds.get(l.sku)!,
         sku: l.sku,
         nameSnapshot: l.name,
         quantity: l.quantity,

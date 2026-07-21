@@ -1,8 +1,20 @@
 import "server-only";
-import { and, desc, eq, sql } from "drizzle-orm";
+import { and, desc, eq, inArray, sql } from "drizzle-orm";
 import { getDb } from "./client";
-import { coaDocuments, dynamicLinks } from "./schema";
-import type { CoaDocument, DynamicLink, ProductCategory } from "./schema";
+import {
+  coaDocuments,
+  dynamicLinks,
+  orders,
+  orderItems,
+  productVariants,
+} from "./schema";
+import type {
+  CoaDocument,
+  DynamicLink,
+  Order,
+  OrderItem,
+  ProductCategory,
+} from "./schema";
 
 /**
  * Read helpers. Each swallows a missing-DATABASE_URL (or transient) error and
@@ -65,6 +77,45 @@ export async function getAllDynamicLinks(): Promise<DynamicLink[]> {
       .orderBy(desc(dynamicLinks.createdAt));
   } catch {
     return [];
+  }
+}
+
+/** Resolve product_variant ids for a set of SKUs (for order_items FK). */
+export async function getVariantIdsBySku(
+  skus: string[],
+): Promise<Map<string, number>> {
+  if (skus.length === 0) return new Map();
+  try {
+    const db = getDb();
+    const rows = await db
+      .select({ id: productVariants.id, sku: productVariants.sku })
+      .from(productVariants)
+      .where(inArray(productVariants.sku, skus));
+    return new Map(rows.map((r) => [r.sku, r.id]));
+  } catch {
+    return new Map();
+  }
+}
+
+/** Fetch an order + its items by order number (for the confirmation page). */
+export async function getOrderByNumber(
+  orderNumber: string,
+): Promise<{ order: Order; items: OrderItem[] } | null> {
+  try {
+    const db = getDb();
+    const [order] = await db
+      .select()
+      .from(orders)
+      .where(eq(orders.orderNumber, orderNumber))
+      .limit(1);
+    if (!order) return null;
+    const items = await db
+      .select()
+      .from(orderItems)
+      .where(eq(orderItems.orderId, order.id));
+    return { order, items };
+  } catch {
+    return null;
   }
 }
 
