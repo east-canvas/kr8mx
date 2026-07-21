@@ -9,8 +9,7 @@ import { createHash } from "node:crypto";
  *
  * If ADMIN_PASSWORD is unset the admin is locked (secure by default).
  */
-export const ADMIN_COOKIE = "nbg_admin";
-export const ADMIN_SESSION_MAX_AGE = 60 * 60 * 8; // 8 hours
+export { ADMIN_COOKIE, ADMIN_SESSION_MAX_AGE } from "./constants";
 
 function adminPassword(): string | undefined {
   return process.env.ADMIN_PASSWORD;

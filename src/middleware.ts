@@ -1,19 +1,19 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { ADMIN_COOKIE } from "@/lib/admin/constants";
+import { adminGuard } from "@/lib/admin/middleware-guard";
 
 /**
- * Barcode compatibility net.
- *
- * A batch of labels may have been printed while a misconfigured
- * NEXT_PUBLIC_SITE_URL produced a malformed scan URL like
- *   https://www.kr8mx.com/coa/tablets/q/tabletscoa
- * instead of the canonical /q/tabletscoa. Any path that ends in `/q/{code}` but
- * has an extra prefix is normalized here to `/q/{code}`, where the dynamic
- * resolver looks up the code and 302s to its current target. This guarantees
- * every already-printed variant resolves, and keeps future codes re-pointable.
+ * Edge middleware:
+ *  1. Barcode compatibility — normalize any `…/q/{code}` (incl. a malformed
+ *     prefixed variant that may have been printed) to the canonical /q/{code}.
+ *  2. Admin gate — presence-check bounce for /admin and /api/admin. The
+ *     authoritative auth check runs server-side (node crypto isn't available
+ *     in edge middleware).
  */
 export function middleware(req: NextRequest) {
   const { pathname, search } = req.nextUrl;
-  // prefix + /q/{code}, e.g. /coa/tablets/q/tabletscoa  (NOT the bare /q/{code})
+
+  // 1) barcode URL normalization (prefix + /q/{code} -> /q/{code})
   const match = pathname.match(/^\/.+\/q\/([^/]+)\/?$/);
   if (match) {
     const url = req.nextUrl.clone();
@@ -21,10 +21,23 @@ export function middleware(req: NextRequest) {
     url.search = search;
     return NextResponse.redirect(url, 308);
   }
+
+  // 2) admin gate
+  const hasAdminCookie = !!req.cookies.get(ADMIN_COOKIE);
+  const decision = adminGuard(pathname, hasAdminCookie);
+  if (decision === "unauthorized") {
+    return new NextResponse("Not authorized", { status: 401 });
+  }
+  if (decision === "redirect") {
+    const url = req.nextUrl.clone();
+    url.pathname = "/admin";
+    url.search = "";
+    return NextResponse.redirect(url);
+  }
+
   return NextResponse.next();
 }
 
 export const config = {
-  // Only run where a stray /q/{code} could appear; skip assets, api, admin.
-  matcher: ["/((?!_next/static|_next/image|favicon.ico|api/|admin/).*)"],
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };
