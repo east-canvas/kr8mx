@@ -1,4 +1,4 @@
-import type { Flavor } from "@/db/schema";
+import type { Flavor, ProductContent } from "@/db/schema";
 import {
   FLAVORS,
   FLAVOR_NAME,
@@ -79,6 +79,22 @@ export function getDrinkVariants(flavor: Flavor): DrinkVariant[] {
     .sort((a, b) => a.packSize - b.packSize);
 }
 
+/**
+ * Layer live DB prices (SKU → cents) over seed-default variants. Pure — pages
+ * fetch the map and apply it so displayed prices match what checkout charges.
+ * A SKU absent from the map keeps its seed price.
+ */
+export function applyPriceOverrides(
+  variants: DrinkVariant[],
+  priceMap?: Map<string, number>,
+): DrinkVariant[] {
+  if (!priceMap || priceMap.size === 0) return variants;
+  return variants.map((v) => {
+    const cents = priceMap.get(v.sku);
+    return typeof cents === "number" ? { ...v, priceCents: cents } : v;
+  });
+}
+
 /** Resolve a single drink variant by flavor + pack size (SKU + price). */
 export function resolveDrinkVariant(
   flavor: Flavor,
@@ -97,4 +113,40 @@ export function getDrinksCatalog(): Array<FlavorMeta & { variants: DrinkVariant[
     ...FLAVOR_META[flavor],
     variants: getDrinkVariants(flavor),
   }));
+}
+
+/**
+ * Resolved, display-ready product content for a flavor: the static defaults
+ * (name / accent) with any admin-edited overrides layered on top, plus optional
+ * marketing copy and a hero image. `imageUrl === null` means render the
+ * CanSilhouette fallback. A pure merge so pages and tests stay deterministic.
+ */
+export type ResolvedContent = {
+  flavor: Flavor;
+  name: string;
+  hex: string;
+  tagline: string | null;
+  description: string | null;
+  imageUrl: string | null;
+};
+
+function isNonEmpty(v: string | null | undefined): v is string {
+  return typeof v === "string" && v.trim().length > 0;
+}
+
+export function resolveContent(
+  flavor: Flavor,
+  override?: ProductContent | null,
+): ResolvedContent {
+  const base = FLAVOR_META[flavor];
+  return {
+    flavor,
+    name: isNonEmpty(override?.name) ? override!.name!.trim() : base.name,
+    hex: isNonEmpty(override?.accentHex) ? override!.accentHex!.trim() : base.hex,
+    tagline: isNonEmpty(override?.tagline) ? override!.tagline!.trim() : null,
+    description: isNonEmpty(override?.description)
+      ? override!.description!.trim()
+      : null,
+    imageUrl: isNonEmpty(override?.imageUrl) ? override!.imageUrl!.trim() : null,
+  };
 }

@@ -20,9 +20,15 @@ export type ResolvedVariant = {
   status: "active" | "coming_soon";
 };
 
-export function resolveVariantBySku(sku: string): ResolvedVariant | null {
+export function resolveVariantBySku(
+  sku: string,
+  priceOverrides?: Map<string, number>,
+): ResolvedVariant | null {
   const v = ALL_VARIANTS.find((x) => x.sku === sku);
   if (!v) return null;
+  // Live DB price wins over the seed default when present.
+  const override = priceOverrides?.get(sku);
+  const priceCents = typeof override === "number" ? override : v.priceCents;
   const category: ProductCategory = v.productSlug.startsWith("drink-")
     ? "drinks"
     : "tablets";
@@ -50,7 +56,7 @@ export function resolveVariantBySku(sku: string): ResolvedVariant | null {
     flavor: v.flavor,
     name,
     packSize,
-    priceCents: v.priceCents,
+    priceCents,
     status: v.status,
   };
 }

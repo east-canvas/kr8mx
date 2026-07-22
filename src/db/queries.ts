@@ -6,14 +6,17 @@ import {
   dynamicLinks,
   orders,
   orderItems,
+  productContent,
   productVariants,
 } from "./schema";
 import type {
   CoaDocument,
   DynamicLink,
+  Flavor,
   Order,
   OrderItem,
   ProductCategory,
+  ProductContent,
 } from "./schema";
 
 /**
@@ -77,6 +80,43 @@ export async function getAllDynamicLinks(): Promise<DynamicLink[]> {
       .orderBy(desc(dynamicLinks.createdAt));
   } catch {
     return [];
+  }
+}
+
+/**
+ * Editable product content for a category, keyed by flavor. Returns a Map so the
+ * storefront can merge overrides onto the static seed defaults per flavor. Empty
+ * (missing table / no DATABASE_URL) → callers fall back to the built-in defaults.
+ */
+export async function getProductContentMap(
+  category: ProductCategory,
+): Promise<Map<Flavor, ProductContent>> {
+  try {
+    const db = getDb();
+    const rows = await db
+      .select()
+      .from(productContent)
+      .where(eq(productContent.category, category));
+    return new Map(rows.map((r) => [r.flavor, r]));
+  } catch {
+    return new Map();
+  }
+}
+
+/**
+ * Live SKU → price (cents) map from product_variants. The admin Products editor
+ * writes here; the storefront and checkout layer these over the seed defaults so
+ * a price change is reflected everywhere. Empty map on a missing DB → seed price.
+ */
+export async function getVariantPriceMap(): Promise<Map<string, number>> {
+  try {
+    const db = getDb();
+    const rows = await db
+      .select({ sku: productVariants.sku, priceCents: productVariants.priceCents })
+      .from(productVariants);
+    return new Map(rows.map((r) => [r.sku, r.priceCents]));
+  } catch {
+    return new Map();
   }
 }
 

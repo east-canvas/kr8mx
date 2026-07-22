@@ -7,7 +7,7 @@ import { orders, orderItems, orderEvents } from "@/db/schema";
 import { buildOrderDraft, type OrderInputItem } from "@/lib/orders/build-order";
 import { generateOrderNumber } from "@/lib/orders/order-number";
 import { assertTransition } from "@/db/order-state";
-import { getVariantIdsBySku } from "@/db/queries";
+import { getVariantIdsBySku, getVariantPriceMap } from "@/db/queries";
 import { isStripeConfigured, createCheckoutSession } from "@/lib/payments/stripe";
 
 const US_STATE_RE = /^[A-Za-z]{2}$/;
@@ -38,7 +38,9 @@ export async function placeOrder(input: {
     return { ok: false, error: "Select a destination state." };
   }
 
-  const draft = buildOrderDraft({ items: input.items, state });
+  // Re-price against live DB prices (admin-editable), falling back to seed.
+  const priceOverrides = await getVariantPriceMap();
+  const draft = buildOrderDraft({ items: input.items, state, priceOverrides });
   if (!draft.ok) return { ok: false, error: draft.error };
 
   const orderNumber = generateOrderNumber();

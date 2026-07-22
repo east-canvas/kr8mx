@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { CanSilhouette } from "@/components/brand/CanSilhouette";
+import { ProductVisual } from "@/components/brand/ProductVisual";
 import { SlashX } from "@/components/brand/SlashX";
 import { HairlineRule } from "@/components/ui/HairlineRule";
 import { DrinkPurchase } from "@/components/drinks/DrinkPurchase";
@@ -12,7 +12,10 @@ import {
   getDrinkVariants,
   flavorToSlug,
   slugToFlavor,
+  resolveContent,
+  applyPriceOverrides,
 } from "@/lib/catalog";
+import { getProductContentMap, getVariantPriceMap } from "@/db/queries";
 import { restrictedStatesFor } from "@/lib/compliance/shipping-restrictions";
 import { buildDrinkProductGroupJsonLd } from "@/lib/jsonld";
 import { breadcrumbJsonLd } from "@/lib/seo";
@@ -78,14 +81,18 @@ export default async function DrinkPdpPage({
   const flavor = slugToFlavor(slug);
   if (!flavor) notFound();
 
-  const meta = FLAVOR_META[flavor];
-  const variants = getDrinkVariants(flavor);
+  const [contentMap, priceMap] = await Promise.all([
+    getProductContentMap("drinks"),
+    getVariantPriceMap(),
+  ]);
+  const c = resolveContent(flavor, contentMap.get(flavor));
+  const variants = applyPriceOverrides(getDrinkVariants(flavor), priceMap);
   const restricted = restrictedStatesFor("drinks");
-  const jsonLd = buildDrinkProductGroupJsonLd(flavor);
+  const jsonLd = buildDrinkProductGroupJsonLd(flavor, priceMap);
   const breadcrumb = breadcrumbJsonLd([
     { name: "Home", path: "/" },
     { name: "Drinks", path: "/drinks" },
-    { name: meta.name, path: `/drinks/${flavorToSlug(flavor)}` },
+    { name: c.name, path: `/drinks/${flavorToSlug(flavor)}` },
   ]);
 
   return (
@@ -137,10 +144,17 @@ export default async function DrinkPdpPage({
         <div
           className="relative flex items-center justify-center overflow-hidden rounded-xl border border-hairline py-16"
           style={{
-            background: `radial-gradient(90% 90% at 50% 25%, ${meta.hex}26, transparent 65%)`,
+            background: `radial-gradient(90% 90% at 50% 25%, ${c.hex}26, transparent 65%)`,
           }}
         >
-          <CanSilhouette accent={meta.hex} height={420} idKey={`pdp-${flavor}`} />
+          <ProductVisual
+            imageUrl={c.imageUrl}
+            alt={`KR8MX Energy Drink — ${c.name}`}
+            accent={c.hex}
+            height={420}
+            idKey={`pdp-${flavor}`}
+            priority
+          />
         </div>
 
         {/* buy box */}
@@ -148,22 +162,22 @@ export default async function DrinkPdpPage({
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-2.5">
               <SlashX size={14} accent />
-              <span className="type-kicker" style={{ color: meta.hex }}>
-                Energy Drink
+              <span className="type-kicker" style={{ color: c.hex }}>
+                {c.tagline ?? "Energy Drink"}
               </span>
             </div>
             <h1 className="type-display text-primary text-3xl sm:text-4xl md:text-5xl">
-              {meta.name}
+              {c.name}
             </h1>
             <p className="max-w-prose text-sm text-secondary">
-              Sharp. Controlled. Elevated. 12 FL OZ (355 ml) per can, built with
-              MitraGen+&trade;.
+              {c.description ??
+                "Sharp. Controlled. Elevated. 12 FL OZ (355 ml) per can, built with MitraGen+™."}
             </p>
           </div>
 
           <DrinkPurchase
             flavor={flavor}
-            flavorName={meta.name}
+            flavorName={c.name}
             variants={variants}
           />
 

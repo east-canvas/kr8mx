@@ -376,6 +376,42 @@ export const auditLog = pgTable("audit_log", {
     .defaultNow(),
 });
 
+/* ---------------------------------------------- editable product content -- */
+
+/**
+ * Storefront-editable product content, keyed by (category, flavor). Rows here
+ * OVERRIDE the static seed defaults (name / accent) and add marketing copy and a
+ * hero image the admin can change without a deploy. Everything is nullable — an
+ * absent value falls back to the built-in default (and no image → the rendered
+ * CanSilhouette). Managed via the KR8MX admin "Products" console.
+ */
+export const productContent = pgTable(
+  "product_content",
+  {
+    id: serial("id").primaryKey(),
+    category: productCategoryEnum("category").notNull(),
+    flavor: flavorEnum("flavor").notNull(),
+    // display-name override (null → built-in FLAVOR_NAME)
+    name: text("name"),
+    // short kicker/eyebrow copy
+    tagline: text("tagline"),
+    // marketing description shown on the PDP
+    description: text("description"),
+    // hosted hero image (Vercel Blob). null → CanSilhouette is rendered instead.
+    imageUrl: text("image_url"),
+    // accent hex override (e.g. "#eb4c5b"). null → built-in FLAVOR_HEX.
+    accentHex: varchar("accent_hex", { length: 9 }),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => ({
+    categoryFlavorUnique: uniqueIndex(
+      "product_content_category_flavor_unique",
+    ).on(t.category, t.flavor),
+  }),
+);
+
 /* ------------------------------------------------- COA + dynamic links ---- */
 
 export const coaStatusEnum = pgEnum("coa_status", ["draft", "published"]);
@@ -455,6 +491,7 @@ export type CartItem = typeof cartItems.$inferSelect;
 export type NotifyListEntry = typeof notifyList.$inferSelect;
 export type ShippingRestriction = typeof shippingRestrictions.$inferSelect;
 
+export type ProductContent = typeof productContent.$inferSelect;
 export type CoaDocument = typeof coaDocuments.$inferSelect;
 export type DynamicLink = typeof dynamicLinks.$inferSelect;
 export type NotifyEntry = typeof notifyList.$inferSelect;

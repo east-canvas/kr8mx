@@ -2,10 +2,16 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { SlashX } from "@/components/brand/SlashX";
-import { CanSilhouette } from "@/components/brand/CanSilhouette";
+import { ProductVisual } from "@/components/brand/ProductVisual";
 import { HairlineRule } from "@/components/ui/HairlineRule";
 import { Reveal } from "@/components/ui/Reveal";
-import { getDrinksCatalog, flavorToSlug } from "@/lib/catalog";
+import {
+  getDrinksCatalog,
+  flavorToSlug,
+  resolveContent,
+  applyPriceOverrides,
+} from "@/lib/catalog";
+import { getProductContentMap, getVariantPriceMap } from "@/db/queries";
 import { formatCents } from "@/db/money";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
@@ -22,8 +28,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function DrinksCollectionPage() {
+export default async function DrinksCollectionPage() {
   const catalog = getDrinksCatalog();
+  const [content, priceMap] = await Promise.all([
+    getProductContentMap("drinks"),
+    getVariantPriceMap(),
+  ]);
   const breadcrumb = breadcrumbJsonLd([
     { name: "Home", path: "/" },
     { name: "Drinks", path: "/drinks" },
@@ -69,8 +79,10 @@ export default function DrinksCollectionPage() {
       {/* flavor cards — full-bleed dark, alternating */}
       <div>
         {catalog.map((item, i) => {
-          const startPrice = item.variants[0]?.priceCents ?? 0;
+          const variants = applyPriceOverrides(item.variants, priceMap);
+          const startPrice = variants[0]?.priceCents ?? 0;
           const flip = i % 2 === 1;
+          const c = resolveContent(item.flavor, content.get(item.flavor));
           return (
             <Link
               key={item.flavor}
@@ -82,12 +94,14 @@ export default function DrinksCollectionPage() {
                 style={{
                   background: `radial-gradient(120% 120% at ${
                     flip ? "85%" : "15%"
-                  } 30%, ${item.hex}1f, transparent 60%)`,
+                  } 30%, ${c.hex}1f, transparent 60%)`,
                 }}
               >
                 <Reveal className={flip ? "md:order-2" : ""}>
-                  <CanSilhouette
-                    accent={item.hex}
+                  <ProductVisual
+                    imageUrl={c.imageUrl}
+                    alt={`KR8MX Energy Drink — ${c.name}`}
+                    accent={c.hex}
                     height={300}
                     idKey={item.flavor}
                     className="mx-auto transition-transform duration-slow ease-out-brand group-hover:-translate-y-1.5"
@@ -100,13 +114,18 @@ export default function DrinksCollectionPage() {
                 >
                   <span
                     className="type-kicker"
-                    style={{ color: item.hex }}
+                    style={{ color: c.hex }}
                   >
-                    {String(i + 1).padStart(2, "0")} / Flavor
+                    {c.tagline ?? `${String(i + 1).padStart(2, "0")} / Flavor`}
                   </span>
                   <h2 className="type-display text-primary text-3xl sm:text-4xl md:text-5xl">
-                    {item.name}
+                    {c.name}
                   </h2>
+                  {c.description ? (
+                    <p className="max-w-md text-sm text-secondary">
+                      {c.description}
+                    </p>
+                  ) : null}
                   <p className="text-sm text-secondary">
                     From {formatCents(startPrice)}{" "}
                     <span className="text-muted">· 6 / 12 / 24 pack</span>

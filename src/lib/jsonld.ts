@@ -1,5 +1,10 @@
 import type { Flavor } from "@/db/schema";
-import { FLAVOR_META, getDrinkVariants, flavorToSlug } from "@/lib/catalog";
+import {
+  FLAVOR_META,
+  getDrinkVariants,
+  flavorToSlug,
+  applyPriceOverrides,
+} from "@/lib/catalog";
 
 /* =============================================================================
    JSON-LD for drink PDPs. A ProductGroup that variesBy flavor + pack size, with
@@ -9,9 +14,12 @@ import { FLAVOR_META, getDrinkVariants, flavorToSlug } from "@/lib/catalog";
 
 const SITE = "https://kr8mx.com";
 
-export function buildDrinkProductGroupJsonLd(flavor: Flavor) {
+export function buildDrinkProductGroupJsonLd(
+  flavor: Flavor,
+  priceOverrides?: Map<string, number>,
+) {
   const meta = FLAVOR_META[flavor];
-  const variants = getDrinkVariants(flavor);
+  const variants = applyPriceOverrides(getDrinkVariants(flavor), priceOverrides);
   const url = `${SITE}/drinks/${flavorToSlug(flavor)}`;
 
   return {

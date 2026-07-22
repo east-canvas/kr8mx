@@ -15,9 +15,12 @@ export type OrderDraft =
 export function buildOrderDraft({
   items,
   state,
+  priceOverrides,
 }: {
   items: OrderInputItem[];
   state: string;
+  /** Live SKU → cents map (from product_variants). Falls back to seed prices. */
+  priceOverrides?: Map<string, number>;
 }): OrderDraft {
   if (!items || items.length === 0) {
     return { ok: false, error: "Your cart is empty." };
@@ -25,7 +28,7 @@ export function buildOrderDraft({
 
   const lines: PricedLine[] = [];
   for (const it of items) {
-    const v = resolveVariantBySku(it.sku);
+    const v = resolveVariantBySku(it.sku, priceOverrides);
     if (!v) return { ok: false, error: `Unknown item: ${it.sku}` };
     if (v.status !== "active") {
       return { ok: false, error: `${v.name} is not available for purchase yet.` };
