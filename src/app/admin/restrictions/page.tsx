@@ -4,7 +4,7 @@ import { listRestrictions } from "@/lib/admin/data";
 import { updateRestrictionAction } from "../ops-actions";
 
 const inputCls =
-  "rounded-md border border-hairline bg-surface px-2 py-1 text-sm text-primary outline-none focus-visible:border-accent";
+  "rounded-md border border-hairline bg-surface px-3 py-1.5 text-sm text-primary outline-none focus-visible:border-accent";
 
 function fmt(d: Date | string | null) {
   return d ? new Date(d).toLocaleDateString("en-US") : "never";

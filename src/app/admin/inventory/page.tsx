@@ -5,7 +5,7 @@ import { adjustInventoryAction } from "../ops-actions";
 import { Badge } from "@/components/ui/Badge";
 
 const inputCls =
-  "w-20 rounded-md border border-hairline bg-surface px-2 py-1 text-sm text-primary outline-none focus-visible:border-accent";
+  "w-20 rounded-md border border-hairline bg-surface px-3 py-1.5 text-sm text-primary outline-none focus-visible:border-accent";
 
 export default async function AdminInventoryPage({
   searchParams,

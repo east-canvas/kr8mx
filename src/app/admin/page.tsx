@@ -151,15 +151,17 @@ export default async function AdminDashboard({
             {links.map((l, i) => (
               <li
                 key={l.id}
-                className="flex gap-4 rounded-lg border border-hairline p-4"
+                className="flex flex-col gap-4 rounded-lg border border-hairline p-4 sm:flex-row"
               >
                 <div
-                  className="h-28 w-28 shrink-0 rounded-md border border-hairline p-2"
+                  className="h-24 w-24 shrink-0 rounded-md border border-hairline p-2"
                   dangerouslySetInnerHTML={{ __html: linkQrs[i] }}
                 />
                 <div className="flex min-w-0 flex-1 flex-col gap-2">
-                  <div className="flex items-center gap-2">
-                    <span className="truncate text-sm text-primary">{l.label}</span>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="min-w-0 max-w-full truncate text-sm text-primary">
+                      {l.label}
+                    </span>
                     <Badge variant={l.active ? "accent" : "outline"}>
                       {l.active ? "Active" : "Off"}
                     </Badge>
@@ -168,11 +170,11 @@ export default async function AdminDashboard({
                     href={scanUrl(l.code)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="truncate text-2xs text-muted hover:text-primary"
+                    className="block truncate text-2xs text-muted hover:text-primary"
                   >
                     {scanUrl(l.code)}
                   </a>
-                  <p className="truncate text-2xs text-secondary">
+                  <p className="block truncate text-2xs text-secondary">
                     &rarr; {l.targetUrl}
                   </p>
                   <span className="text-2xs text-muted">{l.scanCount} scans</span>
@@ -184,34 +186,34 @@ export default async function AdminDashboard({
                     <a
                       href={`/admin/qr/${l.code}?fmt=svg`}
                       download
-                      className="rounded-sm border border-hairline px-2 py-0.5 text-2xs uppercase tracking-wide text-primary hover:border-secondary"
+                      className="rounded-sm border border-hairline px-2.5 py-1 text-2xs uppercase tracking-wide text-primary hover:border-secondary"
                     >
                       SVG
                     </a>
                     <a
                       href={`/admin/qr/${l.code}?fmt=png&size=1024`}
                       download
-                      className="rounded-sm border border-hairline px-2 py-0.5 text-2xs uppercase tracking-wide text-primary hover:border-secondary"
+                      className="rounded-sm border border-hairline px-2.5 py-1 text-2xs uppercase tracking-wide text-primary hover:border-secondary"
                     >
                       PNG 1K
                     </a>
                     <a
                       href={`/admin/qr/${l.code}?fmt=png&size=2048`}
                       download
-                      className="rounded-sm border border-hairline px-2 py-0.5 text-2xs uppercase tracking-wide text-primary hover:border-secondary"
+                      className="rounded-sm border border-hairline px-2.5 py-1 text-2xs uppercase tracking-wide text-primary hover:border-secondary"
                     >
                       PNG 2K
                     </a>
                   </div>
 
-                  <form action={updateLinkTargetAction} className="mt-1 flex gap-2">
+                  <form action={updateLinkTargetAction} className="mt-1 flex flex-wrap gap-2">
                     <input type="hidden" name="id" value={l.id} />
                     <input
                       name="targetUrl"
                       defaultValue={l.targetUrl}
-                      className={`${inputCls} min-w-0 flex-1 py-1.5 text-2xs`}
+                      className={`${inputCls} min-w-0 flex-1 basis-full py-1.5 text-2xs sm:basis-40`}
                     />
-                    <button className="rounded-sm border border-hairline px-2.5 py-1 text-2xs uppercase tracking-wide text-primary hover:border-secondary">
+                    <button className="rounded-sm border border-hairline px-3 py-1.5 text-2xs uppercase tracking-wide text-primary hover:border-secondary">
                       Save
                     </button>
                   </form>
