@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { upload } from "@vercel/blob/client";
 import { recordCoaUploadAction } from "@/app/admin/actions";
 import { FLAVORS } from "@/db/seed-data";
+import { cn } from "@/lib/cn";
 
 const inputCls =
   "rounded-md border border-hairline bg-surface px-3 py-2 text-sm text-primary outline-none focus-visible:border-accent";
@@ -17,8 +18,10 @@ type Status = "idle" | "uploading" | "saving" | "done" | "error";
  * coa/{category}/…; on success a published COA row is recorded and the page
  * refreshes, so the document is immediately live on /coa/{category}.
  */
-export function CoaUpload() {
-  const [category, setCategory] = useState<"drinks" | "tablets">("drinks");
+export function CoaUpload({ folder }: { folder?: "drinks" | "tablets" }) {
+  const [category, setCategory] = useState<"drinks" | "tablets">(
+    folder ?? "drinks",
+  );
   const [flavor, setFlavor] = useState("");
   const [lotNumber, setLotNumber] = useState("");
   const [file, setFile] = useState<File | null>(null);
@@ -80,18 +83,27 @@ export function CoaUpload() {
 
   return (
     <div className="flex flex-col gap-4 rounded-lg border border-hairline p-5">
-      <div className="grid gap-3 sm:grid-cols-3">
-        <label className="flex flex-col gap-1.5">
-          <span className={labelCls}>Folder</span>
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value as "drinks" | "tablets")}
-            className={inputCls}
-          >
-            <option value="drinks">drinks</option>
-            <option value="tablets">tablets</option>
-          </select>
-        </label>
+      <div
+        className={cn(
+          "grid gap-3",
+          folder ? "sm:grid-cols-2" : "sm:grid-cols-3",
+        )}
+      >
+        {folder ? null : (
+          <label className="flex flex-col gap-1.5">
+            <span className={labelCls}>Folder</span>
+            <select
+              value={category}
+              onChange={(e) =>
+                setCategory(e.target.value as "drinks" | "tablets")
+              }
+              className={inputCls}
+            >
+              <option value="drinks">drinks</option>
+              <option value="tablets">tablets</option>
+            </select>
+          </label>
+        )}
         <label className="flex flex-col gap-1.5">
           <span className={labelCls}>Flavor (optional)</span>
           <select

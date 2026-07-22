@@ -1,5 +1,5 @@
 import { cookies } from "next/headers";
-import { getAllCoas, getAllDynamicLinks } from "@/db/queries";
+import { getAllDynamicLinks } from "@/db/queries";
 import {
   createLinkAction,
   updateLinkTargetAction,
@@ -10,7 +10,6 @@ import { ADMIN_COOKIE, isAuthed } from "@/lib/admin/auth";
 import { generateQrSvg, scanUrl } from "@/lib/admin/qr";
 import { Badge } from "@/components/ui/Badge";
 import { HairlineRule } from "@/components/ui/HairlineRule";
-import { CoaUpload } from "@/components/admin/CoaUpload";
 
 const inputCls =
   "rounded-md border border-hairline bg-surface px-3 py-2 text-sm text-primary outline-none focus-visible:border-accent";
@@ -51,7 +50,7 @@ export default async function AdminDashboard({
   if (!isAuthed(store.get(ADMIN_COOKIE)?.value)) return null;
 
   const { ok, error, provider, result } = await searchParams;
-  const [coas, links] = await Promise.all([getAllCoas(), getAllDynamicLinks()]);
+  const links = await getAllDynamicLinks();
   const linkQrs = await Promise.all(
     links.map((l) => generateQrSvg(scanUrl(l.code))),
   );
@@ -224,46 +223,6 @@ export default async function AdminDashboard({
                     </button>
                   </form>
                 </div>
-              </li>
-            ))}
-          </ul>
-        )}
-      </section>
-
-      <HairlineRule />
-
-      {/* ---- COA documents ---- */}
-      <section className="flex flex-col gap-6">
-        <div>
-          <h2 className="type-display text-primary text-xl">
-            Certificates of Analysis
-          </h2>
-          <p className="mt-1 text-sm text-secondary">
-            Publish per-category lab results to{" "}
-            <span className="text-primary">/coa/drinks</span> and{" "}
-            <span className="text-primary">/coa/tablets</span>.
-          </p>
-        </div>
-
-        <CoaUpload />
-
-        {coas.length === 0 ? (
-          <p className="text-sm text-muted">No COAs yet.</p>
-        ) : (
-          <ul className="flex flex-col divide-y divide-hairline border-y border-hairline">
-            {coas.map((c) => (
-              <li key={c.id} className="flex items-center justify-between gap-4 py-4">
-                <div className="flex flex-col gap-1">
-                  <span className="text-sm text-primary">{c.title}</span>
-                  <span className="text-2xs text-muted">
-                    {c.category}
-                    {c.flavor ? ` · ${c.flavor}` : ""}
-                    {c.lotNumber ? ` · Lot ${c.lotNumber}` : ""}
-                  </span>
-                </div>
-                <Badge variant={c.status === "published" ? "accent" : "outline"}>
-                  {c.status}
-                </Badge>
               </li>
             ))}
           </ul>
