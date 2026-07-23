@@ -83,7 +83,7 @@ export default async function DrinksCollectionPage() {
           const variants = applyPriceOverrides(item.variants, priceMap);
           const startPrice = variants[0]?.priceCents ?? 0;
           const flip = i % 2 === 1;
-          const c = resolveContent(item.flavor, content.get(item.flavor));
+          const c = resolveContent("drinks", item.flavor, content.get(item.flavor));
           return (
             <Link
               key={item.flavor}

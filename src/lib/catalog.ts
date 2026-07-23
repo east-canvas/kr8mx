@@ -1,4 +1,5 @@
-import type { Flavor, ProductContent } from "@/db/schema";
+import type { Flavor, ProductCategory, ProductContent } from "@/db/schema";
+import { defaultCopy } from "@/lib/product-copy";
 import {
   FLAVORS,
   FLAVOR_NAME,
@@ -210,18 +211,22 @@ function isNonEmpty(v: string | null | undefined): v is string {
 }
 
 export function resolveContent(
+  category: ProductCategory,
   flavor: Flavor,
   override?: ProductContent | null,
 ): ResolvedContent {
   const base = FLAVOR_META[flavor];
+  const copy = defaultCopy(category, flavor);
   return {
     flavor,
     name: isNonEmpty(override?.name) ? override!.name!.trim() : base.name,
     hex: isNonEmpty(override?.accentHex) ? override!.accentHex!.trim() : base.hex,
-    tagline: isNonEmpty(override?.tagline) ? override!.tagline!.trim() : null,
+    tagline: isNonEmpty(override?.tagline)
+      ? override!.tagline!.trim()
+      : copy.tagline,
     description: isNonEmpty(override?.description)
       ? override!.description!.trim()
-      : null,
+      : copy.description,
     imageUrl: isNonEmpty(override?.imageUrl) ? override!.imageUrl!.trim() : null,
   };
 }

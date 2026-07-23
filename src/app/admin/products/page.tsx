@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { ADMIN_COOKIE, isAuthed } from "@/lib/admin/auth";
 import { listProductEditor } from "@/lib/admin/data";
 import { FLAVOR_META } from "@/lib/catalog";
+import { defaultCopy } from "@/lib/product-copy";
 import {
   saveProductContentAction,
   removeProductImageAction,
@@ -95,6 +96,7 @@ export default async function AdminProductsPage({
             const meta = FLAVOR_META[flavor];
             const c = row.content;
             const accent = c?.accentHex || meta.hex;
+            const copy = defaultCopy(folder, flavor);
             return (
               <li
                 key={flavor}
@@ -186,7 +188,7 @@ export default async function AdminProductsPage({
                         <input
                           name="tagline"
                           defaultValue={c?.tagline ?? ""}
-                          placeholder="Energy Drink"
+                          placeholder={copy.tagline}
                           className={inputCls}
                         />
                       </label>
@@ -195,9 +197,9 @@ export default async function AdminProductsPage({
                         <span className={labelCls}>Description</span>
                         <textarea
                           name="description"
-                          rows={2}
+                          rows={3}
                           defaultValue={c?.description ?? ""}
-                          placeholder="Short marketing copy shown on the product page."
+                          placeholder={copy.description}
                           className={cn(inputCls, "resize-y")}
                         />
                       </label>

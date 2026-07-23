@@ -87,7 +87,7 @@ export default async function TabletPdpPage({
     getProductContentMap("tablets"),
     getVariantPriceMap(),
   ]);
-  const c = resolveContent(flavor, contentMap.get(flavor));
+  const c = resolveContent("tablets", flavor, contentMap.get(flavor));
   const variants = applyPriceOverrides(getTabletVariants(flavor), priceMap);
   const restricted = restrictedStatesFor("tablets");
   const breadcrumb = breadcrumbJsonLd([

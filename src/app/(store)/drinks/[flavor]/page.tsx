@@ -86,7 +86,7 @@ export default async function DrinkPdpPage({
     getProductContentMap("drinks"),
     getVariantPriceMap(),
   ]);
-  const c = resolveContent(flavor, contentMap.get(flavor));
+  const c = resolveContent("drinks", flavor, contentMap.get(flavor));
   const variants = applyPriceOverrides(getDrinkVariants(flavor), priceMap);
   const restricted = restrictedStatesFor("drinks");
   const jsonLd = buildDrinkProductGroupJsonLd(flavor, priceMap);

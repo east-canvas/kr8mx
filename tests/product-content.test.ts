@@ -10,6 +10,9 @@ import {
   FLAVOR_META,
 } from "@/lib/catalog";
 import { resolveVariantBySku } from "@/lib/orders/pricing";
+import { defaultCopy } from "@/lib/product-copy";
+import { scanText } from "@/lib/compliance/content-guard";
+import { FLAVORS } from "@/db/seed-data";
 import type { ProductContent } from "@/db/schema";
 
 function content(over: Partial<ProductContent>): ProductContent {
@@ -28,16 +31,27 @@ function content(over: Partial<ProductContent>): ProductContent {
 }
 
 describe("resolveContent — override merge", () => {
-  it("falls back to seed defaults when no override row exists", () => {
-    const c = resolveContent("grape", null);
+  it("falls back to seed defaults + default copy when no override row exists", () => {
+    const c = resolveContent("drinks", "grape", null);
     expect(c.name).toBe(FLAVOR_META.grape.name);
     expect(c.hex).toBe(FLAVOR_META.grape.hex);
     expect(c.imageUrl).toBeNull();
-    expect(c.description).toBeNull();
+    // tagline + description now fall back to the compelling default copy
+    expect(c.tagline).toBe(defaultCopy("drinks", "grape").tagline);
+    expect(c.description).toBe(defaultCopy("drinks", "grape").description);
+  });
+
+  it("uses the line-specific default copy (drinks vs tablets differ)", () => {
+    const drink = resolveContent("drinks", "peach", null);
+    const tablet = resolveContent("tablets", "peach", null);
+    expect(drink.description).toBe(defaultCopy("drinks", "peach").description);
+    expect(tablet.description).toBe(defaultCopy("tablets", "peach").description);
+    expect(drink.description).not.toBe(tablet.description);
   });
 
   it("layers non-empty overrides over defaults", () => {
     const c = resolveContent(
+      "drinks",
       "grape",
       content({
         name: "Grape Reserve",
@@ -53,7 +67,11 @@ describe("resolveContent — override merge", () => {
   });
 
   it("treats blank/whitespace override fields as absent", () => {
-    const c = resolveContent("grape", content({ name: "   ", accentHex: "" }));
+    const c = resolveContent(
+      "drinks",
+      "grape",
+      content({ name: "   ", accentHex: "" }),
+    );
     expect(c.name).toBe(FLAVOR_META.grape.name);
     expect(c.hex).toBe(FLAVOR_META.grape.hex);
   });
@@ -73,6 +91,27 @@ describe("applyPriceOverrides", () => {
     const out = applyPriceOverrides(vs, map);
     expect(out[0].priceCents).toBe(9999);
     expect(out[1].priceCents).toBe(vs[1].priceCents);
+  });
+});
+
+describe("default product copy — compliance", () => {
+  it("carries a tagline + description for every flavor in both lines", () => {
+    for (const category of ["drinks", "tablets"] as const) {
+      for (const flavor of FLAVORS) {
+        const copy = defaultCopy(category, flavor);
+        expect(copy.tagline.length).toBeGreaterThan(0);
+        expect(copy.description.length).toBeGreaterThan(20);
+      }
+    }
+  });
+
+  it("contains no prohibited claim words", () => {
+    for (const category of ["drinks", "tablets"] as const) {
+      for (const flavor of FLAVORS) {
+        const copy = defaultCopy(category, flavor);
+        expect(scanText(`${copy.tagline}\n${copy.description}`)).toEqual([]);
+      }
+    }
   });
 });
 
