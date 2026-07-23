@@ -144,11 +144,14 @@ A dark treatment (Obsidian `#0B0B0D`, Carbon `#161618`, with an **Acid-Lime `#C6
 - Anatomy: **NOT FOR SALE TO PERSONS UNDER 21 YEARS OF AGE.** → **horizontal KR8MX** (white) → black **"10 TABS"** pill → **100MG MitraGen+™ PER TAB** → **state compliance seal** (e.g., "Florida Compliant") → **flavor chip** (white pill, flavor name) → servings line: **2 SERVINGS PER TABLET | 150MG PER SERVING · 20 TOTAL SERVINGS | 10 TABLETS PER BOTTLE** → **Net Wt 4.24oz (120.20g)**.
 - Wordmark is **white** on the colored label.
 
+> **Dosage schema (confirmed):** serving size = **½ tablet**. **150 mg per serving** → **300 mg per tablet** (2 servings/tablet). The **100 mg MitraGen+™ per tab** callout is the *active* proprietary-blend amount — a different measure from the 300 mg per-tablet serving amount, so label the two distinctly (active vs. per-tablet) to avoid reading as a contradiction.
+> - **10-tab bottle** → 20 servings · 3,000 mg total (150 mg × 20).
+> - **5-tab blister** → 10 servings · 1,500 mg total.
+> - Keep these figures identical across bottle, blister, and web.
+
 ### 6.3 Tablets — blister card (Precision Line)
 - Hang-hole card, **flavor-color header** with line-wave graphic, **21+** badge top corner.
-- **KR8MX wordmark** (white) → black **"5 TABS"** pill → **100MG MitraGen+™ PER TAB** → **five tablets in a quincunx "X" arrangement** (flavor-colored, scored tablets) → **flavor name** at the base.
-
-> **QA flag (numbers):** the current bottle mock mixes "100 MG per tab," "150 MG per serving / 2 servings per tablet," and a "3,000 …per bottle" figure — these don't reconcile (10 tabs × 100 mg = 1,000 mg). Lock the real dosage/servings math with the label before print and keep it identical across bottle, blister, and web.
+- **KR8MX wordmark** (white) → black **"5 TABS"** pill → **100MG MitraGen+™ PER TAB** → **five tablets in a quincunx "X" arrangement** (flavor-colored, **scored** tablets — the score line supports the ½-tablet serving) → **flavor name** at the base.
 
 ---
 
