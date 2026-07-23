@@ -3,7 +3,7 @@ import { Wordmark } from "@/components/brand/Wordmark";
 import { CartButton } from "@/components/site/CartButton";
 
 const NAV = [
-  { href: "/drinks", label: "Drinks" },
+  // Drinks (Energy Drink line) hidden until market-ready — restore when launching.
   { href: "/tablets", label: "Tablets" },
   { href: "/standard", label: "The Standard" },
   { href: "/access", label: "Access" },

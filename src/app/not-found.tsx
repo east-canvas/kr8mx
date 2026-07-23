@@ -19,8 +19,8 @@ export default function NotFound() {
         <Button href="/" variant="solid">
           Home
         </Button>
-        <Button href="/drinks" variant="outline">
-          Drinks
+        <Button href="/tablets" variant="outline">
+          Tablets
         </Button>
       </div>
     </main>

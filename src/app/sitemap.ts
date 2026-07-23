@@ -1,13 +1,13 @@
 import type { MetadataRoute } from "next";
 import { resolveBaseUrl } from "@/lib/seo";
-import { DRINK_FLAVORS, TABLET_FLAVORS, flavorToSlug } from "@/lib/catalog";
+import { TABLET_FLAVORS, flavorToSlug } from "@/lib/catalog";
 
 /** Sitemap for both zones. Excludes checkout / cart / account / order / admin. */
 export default function sitemap(): MetadataRoute.Sitemap {
   const base = resolveBaseUrl();
   const staticPaths = [
     "",
-    "/drinks",
+    // "/drinks" hidden until the Energy Drink line is market-ready.
     "/tablets",
     "/standard",
     "/access",
@@ -21,10 +21,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/legal/lab-results",
   ];
 
-  const drinkPdps = DRINK_FLAVORS.map((f) => `/drinks/${flavorToSlug(f)}`);
   const tabletPdps = TABLET_FLAVORS.map((f) => `/tablets/${flavorToSlug(f)}`);
 
-  return [...staticPaths, ...drinkPdps, ...tabletPdps].map((path) => ({
+  return [...staticPaths, ...tabletPdps].map((path) => ({
     url: `${base}${path}`,
     lastModified: new Date(),
     changeFrequency: "weekly",

@@ -1,19 +1,16 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { ThemeZone } from "@/components/ui/ThemeZone";
 import { Button } from "@/components/ui/Button";
-import { Badge } from "@/components/ui/Badge";
 import { SlashX } from "@/components/brand/SlashX";
 import { Wordmark } from "@/components/brand/Wordmark";
-import { ProductVisual } from "@/components/brand/ProductVisual";
 import { QualityPillars } from "@/components/site/QualityPillars";
 import { Reveal } from "@/components/ui/Reveal";
-import { FLAVOR_META, defaultDrinkImage } from "@/lib/catalog";
+import { FLAVOR_META } from "@/lib/catalog";
 
 export const metadata: Metadata = {
   description:
-    "One brand, two worlds. KR8MX — built for what's next. Explore the performance line and the precision tablet line.",
+    "KR8MX — built for what's next. The precision tablet line: lighter format, higher standards, five flavors. 21+.",
 };
 
 export default function Home() {
@@ -42,56 +39,16 @@ export default function Home() {
             className="max-w-md animate-rise text-sm text-secondary sm:text-base"
             style={{ animationDelay: "240ms" }}
           >
-            One brand, two worlds. A performance line and a precision line —
-            engineered to a single, higher standard.
+            The precision tablet line — lighter format, higher standards,
+            engineered to a single standard. Five flavors. 21+.
           </p>
         </div>
       </section>
 
-      {/* ---- Split gateway — two worlds ---- */}
-      <section
-        aria-label="Product lines"
-        className="mx-auto max-w-6xl px-6 pb-24"
-      >
-        <Reveal className="grid gap-6 lg:grid-cols-2">
-          {/* Drinks — dark performance vitrine, contained + framed */}
-          <ThemeZone
-            theme="performance"
-            className="group relative overflow-hidden rounded-xl border border-hairline"
-          >
-            <div className="flex min-h-[360px] flex-col justify-between gap-8 p-7 sm:min-h-[440px] sm:gap-10 sm:p-10">
-              <div className="flex items-start justify-between">
-                <div className="flex flex-col gap-3">
-                  <span className="type-kicker text-muted">The Performance Line</span>
-                  <h2 className="type-display text-primary text-3xl sm:text-4xl">
-                    Energy Drink
-                  </h2>
-                </div>
-                <SlashX size={26} accent />
-              </div>
-
-              <div className="flex items-end justify-between gap-6">
-                <div className="flex flex-col gap-5">
-                  <p className="max-w-[26ch] text-sm text-secondary">
-                    Five flavors. Obsidian and light. Sharp, controlled, elevated.
-                  </p>
-                  <Button href="/drinks" variant="solid" size="md">
-                    Explore Drinks
-                  </Button>
-                </div>
-                <ProductVisual
-                  imageUrl={defaultDrinkImage("strawberry")}
-                  alt="KR8MX Energy Drink can"
-                  accent={FLAVOR_META.strawberry.hex}
-                  height={260}
-                  idKey="home-drinks"
-                />
-              </div>
-            </div>
-          </ThemeZone>
-
-          {/* Tablets — light precision panel, flavor gradient, premarket */}
-          <div className="relative flex min-h-[360px] flex-col justify-between gap-8 overflow-hidden rounded-xl border border-hairline bg-surface p-7 sm:min-h-[440px] sm:gap-10 sm:p-10">
+      {/* ---- Tablets spotlight — the live precision line ---- */}
+      <section aria-label="Product line" className="mx-auto max-w-6xl px-6 pb-24">
+        <Reveal>
+          <div className="relative flex min-h-[360px] flex-col justify-between gap-8 overflow-hidden rounded-xl border border-hairline bg-surface p-7 sm:min-h-[440px] sm:gap-10 sm:p-10 lg:flex-row lg:items-center lg:gap-12">
             {/* soft flavor-gradient accents */}
             <div
               aria-hidden
@@ -108,36 +65,33 @@ export default function Home() {
               }}
             />
 
-            <div className="relative flex flex-col-reverse items-start gap-3 sm:flex-row sm:items-start sm:justify-between">
-              <div className="flex flex-col gap-3">
+            <div className="relative flex flex-1 flex-col gap-5 lg:max-w-sm">
+              <div className="flex items-center justify-between gap-3">
                 <span className="type-kicker text-muted">The Precision Line</span>
-                <h2 className="type-display text-primary text-3xl sm:text-4xl">
-                  Tablets
-                </h2>
+                <SlashX size={22} accent />
               </div>
-              <Badge variant="outline">Premarket Preview</Badge>
+              <h2 className="type-display text-primary text-3xl sm:text-4xl md:text-5xl">
+                Tablets
+              </h2>
+              <p className="max-w-[34ch] text-sm text-secondary">
+                Lighter format. Higher standards. Five flavors, built with
+                MitraGen+&trade;. 21+ adult use only.
+              </p>
+              <Button href="/tablets" variant="solid" size="md">
+                Explore Tablets
+              </Button>
             </div>
 
-            <div className="relative -mx-1 overflow-hidden rounded-lg">
+            <div className="relative -mx-1 flex-1 overflow-hidden rounded-lg">
               <div className="relative aspect-[16/9]">
                 <Image
                   src="/brand/hero-home.png"
-                  alt="KR8MX tablet packs — Grape, Blue Razz, Peach"
+                  alt="KR8MX tablets — five flavors"
                   fill
                   sizes="(max-width: 1024px) 100vw, 45vw"
-                  className="object-cover object-right"
+                  className="object-cover object-center"
                 />
               </div>
-            </div>
-
-            <div className="relative flex flex-col gap-5">
-              <p className="max-w-[30ch] text-sm text-secondary">
-                Lighter format. Higher standards. Precision-formulated tablets,
-                built with MitraGen+&trade;.
-              </p>
-              <Button href="/tablets" variant="outline" size="md">
-                Preview Tablets
-              </Button>
             </div>
           </div>
         </Reveal>
