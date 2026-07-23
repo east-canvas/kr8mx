@@ -60,16 +60,20 @@ export function defaultDrinkImage(flavor: Flavor): string {
 }
 
 /**
- * Default bottle artwork per tablet flavor (public/brand/tablets). Only flavors
- * with a real cutout are listed; the rest return null and fall back to the
- * TabletSilhouette until their cutouts are added. Admin uploads still override.
+ * Default bottle artwork per tablet flavor (public/brand/tablets) — transparent
+ * cutouts that float on the flavor-gradient card, matching the can treatment.
+ * Admin uploads still override per flavor.
  */
-const TABLET_IMAGE: Partial<Record<Flavor, string>> = {
+const TABLET_IMAGE: Record<Flavor, string> = {
+  grape: "/brand/tablets/grape.png",
+  strawberry: "/brand/tablets/strawberry.png",
   blue_razz: "/brand/tablets/blue-razz.png",
+  lemon: "/brand/tablets/lemon.png",
+  peach: "/brand/tablets/peach.png",
 };
 
-export function defaultTabletImage(flavor: Flavor): string | null {
-  return TABLET_IMAGE[flavor] ?? null;
+export function defaultTabletImage(flavor: Flavor): string {
+  return TABLET_IMAGE[flavor];
 }
 
 /** Marketing lineup shot (all five bottles) for the tablets hero. */
