@@ -10,7 +10,7 @@ type WordmarkProps = {
   className?: string;
   /**
    * Optional Tailwind size classes (e.g. "h-[22px] w-auto md:h-5"). When set,
-   * the mark is sized by CSS instead of a fixed px height — used for responsive
+   * the mark is sized by CSS instead of a fixed px height, used for responsive
    * sizing. `height` still sets the intrinsic aspect ratio.
    */
   sizeClassName?: string;
@@ -24,7 +24,7 @@ const RATIO = 1344 / 451;
 
 /**
  * KR8MX wordmark. Uses padding-trimmed black / white PNGs rendered `unoptimized`
- * so the browser downsamples the full-resolution art directly — the fine slashed-X
+ * so the browser downsamples the full-resolution art directly, the fine slashed-X
  * stays crisp instead of aliasing through the image optimizer at small sizes.
  */
 export function Wordmark({
@@ -66,7 +66,7 @@ export function Wordmark({
   return (
     <Link
       href={href}
-      aria-label="KR8MX — home"
+      aria-label="KR8MX, home"
       className="inline-flex items-center"
     >
       {img}

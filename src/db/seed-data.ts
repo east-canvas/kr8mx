@@ -1,7 +1,7 @@
 import type { Flavor, ProductCategory, VariantStatus } from "./schema";
 
 /* =============================================================================
-   Seed data — pure builders (no DB access) so they can be unit-tested directly.
+   Seed data, pure builders (no DB access) so they can be unit-tested directly.
    The seed *script* (seed.ts) imports these and inserts them.
    ============================================================================= */
 
@@ -34,7 +34,7 @@ export const FLAVOR_NAME: Record<Flavor, string> = {
 export const DRINK_PACK_SIZES = [6, 12, 24] as const;
 
 /* ---------------------------------------------------------------------------
-   PLACEHOLDER PRICES — TODO: replace all values below with confirmed retail
+   PLACEHOLDER PRICES, TODO: replace all values below with confirmed retail
    pricing before launch. Every price here is a placeholder in integer cents.
    --------------------------------------------------------------------------- */
 export const PLACEHOLDER_PRICES = {
@@ -102,7 +102,7 @@ export function buildProducts(): SeedProduct[] {
     products.push({
       lineSlug: "drinks",
       slug: `drink-${flavor.replace("_", "-")}`,
-      name: `KR8MX Energy Drink — ${FLAVOR_NAME[flavor]}`,
+      name: `KR8MX ${FLAVOR_NAME[flavor]} Energy Drink`,
       proprietaryIngredient: "MitraGen+",
       flavor,
       sortOrder: i,
@@ -112,7 +112,7 @@ export function buildProducts(): SeedProduct[] {
     products.push({
       lineSlug: "tablets",
       slug: `tablet-${flavor.replace("_", "-")}`,
-      name: `KR8MX Tablets — ${FLAVOR_NAME[flavor]}`,
+      name: `KR8MX ${FLAVOR_NAME[flavor]} Tablets`,
       proprietaryIngredient: "MitraGen+",
       flavor,
       sortOrder: i,

@@ -41,7 +41,7 @@ export function canTransition(from: OrderStatus, to: OrderStatus): boolean {
   return ORDER_TRANSITIONS[from]?.includes(to) ?? false;
 }
 
-/** Throwing variant — use in write paths so illegal transitions never persist. */
+/** Throwing variant, use in write paths so illegal transitions never persist. */
 export function assertTransition(from: OrderStatus, to: OrderStatus): void {
   if (!canTransition(from, to)) {
     throw new Error(`Illegal order transition: ${from} -> ${to}`);

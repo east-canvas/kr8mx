@@ -13,7 +13,7 @@ type TabletSilhouetteProps = {
 const RATIO = 0.72; // upright blister card
 
 /**
- * Stylized blister-card silhouette built from SVG — no product photography. A
+ * Stylized blister-card silhouette built from SVG, no product photography. A
  * soft flavor-accent gradient washes the card; a grid of tablet wells and the
  * slashed-X echo the packaging without depicting a real product.
  */

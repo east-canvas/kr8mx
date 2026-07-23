@@ -1,5 +1,5 @@
 /**
- * Minimal className joiner — filters out falsy values.
+ * Minimal className joiner, filters out falsy values.
  * Kept dependency-free; the design system is small enough that
  * conflict-resolution (tailwind-merge) isn't required yet.
  */

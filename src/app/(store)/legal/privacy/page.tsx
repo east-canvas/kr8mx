@@ -9,7 +9,7 @@ export default function PrivacyPage() {
       <p>
         This Privacy Policy describes how KR8MX collects, uses, and protects the
         information you provide when you visit the site or place an order.
-        Placeholder content — pending counsel review.
+        Placeholder content, pending counsel review.
       </p>
       <p>
         We collect only the information necessary to process orders, verify age

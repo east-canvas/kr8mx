@@ -9,7 +9,7 @@ import {
 /* =============================================================================
    JSON-LD for drink PDPs. A ProductGroup that variesBy flavor + pack size, with
    one Product variant per pack. Deliberately omits any consumption/medical or
-   nutrition properties — no health, dosage, or effect signals.
+   nutrition properties, no health, dosage, or effect signals.
    ============================================================================= */
 
 const SITE = "https://kr8mx.com";
@@ -26,7 +26,7 @@ export function buildDrinkProductGroupJsonLd(
     "@context": "https://schema.org",
     "@type": "ProductGroup",
     "@id": url,
-    name: `KR8MX Energy Drink — ${meta.name}`,
+    name: `KR8MX ${meta.name} Energy Drink`,
     url,
     brand: { "@type": "Brand", name: "KR8MX" },
     category: "Energy Drink",
@@ -34,7 +34,7 @@ export function buildDrinkProductGroupJsonLd(
     variesBy: ["https://schema.org/flavor", "https://schema.org/size"],
     hasVariant: variants.map((v) => ({
       "@type": "Product",
-      name: `KR8MX Energy Drink — ${meta.name}, ${v.packSize}-pack`,
+      name: `KR8MX ${meta.name} Energy Drink, ${v.packSize}-pack`,
       sku: v.sku,
       flavor: meta.name,
       size: `${v.packSize} x ${v.volumeMl}ml`,

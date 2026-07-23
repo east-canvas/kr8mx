@@ -21,7 +21,7 @@ import { breadcrumbJsonLd } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "Tablets",
   description:
-    "KR8MX Tablets — lighter format, higher standards. Premarket preview.",
+    "KR8MX Tablets, lighter format, higher standards. Premarket preview.",
   alternates: { canonical: "/tablets" },
   openGraph: {
     title: "KR8MX Tablets",
@@ -50,7 +50,7 @@ export default async function TabletsCollectionPage() {
         <div className="relative aspect-[16/10] w-full sm:aspect-[16/7]">
           <Image
             src={TABLETS_LINEUP_IMAGE}
-            alt="KR8MX Tablets — five flavors: Strawberry, Grape, Peach, Blue Razz, Lemon"
+            alt="KR8MX Tablets, five flavors: Strawberry, Grape, Peach, Blue Razz, Lemon"
             fill
             priority
             sizes="100vw"
@@ -77,14 +77,14 @@ export default async function TabletsCollectionPage() {
 
       <HairlineRule />
 
-      {/* The MitraGen+ Standard — formulation intro */}
+      {/* The MitraGen+ Standard, formulation intro */}
       <section className="mx-auto max-w-6xl px-6 py-14">
         <MitraGenStandard />
       </section>
 
       <HairlineRule />
 
-      {/* flavor cards — full-bleed dark, alternating */}
+      {/* flavor cards, full-bleed dark, alternating */}
       <div>
         {catalog.map((item, i) => {
           const flip = i % 2 === 1;
@@ -106,7 +106,7 @@ export default async function TabletsCollectionPage() {
                 <Reveal className={flip ? "md:order-2" : ""}>
                   <ProductVisual
                     imageUrl={c.imageUrl ?? defaultTabletImage(item.flavor)}
-                    alt={`KR8MX Tablets — ${c.name}`}
+                    alt={`KR8MX Tablets, ${c.name}`}
                     accent={c.hex}
                     height={300}
                     idKey={`tab-${item.flavor}`}
@@ -156,7 +156,7 @@ export default async function TabletsCollectionPage() {
           </p>
           <NotifyForm cta="Notify me" />
           <p className="mt-3 text-2xs text-muted">
-            Premarket preview — availability and pricing to be announced. 21+
+            Premarket preview, availability and pricing to be announced. 21+
             only.
           </p>
         </div>

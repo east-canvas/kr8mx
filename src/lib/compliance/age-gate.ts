@@ -1,5 +1,5 @@
 /**
- * 21+ age gate — cookie contract.
+ * 21+ age gate, cookie contract.
  *
  * The gate is confirmation-only: the cookie is set solely by an explicit "I am
  * 21 or older" action and persists for 30 days. Reading is safe on both server

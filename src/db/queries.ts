@@ -159,7 +159,7 @@ export async function getOrderByNumber(
   }
 }
 
-/** Best-effort scan counter — never blocks the redirect. */
+/** Best-effort scan counter, never blocks the redirect. */
 export async function incrementScanCount(code: string): Promise<void> {
   try {
     const db = getDb();

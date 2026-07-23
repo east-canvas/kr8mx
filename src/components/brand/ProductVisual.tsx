@@ -30,7 +30,7 @@ export function ProductVisual({
   if (imageUrl) {
     // Plain img: the source may be any aspect ratio (a can, a blister, or an
     // arbitrary admin upload), so we fix the height and let width follow the
-    // image's true intrinsic ratio — no distortion, no need to know dimensions.
+    // image's true intrinsic ratio, no distortion, no need to know dimensions.
     return (
       // eslint-disable-next-line @next/next/no-img-element
       <img

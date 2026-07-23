@@ -26,7 +26,7 @@ export default function Error({
       </div>
       <h1 className="type-display text-primary text-4xl">A brief glitch.</h1>
       <p className="max-w-sm text-sm text-secondary">
-        We hit an unexpected error. Try again — if it persists, come back shortly.
+        We hit an unexpected error. Try again, if it persists, come back shortly.
       </p>
       <div className="flex gap-3">
         <Button variant="solid" onClick={() => reset()}>

@@ -9,7 +9,7 @@ export default function LabResultsPage() {
     <LegalDoc title="Lab Results">
       <p>
         Certificates of analysis (COAs) and third-party lab testing documentation
-        will be published here. Placeholder — documents pending.
+        will be published here. Placeholder, documents pending.
       </p>
       <div className="pt-2">
         <Badge variant="outline">Coming Soon</Badge>

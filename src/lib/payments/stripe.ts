@@ -3,7 +3,7 @@ import Stripe from "stripe";
 import type { PricedLine, OrderTotals } from "@/lib/orders/pricing";
 
 /**
- * Stripe integration. Fully dormant until STRIPE_SECRET_KEY is set — checkout
+ * Stripe integration. Fully dormant until STRIPE_SECRET_KEY is set, checkout
  * then falls back to creating a pending order without charging. Use Stripe TEST
  * keys to validate card checkout end-to-end now; a bank account is only needed
  * for live payouts at launch.

@@ -3,14 +3,14 @@ import { Wordmark } from "@/components/brand/Wordmark";
 import { CartButton } from "@/components/site/CartButton";
 
 const NAV = [
-  // Drinks (Energy Drink line) hidden until market-ready — restore when launching.
+  // Drinks (Energy Drink line) hidden until market-ready, restore when launching.
   { href: "/tablets", label: "Tablets" },
   { href: "/standard", label: "The Standard" },
   { href: "/access", label: "Access" },
 ];
 
 /**
- * Site header — minimal, precision theme. Wordmark, primary nav, cart. Generous
+ * Site header, minimal, precision theme. Wordmark, primary nav, cart. Generous
  * spacing and a single hairline divider beneath. Server component; only the cart
  * count hydrates.
  */
@@ -40,7 +40,7 @@ export function Header() {
         </div>
       </div>
 
-      {/* Mobile nav — compact row */}
+      {/* Mobile nav, compact row */}
       <nav
         aria-label="Primary mobile"
         className="flex items-center justify-center gap-7 border-t border-hairline px-6 py-2.5 md:hidden"

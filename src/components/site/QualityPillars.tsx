@@ -12,7 +12,7 @@ const PILLARS = [
   { label: "Made for Movement", Icon: MovementIcon },
 ];
 
-/** Quality-pillars band — icon + label only. No claims. */
+/** Quality-pillars band, icon + label only. No claims. */
 export function QualityPillars() {
   return (
     <section aria-label="Quality standards" className="border-y border-hairline">

@@ -10,13 +10,13 @@ import { FLAVOR_META, TABLETS_LINEUP_IMAGE } from "@/lib/catalog";
 
 export const metadata: Metadata = {
   description:
-    "KR8MX — built for what's next. The precision tablet line: lighter format, higher standards, five flavors. 21+.",
+    "KR8MX. Built for what's next. The precision tablet line: lighter format, higher standards, five flavors. 21+.",
 };
 
 export default function Home() {
   return (
     <>
-      {/* ---- Hero — light, editorial ---- */}
+      {/* ---- Hero, light, editorial ---- */}
       <section className="mx-auto max-w-6xl px-5 pb-16 pt-14 sm:px-6 sm:pb-20 sm:pt-20 md:pb-28 md:pt-28">
         <div className="flex flex-col items-center gap-6 text-center sm:gap-8">
           <div className="animate-rise" style={{ animationDelay: "0ms" }}>
@@ -39,13 +39,13 @@ export default function Home() {
             className="max-w-md animate-rise text-sm text-secondary sm:text-base"
             style={{ animationDelay: "240ms" }}
           >
-            The precision tablet line — lighter format, higher standards,
+            The precision tablet line: lighter format, higher standards,
             engineered to a single standard. Five flavors. 21+.
           </p>
         </div>
       </section>
 
-      {/* ---- Tablets spotlight — the live precision line ---- */}
+      {/* ---- Tablets spotlight, the live precision line ---- */}
       <section aria-label="Product line" className="mx-auto max-w-6xl px-6 pb-24">
         <Reveal>
           <div className="relative flex min-h-[360px] flex-col justify-between gap-8 overflow-hidden rounded-xl border border-hairline bg-surface p-7 sm:min-h-[440px] sm:gap-10 sm:p-10 lg:flex-row lg:items-center lg:gap-12">
@@ -86,7 +86,7 @@ export default function Home() {
               <div className="relative aspect-[16/9]">
                 <Image
                   src={TABLETS_LINEUP_IMAGE}
-                  alt="KR8MX tablets — five flavors"
+                  alt="KR8MX tablets, five flavors"
                   fill
                   sizes="(max-width: 1024px) 100vw, 45vw"
                   className="object-cover object-center"

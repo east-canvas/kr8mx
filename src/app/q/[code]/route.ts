@@ -4,7 +4,7 @@ import { getDynamicLink, incrementScanCount } from "@/db/queries";
 /**
  * Dynamic barcode resolver. A QR on packaging encodes /q/{code}; this looks up
  * the link's current target and 302-redirects. The code is permanent, the
- * target is editable in the admin — so a printed barcode is re-pointable without
+ * target is editable in the admin, so a printed barcode is re-pointable without
  * a reprint. Unknown/inactive codes fall back to the COA index.
  */
 export async function GET(

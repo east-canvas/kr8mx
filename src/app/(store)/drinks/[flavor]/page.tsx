@@ -37,11 +37,11 @@ export async function generateMetadata({
   const meta = FLAVOR_META[flavor];
   const path = `/drinks/${flavorToSlug(flavor)}`;
   return {
-    title: `${meta.name} — Energy Drink`,
-    description: `KR8MX Energy Drink — ${meta.name}. 6, 12, or 24 pack.`,
+    title: `${meta.name} Energy Drink`,
+    description: `KR8MX ${meta.name} Energy Drink. 6, 12, or 24 pack.`,
     alternates: { canonical: path },
     openGraph: {
-      title: `KR8MX Energy Drink — ${meta.name}`,
+      title: `KR8MX ${meta.name} Energy Drink`,
       description: "6, 12, or 24 pack.",
       url: path,
       images: [{ url: "/brand/og-drinks.png", width: 1200, height: 630 }],
@@ -150,7 +150,7 @@ export default async function DrinkPdpPage({
         >
           <ProductVisual
             imageUrl={c.imageUrl ?? defaultDrinkImage(flavor)}
-            alt={`KR8MX Energy Drink — ${c.name}`}
+            alt={`KR8MX Energy Drink, ${c.name}`}
             accent={c.hex}
             height={460}
             idKey={`pdp-${flavor}`}
@@ -188,7 +188,7 @@ export default async function DrinkPdpPage({
               <p>
                 Ingredient panel to be published. Built with MitraGen+&trade;
                 proprietary blend.{" "}
-                <span className="text-muted">Full panel — TODO.</span>
+                <span className="text-muted">Full panel, TODO.</span>
               </p>
             </AccordionRow>
 

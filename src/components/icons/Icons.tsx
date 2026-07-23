@@ -26,7 +26,7 @@ export function CartIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-/** Premium Ingredients — clustered hexagons. */
+/** Premium Ingredients, clustered hexagons. */
 export function IngredientsIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...base(props)}>
@@ -37,7 +37,7 @@ export function IngredientsIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-/** Quality Assured — shield with check. */
+/** Quality Assured, shield with check. */
 export function ShieldIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...base(props)}>
@@ -47,7 +47,7 @@ export function ShieldIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-/** Precision Formulated — crosshair / target. */
+/** Precision Formulated, crosshair / target. */
 export function PrecisionIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...base(props)}>
@@ -58,7 +58,7 @@ export function PrecisionIcon(props: SVGProps<SVGSVGElement>) {
   );
 }
 
-/** Made for Movement — forward motion lines. */
+/** Made for Movement, forward motion lines. */
 export function MovementIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg {...base(props)}>

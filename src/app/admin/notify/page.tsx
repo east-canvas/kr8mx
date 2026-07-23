@@ -24,7 +24,7 @@ export default async function AdminNotifyPage({
 
       {sp.ok ? (
         <p className="rounded-md border border-hairline px-4 py-2 text-sm text-secondary">
-          Announcement queued — sent {sp.sent}, skipped {sp.skipped} (already
+          Announcement queued, sent {sp.sent}, skipped {sp.skipped} (already
           sent / unsubscribed), failed {sp.failed}.
         </p>
       ) : null}
@@ -57,12 +57,12 @@ export default async function AdminNotifyPage({
 
       <HairlineRule />
 
-      {/* announcement — confirm step shows recipient count */}
+      {/* announcement, confirm step shows recipient count */}
       <form action={sendAnnouncementAction} className="flex flex-col gap-3 rounded-lg border border-hairline p-5">
         <span className="type-kicker text-muted">Send launch announcement</span>
         <p className="text-2xs text-muted">
           Sends the tablets-launch template to <strong>{subscribed}</strong>{" "}
-          subscribed recipients (unsubscribed excluded). Idempotent per campaign —
+          subscribed recipients (unsubscribed excluded). Idempotent per campaign -
           re-sending the same campaign name skips prior recipients.
         </p>
         <div className="flex flex-wrap items-end gap-2">
@@ -88,7 +88,7 @@ export default async function AdminNotifyPage({
             {rows.map((r) => (
               <tr key={r.id} className="border-b border-hairline">
                 <td className="py-2 pr-4 text-secondary">{r.email}</td>
-                <td className="py-2 pr-4 text-secondary">{r.variantId ?? "—"}</td>
+                <td className="py-2 pr-4 text-secondary">{r.variantId ?? "-"}</td>
                 <td className="py-2">
                   <Badge variant={r.subscribed ? "accent" : "outline"}>
                     {r.subscribed ? "subscribed" : "unsubscribed"}

@@ -15,7 +15,7 @@ export type OrderEmailTemplate = "order_confirmation" | "shipping_notification";
 /**
  * Send an order email idempotently. Reserves a sent_emails row first
  * (unique on order_id+template); if the reservation is a no-op the email was
- * already sent, so we skip. Never throws — a send failure records a dead-letter
+ * already sent, so we skip. Never throws, a send failure records a dead-letter
  * status and returns, so it can't block an order transition.
  */
 export async function sendOrderEmail(

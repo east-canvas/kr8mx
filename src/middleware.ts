@@ -4,9 +4,9 @@ import { adminGuard } from "@/lib/admin/middleware-guard";
 
 /**
  * Edge middleware:
- *  1. Barcode compatibility — normalize any `…/q/{code}` (incl. a malformed
+ *  1. Barcode compatibility, normalize any `…/q/{code}` (incl. a malformed
  *     prefixed variant that may have been printed) to the canonical /q/{code}.
- *  2. Admin gate — presence-check bounce for /admin and /api/admin. The
+ *  2. Admin gate, presence-check bounce for /admin and /api/admin. The
  *     authoritative auth check runs server-side (node crypto isn't available
  *     in edge middleware).
  */

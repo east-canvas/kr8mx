@@ -12,7 +12,7 @@ const base =
   "disabled:cursor-not-allowed disabled:opacity-40";
 
 const variants: Record<Variant, string> = {
-  // small, deliberate fill — the scalpel accent as a CTA
+  // small, deliberate fill, the scalpel accent as a CTA
   solid: "bg-accent text-accent-contrast border-accent hover:opacity-90",
   outline:
     "bg-transparent text-primary border-primary hover:bg-primary hover:text-bg",

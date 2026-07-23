@@ -1,5 +1,5 @@
 /* =============================================================================
-   SEO helpers — base URL resolution + structured data. Claim-free throughout.
+   SEO helpers, base URL resolution + structured data. Claim-free throughout.
    ============================================================================= */
 
 export const SITE = {

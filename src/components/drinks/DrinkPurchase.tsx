@@ -42,7 +42,7 @@ export function DrinkPurchase({
     addItem(
       {
         sku: selected.sku,
-        name: `KR8MX Energy Drink — ${flavorName}, ${selected.packSize}-pack`,
+        name: `KR8MX ${flavorName} Energy Drink, ${selected.packSize}-pack`,
         flavor,
         packSize: selected.packSize,
         unitPriceCents: selected.priceCents,

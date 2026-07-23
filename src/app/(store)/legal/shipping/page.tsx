@@ -10,7 +10,7 @@ export default function ShippingPage() {
     <LegalDoc title="Shipping Policy">
       <p>
         Orders are processed and shipped to serviced states only. An adult 21 or
-        older must be available to receive the delivery. Placeholder content —
+        older must be available to receive the delivery. Placeholder content -
         pending counsel review.
       </p>
       <p>

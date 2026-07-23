@@ -40,7 +40,7 @@ export async function sendTestEmailAction(formData: FormData) {
   const res = await provider.sendTransactional({
     to,
     template: "test",
-    subject: "KR8MX — test email",
+    subject: "KR8MX, test email",
     html: rendered.html,
   });
   redirect(

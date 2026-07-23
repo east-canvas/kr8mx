@@ -111,7 +111,7 @@ export function CoaUpload({ folder }: { folder?: "drinks" | "tablets" }) {
             onChange={(e) => setFlavor(e.target.value)}
             className={inputCls}
           >
-            <option value="">—</option>
+            <option value="">-</option>
             {FLAVORS.map((f) => (
               <option key={f} value={f}>
                 {f}

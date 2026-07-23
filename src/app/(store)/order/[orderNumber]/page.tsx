@@ -54,7 +54,7 @@ export default async function OrderPage({
 
       {!paid && !isStripeConfigured() ? (
         <p className="mt-4 rounded-md border border-hairline bg-surface-raised px-4 py-3 text-2xs text-secondary">
-          Online payment isn&rsquo;t enabled yet — your order is saved and no card
+          Online payment isn&rsquo;t enabled yet, your order is saved and no card
           was charged. We&rsquo;ll be in touch to complete payment before
           fulfillment.
         </p>

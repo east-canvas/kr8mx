@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import {
   scanText,
+  scanTypography,
   extractVisibleText,
   scanRepo,
   DENYLIST,
@@ -80,6 +81,18 @@ describe("content guard — visible-text extraction", () => {
     const src = `export const C = () => <p>Feel the energy today.</p>;`;
     const hits = scanText(extractVisibleText(src));
     expect(hits.map((h) => h.word)).toContain("energy");
+  });
+});
+
+describe("content guard — em dash typography rule", () => {
+  it("flags an em dash in visible copy", () => {
+    expect(scanTypography("Sharp — controlled")).toHaveLength(1);
+    expect(scanTypography("a — b — c")).toHaveLength(2);
+  });
+
+  it("passes copy with organic punctuation", () => {
+    expect(scanTypography("Sharp, controlled. Elevated.")).toEqual([]);
+    expect(scanTypography("6, 12, or 24 pack")).toEqual([]);
   });
 });
 

@@ -1,4 +1,4 @@
-/** CSV export for the notify list (pure — unit tested for shape). */
+/** CSV export for the notify list (pure, unit tested for shape). */
 export type NotifyCsvRow = {
   email: string;
   variantId: number | null;

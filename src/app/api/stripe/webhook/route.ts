@@ -6,7 +6,7 @@ import { canTransition } from "@/db/order-state";
 import { sendOrderEmail } from "@/lib/email/send";
 
 /**
- * Stripe webhook — dormant until STRIPE_WEBHOOK_SECRET is set. On a completed
+ * Stripe webhook, dormant until STRIPE_WEBHOOK_SECRET is set. On a completed
  * checkout it transitions the order to `paid` and appends an order event. (When
  * the processor is the high-risk gateway instead of Stripe, this is where its
  * equivalent notification is handled.)

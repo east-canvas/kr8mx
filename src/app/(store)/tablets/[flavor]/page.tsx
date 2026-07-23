@@ -38,11 +38,11 @@ export async function generateMetadata({
   const meta = FLAVOR_META[flavor];
   const path = `/tablets/${flavorToSlug(flavor)}`;
   return {
-    title: `${meta.name} — Tablets`,
-    description: `KR8MX Tablets — ${meta.name}. Premarket preview.`,
+    title: `${meta.name} Tablets`,
+    description: `KR8MX ${meta.name} Tablets. Premarket preview.`,
     alternates: { canonical: path },
     openGraph: {
-      title: `KR8MX Tablets — ${meta.name}`,
+      title: `KR8MX ${meta.name} Tablets`,
       description: "Lighter format. Higher standards. Premarket preview.",
       url: path,
       images: [{ url: "/brand/og-tablets.png", width: 1200, height: 630 }],
@@ -85,7 +85,7 @@ export default async function TabletPdpPage({
 
   const contentMap = await getProductContentMap("tablets");
   const c = resolveContent("tablets", flavor, contentMap.get(flavor));
-  // Only the 10-tablet bottle ("tube") ships for now — hide the blister format.
+  // Only the 10-tablet bottle ("tube") ships for now, hide the blister format.
   const variants = getTabletVariants(flavor).filter((v) => v.form === "container");
   const restricted = restrictedStatesFor("tablets");
   const breadcrumb = breadcrumbJsonLd([
@@ -144,7 +144,7 @@ export default async function TabletPdpPage({
         >
           <ProductVisual
             imageUrl={c.imageUrl ?? defaultTabletImage(flavor)}
-            alt={`KR8MX Tablets — ${c.name}`}
+            alt={`KR8MX Tablets, ${c.name}`}
             accent={c.hex}
             height={420}
             idKey={`tab-pdp-${flavor}`}
@@ -208,7 +208,7 @@ export default async function TabletPdpPage({
           <div className="mt-2">
             <AccordionRow title="Composition" defaultOpen>
               <p>
-                300 mg per tablet — 100 mg MitraGen+&trade; proprietary
+                300 mg per tablet, 100 mg MitraGen+&trade; proprietary
                 signature plus 200 mg standardized minor alkaloids, including
                 Speciociliatine and Mitragynine. Solvent-free isolation, no
                 synthetics.
@@ -244,7 +244,7 @@ export default async function TabletPdpPage({
         </div>
       </div>
 
-      {/* The MitraGen+ Standard — extensive formulation story */}
+      {/* The MitraGen+ Standard, extensive formulation story */}
       <div className="mt-14">
         <MitraGenStandard accent={c.hex} />
       </div>

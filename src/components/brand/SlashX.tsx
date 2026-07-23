@@ -14,7 +14,7 @@ type SlashXProps = {
 const RATIO = 304 / 451;
 
 /**
- * The brand's slashed-X mark — the actual X lifted from the wordmark, rendered
+ * The brand's slashed-X mark, the actual X lifted from the wordmark, rendered
  * via a CSS mask so it inherits `currentColor` (or the accent) and stays crisp
  * at any size. Same API as before, so every existing usage picks it up.
  */

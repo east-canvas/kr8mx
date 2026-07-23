@@ -10,7 +10,7 @@ import { Wordmark } from "@/components/brand/Wordmark";
 
 export const metadata: Metadata = {
   title: "Styleguide",
-  description: "KR8MX design system — every primitive, rendered in both theme zones.",
+  description: "KR8MX design system, every primitive, rendered in both theme zones.",
 };
 
 /** Renders the full set of primitives. Dropped inside a <ThemeZone> so the same
@@ -101,9 +101,9 @@ function Primitives({ tone }: { tone: "black" | "white" }) {
         <span className="type-kicker text-muted">Type</span>
         <p className="type-display text-primary text-4xl">Display 4XL</p>
         <p className="type-display text-primary text-2xl">Display 2XL</p>
-        <p className="text-lg text-primary">Body large — refined neutral sans.</p>
-        <p className="text-sm text-secondary">Body small — secondary tone.</p>
-        <p className="text-xs text-muted">Caption — muted tone.</p>
+        <p className="text-lg text-primary">Body large, refined neutral sans.</p>
+        <p className="text-sm text-secondary">Body small, secondary tone.</p>
+        <p className="text-xs text-muted">Caption, muted tone.</p>
       </div>
 
       {/* Accent swatch */}
@@ -121,7 +121,7 @@ export default function StyleguidePage() {
       <header className="mx-auto max-w-6xl px-8 py-12">
         <SectionHeading kicker="KR8MX Design System" title="Styleguide" as="h1" />
         <p className="mt-4 max-w-prose text-secondary">
-          Every primitive rendered in both theme zones — proving each reads
+          Every primitive rendered in both theme zones, proving each reads
           correctly in <strong className="text-primary">precision</strong> (light) and{" "}
           <strong className="text-primary">performance</strong> (dark).
         </p>
@@ -130,14 +130,14 @@ export default function StyleguidePage() {
       <div className="mx-auto grid max-w-6xl gap-px overflow-hidden rounded-lg border border-hairline bg-hairline lg:grid-cols-2">
         <ThemeZone theme="precision">
           <div className="flex items-center gap-2 px-8 pt-8">
-            <Badge variant="outline">Precision — Light</Badge>
+            <Badge variant="outline">Precision, Light</Badge>
           </div>
           <Primitives tone="black" />
         </ThemeZone>
 
         <ThemeZone theme="performance">
           <div className="flex items-center gap-2 px-8 pt-8">
-            <Badge variant="outline">Performance — Dark</Badge>
+            <Badge variant="outline">Performance, Dark</Badge>
           </div>
           <Primitives tone="white" />
         </ThemeZone>
@@ -146,7 +146,7 @@ export default function StyleguidePage() {
       <footer className="mx-auto max-w-6xl px-8 py-12">
         <HairlineRule />
         <p className="mt-6 text-xs text-muted">
-          KR8MX — Brand strategy &amp; visual identity. Confidential / internal.
+          KR8MX, Brand strategy &amp; visual identity. Confidential / internal.
         </p>
       </footer>
     </main>

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useCart } from "@/lib/cart/CartProvider";
 import { CartIcon } from "@/components/icons/Icons";
 
-/** Header cart control — icon + live item count from the client cart. */
+/** Header cart control, icon + live item count from the client cart. */
 export function CartButton() {
   const { count } = useCart();
   return (

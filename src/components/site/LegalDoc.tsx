@@ -13,7 +13,7 @@ export function LegalDoc({
     <article className="flex flex-col gap-6">
       <SectionHeading kicker="Legal" title={title} as="h1" />
       <p className="text-xs uppercase tracking-wide text-muted">
-        Placeholder — pending counsel review. Last updated: TODO.
+        Placeholder, pending counsel review. Last updated: TODO.
       </p>
       <div className="flex flex-col gap-4 text-sm leading-relaxed text-secondary">
         {children}

@@ -36,9 +36,9 @@ export class MockProvider implements EmailProvider {
 }
 
 /**
- * Resend slot — active when RESEND_API_KEY is set.
+ * Resend slot, active when RESEND_API_KEY is set.
  *
- * README / TODO-VERIFY (domain auth — set real values in DNS, do NOT fabricate):
+ * README / TODO-VERIFY (domain auth, set real values in DNS, do NOT fabricate):
  *   - SPF   TXT  @   "v=spf1 include:<resend> ~all"     (TODO-VERIFY)
  *   - DKIM  CNAME    resend._domainkey -> <resend>       (TODO-VERIFY)
  *   - DMARC TXT  _dmarc "v=DMARC1; p=quarantine; ..."    (TODO-VERIFY)

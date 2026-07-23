@@ -6,17 +6,17 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "KR8MX — Performance. Elevated.",
-    template: "%s — KR8MX",
+    default: "KR8MX | Performance. Elevated.",
+    template: "%s | KR8MX",
   },
   description:
-    "KR8MX. One brand, two worlds — a premium performance line and a precision tablet line. Built for what's next.",
+    "KR8MX. One brand, two worlds, a premium performance line and a precision tablet line. Built for what's next.",
   metadataBase: new URL(resolveBaseUrl()),
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     siteName: SITE.name,
-    title: "KR8MX — Performance. Elevated.",
+    title: "KR8MX | Performance. Elevated.",
     description:
       "One brand, two worlds. Built for what's next.",
     url: "/",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "KR8MX — Performance. Elevated.",
+    title: "KR8MX | Performance. Elevated.",
     images: ["/brand/og-default.png"],
   },
 };

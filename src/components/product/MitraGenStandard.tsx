@@ -1,7 +1,7 @@
 import { SlashX } from "@/components/brand/SlashX";
 
 /* =============================================================================
-   The MitraGen+™ Standard — the formulation-technology story shared across the
+   The MitraGen+™ Standard, the formulation-technology story shared across the
    product pages. Product/ingredient + manufacturing description only; no
    structure/function or effect claims (see the content guard).
    ============================================================================= */
@@ -15,7 +15,7 @@ const COMPOSITION = [
   {
     mg: "200 mg",
     label: "Minor alkaloids",
-    note: "Standardized — incl. Speciociliatine, Mitragynine",
+    note: "Standardized, incl. Speciociliatine, Mitragynine",
   },
   {
     mg: "300 mg",
@@ -27,11 +27,11 @@ const COMPOSITION = [
 const PILLARS = [
   {
     title: "Cutting-edge formulation",
-    body: "MitraGen+™ is a formulation technology built around isolation, standardization, and bioavailability — innovation in every batch.",
+    body: "MitraGen+™ is a formulation technology built around isolation, standardization, and bioavailability. Innovation in every batch.",
   },
   {
     title: "Solvent-free isolation",
-    body: "Minor alkaloids are isolated without harsh solvents. No DCM — ever. Pure science, not shortcuts.",
+    body: "Minor alkaloids are isolated without harsh solvents. No DCM, ever. Pure science, not shortcuts.",
   },
   {
     title: "Isolated & standardized",
@@ -45,7 +45,8 @@ const STANDARDS = [
   "Florida Compliant",
   "Federally Compliant",
   "Isolated, standardized alkaloids",
-  "No 7-OH",
+  "No 7-hydroxymitragynine",
+  "No MGM",
   "No masking agents",
   "No DCM",
   "No synthetics",
@@ -71,7 +72,7 @@ export function MitraGenStandard({ accent = "#1e2528" }: { accent?: string }) {
           Pure science. Elevated.
         </h2>
         <p className="max-w-2xl text-sm leading-relaxed text-secondary">
-          MitraGen+™ is our proprietary formulation — engineered in the USA with
+          MitraGen+™ is our proprietary formulation, engineered in the USA with
           cutting-edge extraction technology. We use solvent-free isolation to
           separate and standardize minor alkaloids, so every tablet carries a
           clean, consistent, precisely standardized profile. No masking. No

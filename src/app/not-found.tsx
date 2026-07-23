@@ -13,7 +13,7 @@ export default function NotFound() {
       </div>
       <h1 className="type-display text-primary text-4xl">Off the map.</h1>
       <p className="max-w-sm text-sm text-secondary">
-        This page doesn&rsquo;t exist — or it moved. Let&rsquo;s get you back.
+        This page doesn&rsquo;t exist, or it moved. Let&rsquo;s get you back.
       </p>
       <div className="flex gap-3">
         <Button href="/" variant="solid">

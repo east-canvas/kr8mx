@@ -20,7 +20,7 @@ export type FlavorMeta = {
   flavor: Flavor;
   name: string;
   code: string;
-  /** flavor accent hex — the abstract-gradient tint on dark drink cards */
+  /** flavor accent hex, the abstract-gradient tint on dark drink cards */
   hex: string;
 };
 
@@ -60,7 +60,7 @@ export function defaultDrinkImage(flavor: Flavor): string {
 }
 
 /**
- * Default bottle artwork per tablet flavor (public/brand/tablets) — transparent
+ * Default bottle artwork per tablet flavor (public/brand/tablets), transparent
  * cutouts that float on the flavor-gradient card, matching the can treatment.
  * Admin uploads still override per flavor.
  */
@@ -118,7 +118,7 @@ export function getDrinkVariants(flavor: Flavor): DrinkVariant[] {
 }
 
 /**
- * Layer live DB prices (SKU → cents) over seed-default variants. Pure — pages
+ * Layer live DB prices (SKU → cents) over seed-default variants. Pure, pages
  * fetch the map and apply it so displayed prices match what checkout charges.
  * A SKU absent from the map keeps its seed price. Generic over any priced,
  * SKU-keyed variant (drinks or tablets).

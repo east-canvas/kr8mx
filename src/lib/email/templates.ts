@@ -146,7 +146,7 @@ export function tabletsLaunchEmail(unsubscribeUrl: string): RenderedEmail {
     `<p style="font-size:14px;color:${THEME[th].muted};margin:0 0 20px">Lighter format. Higher standards. The KR8MX tablet line is now available. 21+ adult use only.</p>` +
     cta(th, "Shop Tablets", `${base}/tablets`);
   return {
-    subject: "KR8MX Tablets — now available",
+    subject: "KR8MX Tablets, now available",
     html: layout(th, inner, unsubscribeUrl),
   };
 }

@@ -4,7 +4,7 @@ import { scanUrl, generateQrDownloadSvg, generateQrPng } from "@/lib/admin/qr";
 
 /**
  * Downloadable QR for a barcode. Admin-only. The QR encodes the permanent
- * /q/{code} scan URL, so a scan resolves to the link's *current* target — the
+ * /q/{code} scan URL, so a scan resolves to the link's *current* target, the
  * downloaded/printed art keeps working after the target is re-pointed.
  *   /admin/qr/{code}?fmt=svg           → vector SVG (scales to any print size)
  *   /admin/qr/{code}?fmt=png&size=2048 → high-resolution PNG

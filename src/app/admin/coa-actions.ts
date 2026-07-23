@@ -54,7 +54,7 @@ export async function updateCoaAction(formData: FormData) {
   redirect(`/admin/coa?folder=${category}&ok=updated`);
 }
 
-/** Delete a COA — removes the Blob file (best-effort) + the row. Audit-logged. */
+/** Delete a COA, removes the Blob file (best-effort) + the row. Audit-logged. */
 export async function deleteCoaAction(formData: FormData) {
   await assertAuthed();
   const id = Number(str(formData.get("id")));
@@ -75,7 +75,7 @@ export async function deleteCoaAction(formData: FormData) {
       try {
         await del(row.fileUrl);
       } catch {
-        /* ignore — the row delete is what matters for the storefront */
+        /* ignore, the row delete is what matters for the storefront */
       }
     }
 

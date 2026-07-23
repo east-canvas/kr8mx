@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
 /**
- * Surface container framed by a hairline. Restrained by default — no shadow;
+ * Surface container framed by a hairline. Restrained by default, no shadow;
  * `elevated` swaps to the raised surface token for gentle separation.
  */
 export function Card({

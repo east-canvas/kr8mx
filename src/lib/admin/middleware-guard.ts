@@ -1,6 +1,6 @@
 /**
  * Pure admin route guard used by middleware. Presence-only (edge middleware
- * can't run the node-crypto hash check) — the AUTHORITATIVE validation is
+ * can't run the node-crypto hash check), the AUTHORITATIVE validation is
  * server-side in the admin layout / server actions / route handlers via
  * isAuthed(). This is defense-in-depth + UX bounce.
  */

@@ -11,7 +11,7 @@ import {
 } from "react";
 
 /**
- * Client-side cart (localStorage) — a working cart for the storefront now. The
+ * Client-side cart (localStorage), a working cart for the storefront now. The
  * DB-backed carts/cart_items tables remain the server source of truth for
  * checkout once DATABASE_URL is wired; this mirrors the same item shape.
  */

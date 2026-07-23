@@ -1,14 +1,14 @@
 import type { ProductCategory } from "@/db/schema";
 
 /* =============================================================================
-   Shipping restrictions — category x destination-state gating.
+   Shipping restrictions, category x destination-state gating.
 
-   ⚠️  TODO-VERIFY — LEGAL:
+   ⚠️  TODO-VERIFY, LEGAL:
    The state map below is a PLACEHOLDER and MUST be confirmed with counsel before
    launch. KR8MX products contain a kratom-derived proprietary ingredient
    (MitraGen+); the set of states/localities restricting sale or shipment changes
    over time and by product form. Treat this as DATA that is edited to change
-   availability — NOT something that requires a code deploy. At runtime the
+   availability, NOT something that requires a code deploy. At runtime the
    authoritative source is the `shipping_restrictions` table (category x state),
    which is seeded from this map and can be updated live. Keep this map and the
    table in sync, and update BOTH from a verified, counsel-approved source.
@@ -25,7 +25,7 @@ type RestrictionRow = {
 };
 
 /**
- * States where shipment is currently blocked, per category. PLACEHOLDER data —
+ * States where shipment is currently blocked, per category. PLACEHOLDER data -
  * see the TODO-VERIFY note above. Any state not listed defaults to allowed.
  */
 export const RESTRICTED_STATES: Record<ProductCategory, RestrictionRow[]> = {

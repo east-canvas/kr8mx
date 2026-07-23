@@ -2,7 +2,7 @@ import type { Flavor, ProductCategory } from "@/db/schema";
 import { buildVariants, FLAVOR_NAME } from "@/db/seed-data";
 
 /* =============================================================================
-   Server-side pricing. The client cart is untrusted — at checkout we resolve
+   Server-side pricing. The client cart is untrusted, at checkout we resolve
    every SKU's price + name from the catalog here, never from the browser. Pure
    and unit-tested. (Drinks are `active`; tablets are `coming_soon` and cannot be
    purchased yet.)
@@ -43,11 +43,11 @@ export function resolveVariantBySku(
   let packSize: number;
   if (category === "drinks") {
     packSize = cfg.units ?? 0;
-    name = `KR8MX Energy Drink — ${flavorName}, ${packSize}-pack`;
+    name = `KR8MX ${flavorName} Energy Drink, ${packSize}-pack`;
   } else {
     packSize = cfg.tablets ?? 0;
     const form = cfg.kind === "blister" ? "5-tab blister" : "10-tab";
-    name = `KR8MX Tablets — ${flavorName}, ${form}`;
+    name = `KR8MX ${flavorName} Tablets, ${form}`;
   }
 
   return {

@@ -137,7 +137,7 @@ export async function setProductImageAction(formData: FormData) {
       try {
         await del(old);
       } catch {
-        /* ignore — the new URL is what matters */
+        /* ignore, the new URL is what matters */
       }
     }
   } catch {

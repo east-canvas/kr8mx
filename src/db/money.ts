@@ -1,6 +1,6 @@
 /**
  * Money is always integer cents. These helpers keep arithmetic in integer space
- * and only format to a decimal string at the display boundary — never store or
+ * and only format to a decimal string at the display boundary, never store or
  * compute money as a float.
  */
 

@@ -19,7 +19,7 @@ function Flash({ ok, error }: { ok?: string; error?: string }) {
   if (!ok && !error) return null;
   const msg = error
     ? error === "db"
-      ? "Database unavailable — set DATABASE_URL to persist changes."
+      ? "Database unavailable, set DATABASE_URL to persist changes."
       : "Please complete all required fields."
     : "Saved.";
   return (
@@ -78,7 +78,7 @@ export default async function AdminDashboard({
             Test via <span className="text-primary">{provider}</span>:{" "}
             {result === "sent" ? "sent ✓" : "failed"}
             {provider === "mock"
-              ? " (mock — set RESEND_API_KEY to send for real)"
+              ? " (mock, set RESEND_API_KEY to send for real)"
               : ""}
           </p>
         ) : null}
@@ -102,7 +102,7 @@ export default async function AdminDashboard({
           <h2 className="type-display text-primary text-xl">Dynamic Barcodes</h2>
           <p className="mt-1 text-sm text-secondary">
             QR codes for packaging. Each QR encodes a permanent scan link
-            (kr8mx.com/q/&hellip;) and redirects to the destination below —
+            (kr8mx.com/q/&hellip;) and redirects to the destination below -
             change the destination anytime and printed packaging follows, no
             reprint.
           </p>
@@ -128,7 +128,7 @@ export default async function AdminDashboard({
           <label className="flex flex-col gap-1.5">
             <span className={labelCls}>Category (optional)</span>
             <select name="category" className={inputCls} defaultValue="">
-              <option value="">—</option>
+              <option value="">-</option>
               <option value="drinks">drinks</option>
               <option value="tablets">tablets</option>
             </select>

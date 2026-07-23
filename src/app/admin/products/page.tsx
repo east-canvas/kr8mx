@@ -61,7 +61,7 @@ export default async function AdminProductsPage({
       {sp.error ? (
         <p className="rounded-md border border-strawberry/40 px-4 py-2 text-sm text-strawberry">
           {sp.error === "db"
-            ? "Database unavailable — set DATABASE_URL to persist changes."
+            ? "Database unavailable, set DATABASE_URL to persist changes."
             : "Please check the fields and try again."}
         </p>
       ) : null}
@@ -122,7 +122,7 @@ export default async function AdminProductsPage({
                         />
                       ) : (
                         <span className="px-4 text-center text-2xs text-muted">
-                          No custom image — the default {folder === "drinks" ? "can" : "silhouette"}{" "}
+                          No custom image, the default {folder === "drinks" ? "can" : "silhouette"}{" "}
                           shows on the storefront
                         </span>
                       )}
@@ -211,7 +211,7 @@ export default async function AdminProductsPage({
                       </div>
                     </form>
 
-                    {/* variant prices — optional, collapsed, not shown on the site */}
+                    {/* variant prices, optional, collapsed, not shown on the site */}
                     {row.variants.length ? (
                       <details className="group border-t border-hairline pt-3">
                         <summary className="flex cursor-pointer list-none items-center gap-1.5 text-2xs uppercase tracking-wide text-muted [&::-webkit-details-marker]:hidden">
@@ -245,7 +245,7 @@ export default async function AdminProductsPage({
                                   step="0.01"
                                   min="0"
                                   defaultValue={v.priceCents ? dollars(v.priceCents) : ""}
-                                  placeholder="—"
+                                  placeholder="-"
                                   className="w-24 rounded-md border border-hairline bg-surface px-3 py-1.5 text-sm text-primary outline-none focus-visible:border-accent"
                                 />
                               </div>

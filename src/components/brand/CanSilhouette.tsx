@@ -13,7 +13,7 @@ type CanSilhouetteProps = {
 const RATIO = 0.4; // slim 355ml can
 
 /**
- * Stylized slim-can silhouette built from SVG — no product photography. A soft
+ * Stylized slim-can silhouette built from SVG, no product photography. A soft
  * flavor-accent gradient washes the body; a faint slashed-X and the vertical
  * KR8MX bar echo the packaging without depicting a real can.
  */

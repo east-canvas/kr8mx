@@ -13,7 +13,7 @@ export default function TermsPage() {
       </p>
       <p>
         Products are intended for adult use only (21+). Availability is limited by
-        state and subject to change. Placeholder content — to be completed.
+        state and subject to change. Placeholder content, to be completed.
       </p>
     </LegalDoc>
   );

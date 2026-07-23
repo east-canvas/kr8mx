@@ -20,14 +20,14 @@ export function siteOrigin(): string {
 
 /**
  * Permanent scan URL a barcode encodes: {origin}/q/{code}. The code never
- * changes, so a printed QR is re-pointable — the /q resolver 302s to the link's
+ * changes, so a printed QR is re-pointable, the /q resolver 302s to the link's
  * current target.
  */
 export function scanUrl(code: string): string {
   return `${siteOrigin()}/q/${code}`;
 }
 
-/** Render a QR code as an inline SVG string (transparent — for the admin preview). */
+/** Render a QR code as an inline SVG string (transparent, for the admin preview). */
 export async function generateQrSvg(text: string): Promise<string> {
   return QRCode.toString(text, {
     type: "svg",

@@ -19,7 +19,7 @@ import { breadcrumbJsonLd } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "Drinks",
   description:
-    "The KR8MX Energy Drink line — five flavors, one standard. Sharp, controlled, elevated.",
+    "The KR8MX Energy Drink line, five flavors, one standard. Sharp, controlled, elevated.",
   alternates: { canonical: "/drinks" },
   openGraph: {
     title: "KR8MX Energy Drink",
@@ -77,7 +77,7 @@ export default async function DrinksCollectionPage() {
 
       <HairlineRule />
 
-      {/* flavor cards — full-bleed dark, alternating */}
+      {/* flavor cards, full-bleed dark, alternating */}
       <div>
         {catalog.map((item, i) => {
           const variants = applyPriceOverrides(item.variants, priceMap);
@@ -101,7 +101,7 @@ export default async function DrinksCollectionPage() {
                 <Reveal className={flip ? "md:order-2" : ""}>
                   <ProductVisual
                     imageUrl={c.imageUrl ?? defaultDrinkImage(item.flavor)}
-                    alt={`KR8MX Energy Drink — ${c.name}`}
+                    alt={`KR8MX Energy Drink, ${c.name}`}
                     accent={c.hex}
                     height={340}
                     idKey={item.flavor}

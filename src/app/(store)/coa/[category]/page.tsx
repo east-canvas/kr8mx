@@ -22,13 +22,13 @@ export async function generateMetadata({
   const { category } = await params;
   const label = category.charAt(0).toUpperCase() + category.slice(1);
   return {
-    title: `${label} — Certificates of Analysis`,
-    description: `KR8MX ${label} lab results — third-party Certificates of Analysis.`,
+    title: `${label}, Certificates of Analysis`,
+    description: `KR8MX ${label} lab results, third-party Certificates of Analysis.`,
   };
 }
 
 function fmtDate(d: Date | null): string {
-  if (!d) return "—";
+  if (!d) return "-";
   return new Date(d).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",

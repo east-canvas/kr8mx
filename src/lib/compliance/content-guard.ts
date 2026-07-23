@@ -11,7 +11,7 @@ import { join, relative } from "node:path";
 
    Scope: JSX text nodes + text-bearing attributes (alt/title/aria-label/
    placeholder) in marketing .tsx files. Explicitly EXCLUDED are the legal route
-   group and the compliance components (age gate, footer) — those legitimately
+   group and the compliance components (age gate, footer), those legitimately
    carry regulated words inside required disclaimers (e.g. the FDA statement
    "...not intended to diagnose, treat, cure..."), which are disclaimers, not
    marketing claims.
@@ -33,12 +33,12 @@ export const DENYLIST = [
 
 /**
  * Whitelisted literal phrases removed before scanning.
- * "Energy Drink" is CATEGORY-DESCRIPTOR-ONLY — it names the legal product
+ * "Energy Drink" is CATEGORY-DESCRIPTOR-ONLY, it names the legal product
  * category on packaging/labeling and is not a performance claim.
  */
 export const WHITELIST_PHRASES = ["energy drink"] as const;
 
-/** Paths (relative, posix) excluded from the marketing scan — see note above. */
+/** Paths (relative, posix) excluded from the marketing scan, see note above. */
 const EXCLUDE_PATTERNS: RegExp[] = [
   /\/legal\//,
   /\/compliance\//,
@@ -121,6 +121,26 @@ export function scanText(text: string): Violation[] {
   return violations;
 }
 
+/**
+ * Typography guard: em dashes are banned from rendered copy (brand rule — copy
+ * must read organically for SEO). Flags every em dash in visible text.
+ */
+export function scanTypography(text: string): Violation[] {
+  const violations: Violation[] = [];
+  const re = /—/g; // em dash
+  let hit: RegExpExecArray | null;
+  while ((hit = re.exec(text)) !== null) {
+    const start = Math.max(0, hit.index - 30);
+    const end = Math.min(text.length, hit.index + 31);
+    violations.push({
+      file: "<text>",
+      word: "em dash (—)",
+      snippet: text.slice(start, end).replace(/\s+/g, " ").trim(),
+    });
+  }
+  return violations;
+}
+
 function walk(dir: string, acc: string[], exts: string[]): string[] {
   for (const entry of readdirSync(dir)) {
     const full = join(dir, entry);
@@ -144,7 +164,7 @@ export function scanRepo(rootDir: string = process.cwd()): Violation[] {
     try {
       walk(abs, files, root.exts);
     } catch {
-      // root may not exist yet — skip
+      // root may not exist yet, skip
     }
   }
 
@@ -154,6 +174,9 @@ export function scanRepo(rootDir: string = process.cwd()): Violation[] {
     if (isExcluded(rel)) continue;
     const text = extractVisibleText(readFileSync(file, "utf8"));
     for (const v of scanText(text)) {
+      violations.push({ ...v, file: rel });
+    }
+    for (const v of scanTypography(text)) {
       violations.push({ ...v, file: rel });
     }
   }

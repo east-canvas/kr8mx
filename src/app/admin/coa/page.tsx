@@ -23,7 +23,7 @@ function fmtDate(d: Date | string | null) {
         month: "short",
         day: "numeric",
       })
-    : "—";
+    : "-";
 }
 
 export default async function AdminCoaPage({

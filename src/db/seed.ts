@@ -102,7 +102,7 @@ async function main() {
       {
         category: "drinks",
         flavor: "grape",
-        title: "Energy Drink — Grape — Lot 24-0142",
+        title: "Energy Drink, Grape, Lot 24-0142",
         lotNumber: "24-0142",
         fileUrl: "https://example.com/coa/K8D-GRP-24-0142.pdf",
         status: "published",
@@ -111,7 +111,7 @@ async function main() {
       {
         category: "tablets",
         flavor: "lemon",
-        title: "Tablets — Lemon — Lot T-24-0007",
+        title: "Tablets, Lemon, Lot T-24-0007",
         lotNumber: "T-24-0007",
         fileUrl: "https://example.com/coa/KR8-T100-10-LEM-0007.pdf",
         status: "published",
@@ -126,14 +126,14 @@ async function main() {
     .values([
       {
         code: "drinkscoa",
-        label: "Drinks pack — COA QR",
+        label: "Drinks pack, COA QR",
         targetUrl: "https://www.kr8mx.com/coa/drinks",
         category: "drinks",
         active: true,
       },
       {
         code: "tabletscoa",
-        label: "Tablets pack — COA QR",
+        label: "Tablets pack, COA QR",
         targetUrl: "https://www.kr8mx.com/coa/tablets",
         category: "tablets",
         active: true,

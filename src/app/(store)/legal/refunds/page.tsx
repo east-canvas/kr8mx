@@ -8,7 +8,7 @@ export default function RefundsPage() {
     <LegalDoc title="Refund Policy">
       <p>
         This Refund Policy describes the conditions under which returns and
-        refunds may be issued. Placeholder content — pending counsel review.
+        refunds may be issued. Placeholder content, pending counsel review.
       </p>
       <p>
         Due to the nature of the products, unopened items may be eligible for

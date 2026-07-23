@@ -13,7 +13,7 @@ import {
 } from "drizzle-orm/pg-core";
 
 /* =============================================================================
-   KR8MX — database schema (Drizzle ORM, Neon Postgres)
+   KR8MX, database schema (Drizzle ORM, Neon Postgres)
 
    Conventions:
    - Money is ALWAYS integer cents (price_cents). Never floats.
@@ -104,7 +104,7 @@ export const productVariants = pgTable(
     //   { kind: "tablet_container", tablets: 10, mgPerTab: 100 }
     //   { kind: "blister", tablets: 5, mgPerTab: 100 }
     packConfig: jsonb("pack_config").notNull(),
-    // money as integer cents. Placeholder values are TODO — see seed.
+    // money as integer cents. Placeholder values are TODO, see seed.
     priceCents: integer("price_cents").notNull(),
     upc: varchar("upc", { length: 14 }),
     status: variantStatusEnum("status").notNull().default("active"),
@@ -195,7 +195,7 @@ export const orders = pgTable(
     orderNumber: varchar("order_number", { length: 24 }).notNull().unique(),
     status: orderStatusEnum("status").notNull().default("pending"),
     email: text("email").notNull(),
-    // destination state — drives shipping_restrictions checks
+    // destination state, drives shipping_restrictions checks
     shipState: varchar("ship_state", { length: 2 }),
     // money as integer cents
     subtotalCents: integer("subtotal_cents").notNull().default(0),
@@ -236,7 +236,7 @@ export const orderItems = pgTable(
 );
 
 /**
- * Append-only order event log. Never UPDATE or DELETE — every state change and
+ * Append-only order event log. Never UPDATE or DELETE, every state change and
  * side effect appends a row, giving a full audit trail.
  */
 export const orderEvents = pgTable(
@@ -332,7 +332,7 @@ export const emailOutbox = pgTable("email_outbox", {
 
 /**
  * Idempotency + audit ledger for sends. Unique on (order_id, template) for
- * order emails and (campaign, email) for announcements — a duplicate event
+ * order emails and (campaign, email) for announcements, a duplicate event
  * inserts nothing, so the same email is never sent twice.
  */
 export const sentEmails = pgTable(
@@ -362,7 +362,7 @@ export const sentEmails = pgTable(
   }),
 );
 
-/** Admin audit trail — every manual change records actor + before/after. */
+/** Admin audit trail, every manual change records actor + before/after. */
 export const auditLog = pgTable("audit_log", {
   id: serial("id").primaryKey(),
   actor: text("actor").notNull().default("admin"),
@@ -381,7 +381,7 @@ export const auditLog = pgTable("audit_log", {
 /**
  * Storefront-editable product content, keyed by (category, flavor). Rows here
  * OVERRIDE the static seed defaults (name / accent) and add marketing copy and a
- * hero image the admin can change without a deploy. Everything is nullable — an
+ * hero image the admin can change without a deploy. Everything is nullable, an
  * absent value falls back to the built-in default (and no image → the rendered
  * CanSilhouette). Managed via the KR8MX admin "Products" console.
  */

@@ -11,7 +11,7 @@ const inputCls =
   "rounded-md border border-hairline bg-surface px-3 py-1.5 text-sm text-primary outline-none focus-visible:border-accent";
 
 function fmt(d: Date | string | null) {
-  return d ? new Date(d).toLocaleString("en-US") : "—";
+  return d ? new Date(d).toLocaleString("en-US") : "-";
 }
 
 export default async function AdminOrdersPage({

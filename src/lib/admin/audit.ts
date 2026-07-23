@@ -22,6 +22,6 @@ export async function logAudit(args: {
       after: args.after ?? null,
     });
   } catch {
-    /* ignore — audit must not break the operation it records */
+    /* ignore, audit must not break the operation it records */
   }
 }
