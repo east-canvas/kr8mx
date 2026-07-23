@@ -41,6 +41,23 @@ export const FLAVOR_META: Record<Flavor, FlavorMeta> = Object.fromEntries(
 export const DRINK_FLAVORS = FLAVORS;
 export const PACK_SIZES = DRINK_PACK_SIZES;
 
+/**
+ * Default can artwork per flavor (committed under public/brand/drinks). Used as
+ * the storefront visual when no admin-uploaded image overrides it, so the real
+ * product shots show without depending on the DB / Blob.
+ */
+const DRINK_IMAGE: Record<Flavor, string> = {
+  grape: "/brand/drinks/grape.png",
+  strawberry: "/brand/drinks/strawberry.png",
+  blue_razz: "/brand/drinks/blue-razz.png",
+  lemon: "/brand/drinks/lemon.png",
+  peach: "/brand/drinks/peach.png",
+};
+
+export function defaultDrinkImage(flavor: Flavor): string {
+  return DRINK_IMAGE[flavor];
+}
+
 export type DrinkVariant = {
   sku: string;
   flavor: Flavor;

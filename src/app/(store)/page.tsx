@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { SlashX } from "@/components/brand/SlashX";
 import { Wordmark } from "@/components/brand/Wordmark";
-import { CanSilhouette } from "@/components/brand/CanSilhouette";
+import { ProductVisual } from "@/components/brand/ProductVisual";
 import { QualityPillars } from "@/components/site/QualityPillars";
 import { Reveal } from "@/components/ui/Reveal";
-import { FLAVOR_META } from "@/lib/catalog";
+import { FLAVOR_META, defaultDrinkImage } from "@/lib/catalog";
 
 export const metadata: Metadata = {
   description:
@@ -79,7 +79,13 @@ export default function Home() {
                     Explore Drinks
                   </Button>
                 </div>
-                <CanSilhouette accent="#c6ff00" height={220} idKey="home-drinks" />
+                <ProductVisual
+                  imageUrl={defaultDrinkImage("strawberry")}
+                  alt="KR8MX Energy Drink can"
+                  accent={FLAVOR_META.strawberry.hex}
+                  height={260}
+                  idKey="home-drinks"
+                />
               </div>
             </div>
           </ThemeZone>

@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { CanSilhouette } from "./CanSilhouette";
 import { TabletSilhouette } from "./TabletSilhouette";
 import { cn } from "@/lib/cn";
@@ -29,16 +28,21 @@ export function ProductVisual({
   shape?: "can" | "tablet";
 }) {
   if (imageUrl) {
+    // Plain img: the source may be any aspect ratio (a can, a blister, or an
+    // arbitrary admin upload), so we fix the height and let width follow the
+    // image's true intrinsic ratio — no distortion, no need to know dimensions.
     return (
-      <Image
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
         src={imageUrl}
         alt={alt}
-        width={Math.round(height * 0.72)}
-        height={height}
-        priority={priority}
-        sizes="(max-width: 768px) 60vw, 320px"
         style={{ height, width: "auto" }}
-        className={cn("block object-contain", className)}
+        loading={priority ? "eager" : "lazy"}
+        decoding="async"
+        className={cn(
+          "block max-w-full object-contain drop-shadow-[0_18px_40px_rgba(0,0,0,0.45)]",
+          className,
+        )}
       />
     );
   }

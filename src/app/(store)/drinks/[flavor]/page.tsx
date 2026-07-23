@@ -14,6 +14,7 @@ import {
   slugToFlavor,
   resolveContent,
   applyPriceOverrides,
+  defaultDrinkImage,
 } from "@/lib/catalog";
 import { getProductContentMap, getVariantPriceMap } from "@/db/queries";
 import { restrictedStatesFor } from "@/lib/compliance/shipping-restrictions";
@@ -148,10 +149,10 @@ export default async function DrinkPdpPage({
           }}
         >
           <ProductVisual
-            imageUrl={c.imageUrl}
+            imageUrl={c.imageUrl ?? defaultDrinkImage(flavor)}
             alt={`KR8MX Energy Drink — ${c.name}`}
             accent={c.hex}
-            height={420}
+            height={460}
             idKey={`pdp-${flavor}`}
             priority
           />

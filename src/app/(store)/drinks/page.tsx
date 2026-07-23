@@ -10,6 +10,7 @@ import {
   flavorToSlug,
   resolveContent,
   applyPriceOverrides,
+  defaultDrinkImage,
 } from "@/lib/catalog";
 import { getProductContentMap, getVariantPriceMap } from "@/db/queries";
 import { formatCents } from "@/db/money";
@@ -99,10 +100,10 @@ export default async function DrinksCollectionPage() {
               >
                 <Reveal className={flip ? "md:order-2" : ""}>
                   <ProductVisual
-                    imageUrl={c.imageUrl}
+                    imageUrl={c.imageUrl ?? defaultDrinkImage(item.flavor)}
                     alt={`KR8MX Energy Drink — ${c.name}`}
                     accent={c.hex}
-                    height={300}
+                    height={340}
                     idKey={item.flavor}
                     className="mx-auto transition-transform duration-slow ease-out-brand group-hover:-translate-y-1.5"
                   />
