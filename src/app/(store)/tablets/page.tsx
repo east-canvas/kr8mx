@@ -7,6 +7,7 @@ import { HairlineRule } from "@/components/ui/HairlineRule";
 import { Badge } from "@/components/ui/Badge";
 import { Reveal } from "@/components/ui/Reveal";
 import { NotifyForm } from "@/components/site/NotifyForm";
+import { MitraGenStandard } from "@/components/product/MitraGenStandard";
 import {
   getTabletsCatalog,
   flavorToSlug,
@@ -76,6 +77,13 @@ export default async function TabletsCollectionPage() {
 
       <HairlineRule />
 
+      {/* The MitraGen+ Standard — formulation intro */}
+      <section className="mx-auto max-w-6xl px-6 py-14">
+        <MitraGenStandard />
+      </section>
+
+      <HairlineRule />
+
       {/* flavor cards — full-bleed dark, alternating */}
       <div>
         {catalog.map((item, i) => {
@@ -124,7 +132,7 @@ export default async function TabletsCollectionPage() {
                   ) : null}
                   <p className="text-sm text-secondary">
                     Premarket{" "}
-                    <span className="text-muted">· 5 / 10-tablet formats</span>
+                    <span className="text-muted">· 10-tablet bottle</span>
                   </p>
                   <span className="inline-flex items-center gap-2 text-xs uppercase tracking-wide text-primary">
                     Preview

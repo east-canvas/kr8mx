@@ -211,11 +211,16 @@ export default async function AdminProductsPage({
                       </div>
                     </form>
 
-                    {/* variant prices */}
+                    {/* variant prices — optional, collapsed, not shown on the site */}
                     {row.variants.length ? (
-                      <div className="flex flex-col gap-2 border-t border-hairline pt-3">
-                        <span className={labelCls}>Prices</span>
-                        <div className="flex flex-col gap-2">
+                      <details className="group border-t border-hairline pt-3">
+                        <summary className="flex cursor-pointer list-none items-center gap-1.5 text-2xs uppercase tracking-wide text-muted [&::-webkit-details-marker]:hidden">
+                          Pricing
+                          <span className="text-muted/70">
+                            · optional, not shown on the storefront
+                          </span>
+                        </summary>
+                        <div className="mt-3 flex flex-col gap-2">
                           {row.variants.map((v) => (
                             <form
                               key={v.variantId}
@@ -239,7 +244,8 @@ export default async function AdminProductsPage({
                                   type="number"
                                   step="0.01"
                                   min="0"
-                                  defaultValue={dollars(v.priceCents)}
+                                  defaultValue={v.priceCents ? dollars(v.priceCents) : ""}
+                                  placeholder="—"
                                   className="w-24 rounded-md border border-hairline bg-surface px-3 py-1.5 text-sm text-primary outline-none focus-visible:border-accent"
                                 />
                               </div>
@@ -248,8 +254,11 @@ export default async function AdminProductsPage({
                               </button>
                             </form>
                           ))}
+                          <p className="text-2xs text-muted">
+                            Leave a field blank and Save to clear its price.
+                          </p>
                         </div>
-                      </div>
+                      </details>
                     ) : null}
                   </div>
                 </div>

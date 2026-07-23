@@ -6,6 +6,7 @@ import { SlashX } from "@/components/brand/SlashX";
 import { HairlineRule } from "@/components/ui/HairlineRule";
 import { Badge } from "@/components/ui/Badge";
 import { NotifyForm } from "@/components/site/NotifyForm";
+import { MitraGenStandard } from "@/components/product/MitraGenStandard";
 import { ChevronDownIcon, ExternalIcon } from "@/components/icons/Icons";
 import {
   TABLET_FLAVORS,
@@ -15,12 +16,10 @@ import {
   flavorToSlug,
   slugToFlavor,
   resolveContent,
-  applyPriceOverrides,
   defaultTabletImage,
 } from "@/lib/catalog";
-import { getProductContentMap, getVariantPriceMap } from "@/db/queries";
+import { getProductContentMap } from "@/db/queries";
 import { restrictedStatesFor } from "@/lib/compliance/shipping-restrictions";
-import { formatCents } from "@/db/money";
 import { breadcrumbJsonLd } from "@/lib/seo";
 import { cn } from "@/lib/cn";
 
@@ -84,12 +83,10 @@ export default async function TabletPdpPage({
   const flavor = slugToFlavor(slug);
   if (!flavor) notFound();
 
-  const [contentMap, priceMap] = await Promise.all([
-    getProductContentMap("tablets"),
-    getVariantPriceMap(),
-  ]);
+  const contentMap = await getProductContentMap("tablets");
   const c = resolveContent("tablets", flavor, contentMap.get(flavor));
-  const variants = applyPriceOverrides(getTabletVariants(flavor), priceMap);
+  // Only the 10-tablet bottle ("tube") ships for now — hide the blister format.
+  const variants = getTabletVariants(flavor).filter((v) => v.form === "container");
   const restricted = restrictedStatesFor("tablets");
   const breadcrumb = breadcrumbJsonLd([
     { name: "Home", path: "/" },
@@ -175,9 +172,9 @@ export default async function TabletPdpPage({
             </p>
           </div>
 
-          {/* pack formats */}
+          {/* format */}
           <div className="flex flex-col gap-3">
-            <span className="type-kicker text-muted">Formats</span>
+            <span className="type-kicker text-muted">Format</span>
             <ul className="flex flex-col gap-2.5">
               {variants.map((v) => (
                 <li
@@ -189,16 +186,10 @@ export default async function TabletPdpPage({
                       {tabletPackLabel(v)}
                     </span>
                     <span className="text-2xs text-muted">
-                      {v.mgPerTab} mg per tablet · {v.sku}
+                      100 mg MitraGen+™ per tablet · 300 mg total
                     </span>
                   </div>
-                  <div className="flex items-center gap-3">
-                    <span className="text-sm text-secondary">
-                      {formatCents(v.priceCents)}{" "}
-                      <span className="text-muted">at launch</span>
-                    </span>
-                    <Badge variant="outline">Coming soon</Badge>
-                  </div>
+                  <Badge variant="outline">Coming soon</Badge>
                 </li>
               ))}
             </ul>
@@ -215,11 +206,16 @@ export default async function TabletPdpPage({
 
           {/* details accordion */}
           <div className="mt-2">
-            <AccordionRow title="Ingredients" defaultOpen>
+            <AccordionRow title="Composition" defaultOpen>
               <p>
-                Ingredient panel to be published. Built with MitraGen+&trade;
-                proprietary blend.{" "}
-                <span className="text-muted">Full panel — TODO.</span>
+                300 mg per tablet — 100 mg MitraGen+&trade; proprietary
+                signature plus 200 mg standardized minor alkaloids, including
+                Speciociliatine and Mitragynine. Solvent-free isolation, no
+                synthetics.
+              </p>
+              <p className="mt-2 text-muted">
+                Scored for ½-tablet servings. Full ingredient panel published on
+                pack.
               </p>
             </AccordionRow>
 
@@ -246,6 +242,11 @@ export default async function TabletPdpPage({
             </AccordionRow>
           </div>
         </div>
+      </div>
+
+      {/* The MitraGen+ Standard — extensive formulation story */}
+      <div className="mt-14">
+        <MitraGenStandard accent={c.hex} />
       </div>
     </div>
   );
