@@ -82,12 +82,13 @@ export function getDrinkVariants(flavor: Flavor): DrinkVariant[] {
 /**
  * Layer live DB prices (SKU → cents) over seed-default variants. Pure — pages
  * fetch the map and apply it so displayed prices match what checkout charges.
- * A SKU absent from the map keeps its seed price.
+ * A SKU absent from the map keeps its seed price. Generic over any priced,
+ * SKU-keyed variant (drinks or tablets).
  */
-export function applyPriceOverrides(
-  variants: DrinkVariant[],
+export function applyPriceOverrides<T extends { sku: string; priceCents: number }>(
+  variants: T[],
   priceMap?: Map<string, number>,
-): DrinkVariant[] {
+): T[] {
   if (!priceMap || priceMap.size === 0) return variants;
   return variants.map((v) => {
     const cents = priceMap.get(v.sku);
@@ -112,6 +113,63 @@ export function getDrinksCatalog(): Array<FlavorMeta & { variants: DrinkVariant[
   return FLAVORS.map((flavor) => ({
     ...FLAVOR_META[flavor],
     variants: getDrinkVariants(flavor),
+  }));
+}
+
+/* ---------------------------------------------------------------- tablets -- */
+
+export const TABLET_FLAVORS = FLAVORS;
+
+export type TabletForm = "blister" | "container";
+
+export type TabletVariant = {
+  sku: string;
+  flavor: Flavor;
+  form: TabletForm;
+  tablets: number;
+  mgPerTab: number;
+  priceCents: number;
+  status: "active" | "coming_soon";
+};
+
+/** Human label for a tablet pack, e.g. "5-tablet blister". */
+export function tabletPackLabel(v: Pick<TabletVariant, "form" | "tablets">): string {
+  return v.form === "blister"
+    ? `${v.tablets}-tablet blister`
+    : `${v.tablets}-tablet container`;
+}
+
+/** All tablet variants for a flavor, blister (smaller) before container. */
+export function getTabletVariants(flavor: Flavor): TabletVariant[] {
+  return ALL_VARIANTS.filter(
+    (v) => v.productSlug === `tablet-${flavorToSlug(flavor)}`,
+  )
+    .map((v) => {
+      const cfg = v.packConfig as {
+        kind: string;
+        tablets: number;
+        mgPerTab: number;
+      };
+      return {
+        sku: v.sku,
+        flavor,
+        form: (cfg.kind === "blister" ? "blister" : "container") as TabletForm,
+        tablets: cfg.tablets,
+        mgPerTab: cfg.mgPerTab,
+        priceCents: v.priceCents,
+        status: v.status,
+      };
+    })
+    .sort((a, b) => a.tablets - b.tablets);
+}
+
+/** The full tablets catalog for collection rendering. */
+export function getTabletsCatalog(): Array<
+  FlavorMeta & { variants: TabletVariant[] }
+> {
+  return FLAVORS.map((flavor) => ({
+    ...FLAVOR_META[flavor],
+    variants: getTabletVariants(flavor),
   }));
 }
 

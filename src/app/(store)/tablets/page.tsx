@@ -1,9 +1,19 @@
 import type { Metadata } from "next";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Badge } from "@/components/ui/Badge";
+import Image from "next/image";
+import Link from "next/link";
+import { SlashX } from "@/components/brand/SlashX";
+import { ProductVisual } from "@/components/brand/ProductVisual";
 import { HairlineRule } from "@/components/ui/HairlineRule";
+import { Badge } from "@/components/ui/Badge";
+import { Reveal } from "@/components/ui/Reveal";
 import { NotifyForm } from "@/components/site/NotifyForm";
-import { FLAVOR_META, DRINK_FLAVORS } from "@/lib/catalog";
+import {
+  getTabletsCatalog,
+  flavorToSlug,
+  resolveContent,
+} from "@/lib/catalog";
+import { getProductContentMap } from "@/db/queries";
+import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
   title: "Tablets",
@@ -18,56 +28,129 @@ export const metadata: Metadata = {
   },
 };
 
-export default function TabletsPage() {
+export default async function TabletsCollectionPage() {
+  const catalog = getTabletsCatalog();
+  const content = await getProductContentMap("tablets");
+  const breadcrumb = breadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Tablets", path: "/tablets" },
+  ]);
+
   return (
-    <div className="mx-auto max-w-4xl px-6 py-16">
-      <div className="flex items-center gap-3">
-        <Badge variant="outline">Premarket Preview</Badge>
-      </div>
-      <SectionHeading
-        kicker="The Precision Line"
-        title="Tablets"
-        as="h1"
-        className="mt-6"
+    <div>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
       />
-      <p className="mt-5 max-w-prose text-sm text-secondary">
-        Lighter format. Higher standards. Built with MitraGen+&trade;. Five
-        flavor-coded options, 21+ adult use only.
-      </p>
+      {/* cinematic hero */}
+      <section className="relative overflow-hidden">
+        <div className="relative aspect-[16/10] w-full sm:aspect-[16/7]">
+          <Image
+            src="/brand/hero-home.png"
+            alt="KR8MX tablet packs"
+            fill
+            priority
+            sizes="100vw"
+            className="object-cover"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/40 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0">
+            <div className="mx-auto max-w-6xl px-6 pb-10">
+              <div className="flex items-center gap-3 text-muted">
+                <SlashX size={16} accent />
+                <span className="type-kicker">The Precision Line</span>
+                <Badge variant="outline">Premarket Preview</Badge>
+              </div>
+              <h1 className="type-display mt-4 max-w-[16ch] text-primary text-4xl sm:text-5xl md:text-6xl">
+                Tablets
+              </h1>
+              <p className="mt-4 max-w-md text-sm text-secondary">
+                Lighter format. Higher standards. 21+ adult use only.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
-      <HairlineRule className="my-10" />
+      <HairlineRule />
 
-      <ul className="grid grid-cols-2 gap-4 sm:grid-cols-5">
-        {DRINK_FLAVORS.map((f) => {
-          const meta = FLAVOR_META[f];
+      {/* flavor cards — full-bleed dark, alternating */}
+      <div>
+        {catalog.map((item, i) => {
+          const flip = i % 2 === 1;
+          const c = resolveContent(item.flavor, content.get(item.flavor));
           return (
-            <li
-              key={f}
-              className="flex flex-col items-center gap-3 rounded-md border border-hairline p-5 text-center"
+            <Link
+              key={item.flavor}
+              href={`/tablets/${flavorToSlug(item.flavor)}`}
+              className="group block border-b border-hairline"
             >
-              <span
-                className="h-8 w-8 rounded-full"
-                style={{ background: `${meta.hex}` }}
-                aria-hidden
-              />
-              <span className="text-xs text-primary">{meta.name}</span>
-            </li>
+              <article
+                className="relative mx-auto flex max-w-6xl flex-col items-center gap-8 px-6 py-16 md:min-h-[420px] md:flex-row md:justify-between md:py-20"
+                style={{
+                  background: `radial-gradient(120% 120% at ${
+                    flip ? "85%" : "15%"
+                  } 30%, ${c.hex}1f, transparent 60%)`,
+                }}
+              >
+                <Reveal className={flip ? "md:order-2" : ""}>
+                  <ProductVisual
+                    imageUrl={c.imageUrl}
+                    alt={`KR8MX Tablets — ${c.name}`}
+                    accent={c.hex}
+                    height={300}
+                    idKey={`tab-${item.flavor}`}
+                    shape="tablet"
+                    className="mx-auto transition-transform duration-slow ease-out-brand group-hover:-translate-y-1.5"
+                  />
+                </Reveal>
+
+                <Reveal
+                  delay={120}
+                  className={`flex flex-col gap-5 ${flip ? "md:order-1" : ""}`}
+                >
+                  <span className="type-kicker" style={{ color: c.hex }}>
+                    {c.tagline ?? `${String(i + 1).padStart(2, "0")} / Flavor`}
+                  </span>
+                  <h2 className="type-display text-primary text-3xl sm:text-4xl md:text-5xl">
+                    {c.name}
+                  </h2>
+                  {c.description ? (
+                    <p className="max-w-md text-sm text-secondary">
+                      {c.description}
+                    </p>
+                  ) : null}
+                  <p className="text-sm text-secondary">
+                    Premarket{" "}
+                    <span className="text-muted">· 5 / 10-tablet formats</span>
+                  </p>
+                  <span className="inline-flex items-center gap-2 text-xs uppercase tracking-wide text-primary">
+                    Preview
+                    <span className="transition-transform duration-base ease-out-brand group-hover:translate-x-1">
+                      &rarr;
+                    </span>
+                  </span>
+                </Reveal>
+              </article>
+            </Link>
           );
         })}
-      </ul>
-
-      <HairlineRule className="my-10" />
-
-      <div className="max-w-md">
-        <span className="type-kicker text-muted">Be first in line</span>
-        <p className="mb-4 mt-2 text-sm text-secondary">
-          Join the list for launch updates and early access.
-        </p>
-        <NotifyForm cta="Notify me" />
-        <p className="mt-3 text-2xs text-muted">
-          Premarket preview — availability and pricing to be announced. 21+ only.
-        </p>
       </div>
+
+      {/* notify */}
+      <section className="mx-auto max-w-6xl px-6 py-16">
+        <div className="max-w-md">
+          <span className="type-kicker text-muted">Be first in line</span>
+          <p className="mb-4 mt-2 text-sm text-secondary">
+            Join the list for launch updates and early access.
+          </p>
+          <NotifyForm cta="Notify me" />
+          <p className="mt-3 text-2xs text-muted">
+            Premarket preview — availability and pricing to be announced. 21+
+            only.
+          </p>
+        </div>
+      </section>
     </div>
   );
 }

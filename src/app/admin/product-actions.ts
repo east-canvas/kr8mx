@@ -71,10 +71,9 @@ async function upsertContent(
 
 function revalidateStorefront(category: ProductCategory, flavorSlug: string) {
   revalidatePath("/admin/products");
-  if (category === "drinks") {
-    revalidatePath("/drinks");
-    revalidatePath(`/drinks/${flavorSlug}`);
-  }
+  const base = category === "drinks" ? "/drinks" : "/tablets";
+  revalidatePath(base);
+  revalidatePath(`${base}/${flavorSlug}`);
 }
 
 /** Save the marketing fields (name / tagline / description / accent) for a flavor. */
@@ -219,8 +218,8 @@ export async function updateVariantPriceAction(formData: FormData) {
   } catch {
     redirect(`/admin/products?folder=${category}&error=db`);
   }
-  // Prices show on the drinks collection + PDP (and are re-priced server-side at checkout).
+  // Prices show on the collection + PDP (and are re-priced server-side at checkout).
   revalidatePath("/admin/products");
-  revalidatePath("/drinks");
+  revalidatePath(category === "drinks" ? "/drinks" : "/tablets");
   redirect(`/admin/products?folder=${category}&ok=price`);
 }

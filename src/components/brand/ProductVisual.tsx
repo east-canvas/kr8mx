@@ -1,12 +1,13 @@
 import Image from "next/image";
 import { CanSilhouette } from "./CanSilhouette";
+import { TabletSilhouette } from "./TabletSilhouette";
 import { cn } from "@/lib/cn";
 
 /**
  * Product hero visual. When the admin has uploaded an image for a flavor it is
- * shown; otherwise the generated CanSilhouette is rendered as a graceful
- * fallback. Height maps to the silhouette's px height so both paths occupy the
- * same footprint in the layout.
+ * shown; otherwise a generated silhouette (can for drinks, blister card for
+ * tablets) is rendered as a graceful fallback. Height maps to the silhouette's
+ * px height so both paths occupy the same footprint in the layout.
  */
 export function ProductVisual({
   imageUrl,
@@ -16,6 +17,7 @@ export function ProductVisual({
   idKey,
   className,
   priority = false,
+  shape = "can",
 }: {
   imageUrl: string | null;
   alt: string;
@@ -24,6 +26,7 @@ export function ProductVisual({
   idKey: string;
   className?: string;
   priority?: boolean;
+  shape?: "can" | "tablet";
 }) {
   if (imageUrl) {
     return (
@@ -39,8 +42,9 @@ export function ProductVisual({
       />
     );
   }
+  const Silhouette = shape === "tablet" ? TabletSilhouette : CanSilhouette;
   return (
-    <CanSilhouette
+    <Silhouette
       accent={accent}
       height={height}
       idKey={idKey}

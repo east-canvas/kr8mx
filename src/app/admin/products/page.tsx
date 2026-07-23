@@ -43,10 +43,8 @@ export default async function AdminProductsPage({
         <p className="mt-1 text-sm text-secondary">
           Edit the images, names, copy, and prices shown on the storefront.
           Changes publish live to{" "}
-          <span className="text-primary">
-            /{folder === "drinks" ? "drinks" : "drinks & home"}
-          </span>
-          . No image → the branded silhouette is shown.
+          <span className="text-primary">/{folder}</span>. No image → the
+          branded silhouette is shown.
         </p>
       </div>
 
