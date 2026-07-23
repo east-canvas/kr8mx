@@ -10,7 +10,7 @@ const COMPOSITION = [
   {
     mg: "100 mg",
     label: "MitraGen+™",
-    note: "Proprietary signature",
+    note: "Proprietary formulation",
   },
   {
     mg: "200 mg",
@@ -27,7 +27,7 @@ const COMPOSITION = [
 const PILLARS = [
   {
     title: "Cutting-edge formulation",
-    body: "MitraGen+™ is a formulation technology built around isolation, standardization, and bioavailability. Innovation in every batch.",
+    body: "MitraGen+™ is a proprietary formulation technology centered on isolation, standardization, and bioavailability. Innovation in every batch.",
   },
   {
     title: "Solvent-free isolation",
@@ -72,11 +72,11 @@ export function MitraGenStandard({ accent = "#1e2528" }: { accent?: string }) {
           Pure science. Elevated.
         </h2>
         <p className="max-w-2xl text-sm leading-relaxed text-secondary">
-          MitraGen+™ is our proprietary formulation, engineered in the USA with
-          cutting-edge extraction technology. We use solvent-free isolation to
-          separate and standardize minor alkaloids, so every tablet carries a
-          clean, consistent, precisely standardized profile. No masking. No
-          synthetics. Pure science.
+          Every KR8MX tablet is built with MitraGen+™, a proprietary formulation
+          engineered in the USA with cutting-edge extraction technology.
+          Solvent-free isolation separates and standardizes minor alkaloids, so
+          every tablet carries a clean, consistent, precisely standardized
+          profile. No masking. No synthetics. Pure science.
         </p>
       </div>
 

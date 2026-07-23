@@ -186,9 +186,9 @@ export default async function DrinkPdpPage({
           <div className="mt-2">
             <AccordionRow title="Ingredients" defaultOpen>
               <p>
-                Ingredient panel to be published. Built with MitraGen+&trade;
-                proprietary blend.{" "}
-                <span className="text-muted">Full panel, TODO.</span>
+                Ingredient panel to be published. Built with the MitraGen+&trade;
+                formulation.{" "}
+                <span className="text-muted">Full panel to follow.</span>
               </p>
             </AccordionRow>
 

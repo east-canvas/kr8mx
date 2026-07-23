@@ -208,10 +208,10 @@ export default async function TabletPdpPage({
           <div className="mt-2">
             <AccordionRow title="Composition" defaultOpen>
               <p>
-                300 mg per tablet, 100 mg MitraGen+&trade; proprietary
-                signature plus 200 mg standardized minor alkaloids, including
-                Speciociliatine and Mitragynine. Solvent-free isolation, no
-                synthetics.
+                300 mg per tablet: 100 mg MitraGen+&trade;, the proprietary
+                formulation this product is built with, plus 200 mg standardized
+                minor alkaloids, including Speciociliatine and Mitragynine.
+                Solvent-free isolation, no synthetics.
               </p>
               <p className="mt-2 text-muted">
                 Scored for ½-tablet servings. Full ingredient panel published on
