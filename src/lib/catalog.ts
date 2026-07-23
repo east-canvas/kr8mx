@@ -59,6 +59,22 @@ export function defaultDrinkImage(flavor: Flavor): string {
   return DRINK_IMAGE[flavor];
 }
 
+/**
+ * Default bottle artwork per tablet flavor (public/brand/tablets). Only flavors
+ * with a real cutout are listed; the rest return null and fall back to the
+ * TabletSilhouette until their cutouts are added. Admin uploads still override.
+ */
+const TABLET_IMAGE: Partial<Record<Flavor, string>> = {
+  blue_razz: "/brand/tablets/blue-razz.png",
+};
+
+export function defaultTabletImage(flavor: Flavor): string | null {
+  return TABLET_IMAGE[flavor] ?? null;
+}
+
+/** Marketing lineup shot (all five bottles) for the tablets hero. */
+export const TABLETS_LINEUP_IMAGE = "/brand/tablets/lineup.jpg";
+
 export type DrinkVariant = {
   sku: string;
   flavor: Flavor;

@@ -11,6 +11,8 @@ import {
   getTabletsCatalog,
   flavorToSlug,
   resolveContent,
+  defaultTabletImage,
+  TABLETS_LINEUP_IMAGE,
 } from "@/lib/catalog";
 import { getProductContentMap } from "@/db/queries";
 import { breadcrumbJsonLd } from "@/lib/seo";
@@ -46,12 +48,12 @@ export default async function TabletsCollectionPage() {
       <section className="relative overflow-hidden">
         <div className="relative aspect-[16/10] w-full sm:aspect-[16/7]">
           <Image
-            src="/brand/hero-home.png"
-            alt="KR8MX tablet packs"
+            src={TABLETS_LINEUP_IMAGE}
+            alt="KR8MX Tablets — five flavors: Strawberry, Grape, Peach, Blue Razz, Lemon"
             fill
             priority
             sizes="100vw"
-            className="object-cover"
+            className="object-cover object-center"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/40 to-transparent" />
           <div className="absolute inset-x-0 bottom-0">
@@ -95,7 +97,7 @@ export default async function TabletsCollectionPage() {
               >
                 <Reveal className={flip ? "md:order-2" : ""}>
                   <ProductVisual
-                    imageUrl={c.imageUrl}
+                    imageUrl={c.imageUrl ?? defaultTabletImage(item.flavor)}
                     alt={`KR8MX Tablets — ${c.name}`}
                     accent={c.hex}
                     height={300}

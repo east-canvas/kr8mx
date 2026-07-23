@@ -16,6 +16,7 @@ import {
   slugToFlavor,
   resolveContent,
   applyPriceOverrides,
+  defaultTabletImage,
 } from "@/lib/catalog";
 import { getProductContentMap, getVariantPriceMap } from "@/db/queries";
 import { restrictedStatesFor } from "@/lib/compliance/shipping-restrictions";
@@ -145,7 +146,7 @@ export default async function TabletPdpPage({
           }}
         >
           <ProductVisual
-            imageUrl={c.imageUrl}
+            imageUrl={c.imageUrl ?? defaultTabletImage(flavor)}
             alt={`KR8MX Tablets — ${c.name}`}
             accent={c.hex}
             height={420}

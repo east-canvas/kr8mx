@@ -6,7 +6,7 @@ import { SlashX } from "@/components/brand/SlashX";
 import { Wordmark } from "@/components/brand/Wordmark";
 import { QualityPillars } from "@/components/site/QualityPillars";
 import { Reveal } from "@/components/ui/Reveal";
-import { FLAVOR_META } from "@/lib/catalog";
+import { FLAVOR_META, TABLETS_LINEUP_IMAGE } from "@/lib/catalog";
 
 export const metadata: Metadata = {
   description:
@@ -85,7 +85,7 @@ export default function Home() {
             <div className="relative -mx-1 flex-1 overflow-hidden rounded-lg">
               <div className="relative aspect-[16/9]">
                 <Image
-                  src="/brand/hero-home.png"
+                  src={TABLETS_LINEUP_IMAGE}
                   alt="KR8MX tablets — five flavors"
                   fill
                   sizes="(max-width: 1024px) 100vw, 45vw"
