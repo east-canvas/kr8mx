@@ -83,6 +83,22 @@ export function websiteJsonLd() {
   };
 }
 
+/** AboutPage JSON-LD, linked to the Organization + WebSite entities. */
+export function aboutPageJsonLd() {
+  const base = resolveBaseUrl();
+  return {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "@id": `${base}/about`,
+    url: `${base}/about`,
+    name: `About ${SITE.name}`,
+    description: SITE.description,
+    about: { "@id": `${base}/#organization` },
+    isPartOf: { "@id": `${base}/#website` },
+    inLanguage: "en-US",
+  };
+}
+
 /** BreadcrumbList JSON-LD from [{name, path}] items (path relative to origin). */
 export function breadcrumbJsonLd(items: { name: string; path: string }[]) {
   const base = resolveBaseUrl();

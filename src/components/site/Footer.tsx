@@ -4,6 +4,9 @@ import { HairlineRule } from "@/components/ui/HairlineRule";
 import { allRestrictedStates } from "@/lib/compliance/shipping-restrictions";
 
 const LEGAL_LINKS = [
+  { href: "/about", label: "About" },
+  { href: "/tablets", label: "Tablets" },
+  { href: "/coa", label: "COAs" },
   { href: "/legal/terms", label: "Terms" },
   { href: "/legal/privacy", label: "Privacy" },
   { href: "/legal/shipping", label: "Shipping" },

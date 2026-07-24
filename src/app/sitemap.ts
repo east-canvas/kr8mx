@@ -7,6 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const base = resolveBaseUrl();
   const staticPaths = [
     "",
+    "/about",
     // "/drinks" hidden until the Energy Drink line is market-ready.
     "/tablets",
     "/standard",
