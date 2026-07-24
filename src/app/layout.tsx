@@ -6,7 +6,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "KR8MX | Performance. Elevated.",
+    default: "KR8MX | Pure Science.",
     template: "%s | KR8MX",
   },
   description:
@@ -16,7 +16,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     siteName: SITE.name,
-    title: "KR8MX | Performance. Elevated.",
+    title: "KR8MX | Pure Science.",
     description:
       "One brand, two worlds. Built for what's next.",
     url: "/",
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "KR8MX | Performance. Elevated.",
+    title: "KR8MX | Pure Science.",
     images: ["/brand/og-default.png"],
   },
 };

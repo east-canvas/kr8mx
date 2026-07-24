@@ -4,7 +4,7 @@
 
 export const SITE = {
   name: "KR8MX",
-  tagline: "Performance. Elevated.",
+  tagline: "Pure Science.",
   legalName: "Gel Trading Group LLC",
   license: "2027-R-2248133",
 } as const;

@@ -62,7 +62,7 @@ describe("sales export format", () => {
   });
 
   it("quotes CSV fields containing commas", () => {
-    const csv = ordersToCsv([makeOrder({ company: "Acme, Inc." })]);
+    const csv = ordersToCsv([{ ...makeOrder({ company: "Acme, Inc." }), repName: "AJ" }]);
     expect(csv).toContain('"Acme, Inc."');
   });
 

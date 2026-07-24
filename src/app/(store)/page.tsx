@@ -27,7 +27,7 @@ export default function Home() {
             style={{ animationDelay: "80ms" }}
           >
             <SlashX size={16} accent />
-            <span className="type-kicker">Performance. Elevated.</span>
+            <span className="type-kicker">Pure Science.</span>
           </div>
           <h1
             className="type-display max-w-[14ch] animate-rise text-balance text-primary text-4xl sm:text-5xl md:text-6xl"
