@@ -376,6 +376,97 @@ export const auditLog = pgTable("audit_log", {
     .defaultNow(),
 });
 
+/* ---------------------------------------------------- B2B sales orders ---- */
+
+export const salesOrderStatusEnum = pgEnum("sales_order_status", [
+  "new",
+  "invoiced",
+  "paid",
+  "submitted",
+  "cancelled",
+]);
+
+/** Internal sales reps. Orders are attributed to a rep for allocation. */
+export const salesReps = pgTable(
+  "sales_reps",
+  {
+    id: serial("id").primaryKey(),
+    name: text("name").notNull(),
+    email: text("email"),
+    phone: varchar("phone", { length: 32 }),
+    // short attribution code, e.g. "AJ"
+    code: varchar("code", { length: 16 }),
+    active: boolean("active").notNull().default(true),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => ({
+    codeUnique: uniqueIndex("sales_reps_code_unique").on(t.code),
+  }),
+);
+
+/**
+ * Manual (no online payment) wholesale orders. Reps place them; internal staff
+ * invoice, collect payment, and submit to fulfillment on another platform.
+ */
+export const salesOrders = pgTable(
+  "sales_orders",
+  {
+    id: serial("id").primaryKey(),
+    orderNumber: varchar("order_number", { length: 24 }).notNull().unique(),
+    repId: integer("rep_id").references(() => salesReps.id),
+    status: salesOrderStatusEnum("status").notNull().default("new"),
+    // customer / account
+    company: text("company").notNull(),
+    contactName: text("contact_name"),
+    email: text("email"),
+    phone: varchar("phone", { length: 32 }),
+    shipAddress: text("ship_address"),
+    shipCity: varchar("ship_city", { length: 96 }),
+    shipState: varchar("ship_state", { length: 2 }),
+    shipZip: varchar("ship_zip", { length: 12 }),
+    notes: text("notes"),
+    // money as integer cents; may be 0 while pricing is TBD
+    subtotalCents: integer("subtotal_cents").notNull().default(0),
+    // total bottles across all lines (cases x 200 + loose bottles)
+    totalBottles: integer("total_bottles").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => ({
+    statusIdx: index("sales_orders_status_idx").on(t.status),
+    repIdx: index("sales_orders_rep_idx").on(t.repId),
+  }),
+);
+
+export const salesOrderItems = pgTable(
+  "sales_order_items",
+  {
+    id: serial("id").primaryKey(),
+    orderId: integer("order_id")
+      .notNull()
+      .references(() => salesOrders.id),
+    brand: text("brand").notNull(),
+    flavor: text("flavor").notNull(),
+    sku: varchar("sku", { length: 32 }).notNull(),
+    // "case" | "bottle"
+    unit: varchar("unit", { length: 12 }).notNull(),
+    bottlesPerUnit: integer("bottles_per_unit").notNull().default(1),
+    quantity: integer("quantity").notNull(),
+    bottles: integer("bottles").notNull().default(0),
+    unitPriceCents: integer("unit_price_cents").notNull().default(0),
+    lineTotalCents: integer("line_total_cents").notNull().default(0),
+  },
+  (t) => ({
+    orderIdx: index("sales_order_items_order_idx").on(t.orderId),
+  }),
+);
+
 /* ---------------------------------------------- editable product content -- */
 
 /**
@@ -492,6 +583,9 @@ export type NotifyListEntry = typeof notifyList.$inferSelect;
 export type ShippingRestriction = typeof shippingRestrictions.$inferSelect;
 
 export type ProductContent = typeof productContent.$inferSelect;
+export type SalesRep = typeof salesReps.$inferSelect;
+export type SalesOrder = typeof salesOrders.$inferSelect;
+export type SalesOrderItem = typeof salesOrderItems.$inferSelect;
 export type CoaDocument = typeof coaDocuments.$inferSelect;
 export type DynamicLink = typeof dynamicLinks.$inferSelect;
 export type NotifyEntry = typeof notifyList.$inferSelect;
