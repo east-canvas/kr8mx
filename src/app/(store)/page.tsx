@@ -10,7 +10,7 @@ import { FLAVOR_META, TABLETS_LINEUP_IMAGE } from "@/lib/catalog";
 
 export const metadata: Metadata = {
   description:
-    "KR8MX. Built for what's next. The precision tablet line: lighter format, higher standards, five flavors. 21+.",
+    "KR8MX Tablets deliver 100 mg MitraGen+™ per tablet, in bottle and blister-pack formats. Five flavors: Grape, Lemon, Peach, Strawberry, and Blue Razz. Built with the proprietary MitraGen+™ formula by Mitragen Labs. 21+.",
 };
 
 export default function Home() {

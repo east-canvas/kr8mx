@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { fontVariables } from "@/lib/fonts";
 import { CartProvider } from "@/lib/cart/CartProvider";
-import { resolveBaseUrl, SITE, organizationJsonLd } from "@/lib/seo";
+import { resolveBaseUrl, SITE, organizationJsonLd, websiteJsonLd } from "@/lib/seo";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -9,22 +9,37 @@ export const metadata: Metadata = {
     default: "KR8MX | Pure Science.",
     template: "%s | KR8MX",
   },
-  description:
-    "KR8MX. One brand, two worlds, a premium performance line and a precision tablet line. Built for what's next.",
+  applicationName: SITE.name,
+  description: SITE.description,
   metadataBase: new URL(resolveBaseUrl()),
   alternates: { canonical: "/" },
+  keywords: [
+    "KR8MX",
+    "Kr8Mx",
+    "KR8MX Tablets",
+    "kratom tablets",
+    "kratom brand",
+    "MitraGen+",
+    "Mitragen Labs",
+    "Grape",
+    "Lemon",
+    "Peach",
+    "Strawberry",
+    "Blue Razz",
+  ],
+  category: "Health & Personal Care",
   openGraph: {
     type: "website",
     siteName: SITE.name,
     title: "KR8MX | Pure Science.",
-    description:
-      "One brand, two worlds. Built for what's next.",
+    description: SITE.description,
     url: "/",
     images: [{ url: "/brand/og-default.png", width: 1200, height: 630 }],
   },
   twitter: {
     card: "summary_large_image",
     title: "KR8MX | Pure Science.",
+    description: SITE.description,
     images: ["/brand/og-default.png"],
   },
 };
@@ -48,6 +63,12 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(organizationJsonLd()),
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(websiteJsonLd()),
           }}
         />
         <CartProvider>{children}</CartProvider>

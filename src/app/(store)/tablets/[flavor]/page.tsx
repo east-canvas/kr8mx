@@ -39,11 +39,11 @@ export async function generateMetadata({
   const path = `/tablets/${flavorToSlug(flavor)}`;
   return {
     title: `${meta.name} Tablets`,
-    description: `KR8MX ${meta.name} Tablets. Premarket preview.`,
+    description: `KR8MX ${meta.name} Tablets, 100 mg MitraGen+™ per tablet, in bottle and blister-pack formats. Built with the proprietary MitraGen+™ formula by Mitragen Labs. 21+.`,
     alternates: { canonical: path },
     openGraph: {
       title: `KR8MX ${meta.name} Tablets`,
-      description: "Lighter format. Higher standards. Premarket preview.",
+      description: `KR8MX ${meta.name} Tablets, 100 mg MitraGen+™ per tablet. Bottle and blister pack. 21+.`,
       url: path,
       images: [{ url: "/brand/og-tablets.png", width: 1200, height: 630 }],
     },

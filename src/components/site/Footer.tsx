@@ -63,6 +63,9 @@ export function Footer() {
             {OPERATOR_LINE}
           </p>
           <p className="text-muted">
+            MitraGen+™ is a proprietary formula of Mitragen Labs.
+          </p>
+          <p className="text-muted">
             © {new Date().getFullYear()} KR8MX. All rights reserved.
           </p>
         </div>

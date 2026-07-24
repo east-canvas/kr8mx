@@ -21,11 +21,12 @@ import { breadcrumbJsonLd } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "Tablets",
   description:
-    "KR8MX Tablets, lighter format, higher standards. Premarket preview.",
+    "KR8MX Tablets in bottle and blister-pack formats. 100 mg MitraGen+™ per tablet, five flavors, built with the proprietary MitraGen+™ formula by Mitragen Labs. 21+.",
   alternates: { canonical: "/tablets" },
   openGraph: {
     title: "KR8MX Tablets",
-    description: "Lighter format. Higher standards. Premarket preview.",
+    description:
+      "Bottle and blister pack. 100 mg MitraGen+™ per tablet, five flavors. Built with the proprietary MitraGen+™ formula by Mitragen Labs. 21+.",
     url: "/tablets",
     images: [{ url: "/brand/og-tablets.png", width: 1200, height: 630 }],
   },

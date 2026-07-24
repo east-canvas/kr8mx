@@ -123,7 +123,8 @@ export function MitraGenStandard({ accent = "#1e2528" }: { accent?: string }) {
           ))}
         </ul>
         <p className="mt-4 text-2xs text-muted">
-          21+ adult use only. Made in the USA.
+          21+ adult use only. Made in the USA. MitraGen+™ is a proprietary
+          formula of Mitragen Labs.
         </p>
       </div>
     </section>

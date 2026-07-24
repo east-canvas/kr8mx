@@ -4,9 +4,18 @@
 
 export const SITE = {
   name: "KR8MX",
+  alternateName: "Kr8Mx",
   tagline: "Pure Science.",
   legalName: "Gel Trading Group LLC",
   license: "2027-R-2248133",
+  // Brand-defining description. Helps search + AI overviews recognize KR8MX as
+  // a distinct brand (not the Keychron keyboard) with clear products.
+  description:
+    "KR8MX is a premium 21+ kratom-derived brand. KR8MX Tablets deliver 100 mg MitraGen+™ per tablet in bottle and blister-pack formats, in five flavors: Grape, Lemon, Peach, Strawberry, and Blue Razz. MitraGen+™ is a proprietary formula by Mitragen Labs.",
+  mitragen: {
+    name: "MitraGen+™",
+    owner: "Mitragen Labs",
+  },
 } as const;
 
 /** NEXT_PUBLIC_SITE_URL (origin only) → VERCEL_URL → localhost. */
@@ -23,23 +32,54 @@ export function resolveBaseUrl(): string {
   return "http://localhost:3000";
 }
 
-/** Sitewide Organization JSON-LD. legalName + license are operator slots. */
+/** Sitewide Organization + Brand JSON-LD. Defines KR8MX as a distinct brand. */
 export function organizationJsonLd() {
   const base = resolveBaseUrl();
   return {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": `${base}/#organization`,
     name: SITE.name,
+    alternateName: SITE.alternateName,
     legalName: SITE.legalName,
     url: base,
-    logo: `${base}/brand/kr8mx-wordmark-black.png`,
-    // Operating license for the entity (see footer compliance line).
+    logo: {
+      "@type": "ImageObject",
+      url: `${base}/brand/kr8mx-wordmark-black.png`,
+    },
+    image: `${base}/brand/og-default.png`,
+    description: SITE.description,
+    slogan: SITE.tagline,
+    brand: {
+      "@type": "Brand",
+      name: SITE.name,
+      slogan: SITE.tagline,
+      logo: `${base}/brand/kr8mx-wordmark-black.png`,
+    },
+    // MitraGen+™ is a proprietary formula owned by Mitragen Labs.
+    knowsAbout: [SITE.mitragen.name, SITE.mitragen.owner, "kratom tablets"],
     identifier: {
       "@type": "PropertyValue",
       propertyID: "license",
       value: SITE.license,
     },
-    sameAs: [], // TODO: social profiles
+    sameAs: [], // TODO: add verified social profiles to strengthen the entity
+  };
+}
+
+/** WebSite JSON-LD, tied to the Organization, so search engines link the two. */
+export function websiteJsonLd() {
+  const base = resolveBaseUrl();
+  return {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${base}/#website`,
+    name: SITE.name,
+    alternateName: SITE.alternateName,
+    url: base,
+    description: SITE.description,
+    inLanguage: "en-US",
+    publisher: { "@id": `${base}/#organization` },
   };
 }
 
