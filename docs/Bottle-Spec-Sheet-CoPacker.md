@@ -2,9 +2,9 @@
 
 Build the content below into a **single-page, print-ready PDF spec sheet** for a co-packer.
 
-- **Format:** US Letter (8.5 x 11 in), portrait, 0.5 in margins. It MUST fit on one page.
+- **Format:** US Letter (8.5 x 11 in), portrait, 0.45 in margins. It MUST fit on one page.
 - **Style:** plain **black text on white**. No logos, no brand colors, no graphics, no shading beyond simple table rules. Clean headings and ruled tables only.
-- **Font:** a clean sans-serif (Helvetica or Arial). Title about 16 pt, section headings about 11 pt bold, body about 9 to 10 pt.
+- **Font:** a clean sans-serif (Helvetica or Arial). Title about 14 pt, section headings about 9 pt bold, body about 8.3 pt.
 - **Do not add, infer, or change any numbers.** Keep every value exactly as written. Leave every "TBD" as "TBD".
 - Render tables with visible borders. Output the finished PDF file.
 
@@ -36,48 +36,48 @@ Even split: **1,000 bottles per flavor, per brand.**
 | Item | Value |
 |---|---|
 | Tablets per bottle | 10 |
-| Tablet diameter | 14 mm |
+| Tablet diameter | 14 mm (0.551 in) |
 | Total tablets | 100,000 (10,000 bottles x 10) |
 
 ## 4. Bottle Specifications
 
-| Dimension | Value |
-|---|---|
-| Total height (with cap) | 74 mm (2.913 in) |
-| Height without cap | 66.6 mm (2.622 in) |
-| Base diameter | 29.90 mm (1.177 in) |
-| Wall thickness | 2 mm (0.079 in) |
-| Base circumference (reference) | approx. 93.9 mm (3.697 in) |
+| Dimension | Metric | Imperial |
+|---|---|---|
+| Total height (with cap) | 74 mm | 2.913 in |
+| Height without cap | 66.6 mm | 2.622 in |
+| Base diameter | 29.90 mm | 1.177 in |
+| Wall thickness | 2 mm | 0.079 in |
+| Base circumference (reference) | 93.9 mm | 3.697 in |
 
 ## 5. Label
 
 | Item | Value |
 |---|---|
 | Applied label size | 3.5 in x 1.5 in (88.9 mm x 38.1 mm) |
-| Roll count | 2,000 labels per roll, one roll per flavor |
+| Label designs | 2 per flavor, one for KR8MX and one for Sigma 7 (same flavor, brand-specific art) |
+| Rolls | One roll per flavor, per brand = 10 rolls total |
+| Roll count | 2,000 labels per roll (20,000 labels total) |
 | Winding | Wind #4, unwind from the left side first |
 | Inline print (lot / batch codes) | Per flavor, TBD |
 
 ## 6. Per-Flavor Breakdown
 
-| Brand | Bottle Color | Flavor | Bottles | Tablets | Batch / Lot # |
-|---|---|---|---|---|---|
-| KR8MX | White | Grape | 1,000 | 10,000 | TBD |
-| KR8MX | White | Lemon | 1,000 | 10,000 | TBD |
-| KR8MX | White | Peach | 1,000 | 10,000 | TBD |
-| KR8MX | White | Strawberry | 1,000 | 10,000 | TBD |
-| KR8MX | White | Blue Razz | 1,000 | 10,000 | TBD |
-| Sigma 7 | Black | Grape | 1,000 | 10,000 | TBD |
-| Sigma 7 | Black | Lemon | 1,000 | 10,000 | TBD |
-| Sigma 7 | Black | Peach | 1,000 | 10,000 | TBD |
-| Sigma 7 | Black | Strawberry | 1,000 | 10,000 | TBD |
-| Sigma 7 | Black | Blue Razz | 1,000 | 10,000 | TBD |
-| **Total** | | | **10,000** | **100,000** | |
+| Brand | Color | Flavor | Bottles | Tablets | Label Rolls (2,000 ct) | Batch / Lot # |
+|---|---|---|---|---|---|---|
+| KR8MX | White | Grape | 1,000 | 10,000 | 1 | TBD |
+| KR8MX | White | Lemon | 1,000 | 10,000 | 1 | TBD |
+| KR8MX | White | Peach | 1,000 | 10,000 | 1 | TBD |
+| KR8MX | White | Strawberry | 1,000 | 10,000 | 1 | TBD |
+| KR8MX | White | Blue Razz | 1,000 | 10,000 | 1 | TBD |
+| Sigma 7 | Black | Grape | 1,000 | 10,000 | 1 | TBD |
+| Sigma 7 | Black | Lemon | 1,000 | 10,000 | 1 | TBD |
+| Sigma 7 | Black | Peach | 1,000 | 10,000 | 1 | TBD |
+| Sigma 7 | Black | Strawberry | 1,000 | 10,000 | 1 | TBD |
+| Sigma 7 | Black | Blue Razz | 1,000 | 10,000 | 1 | TBD |
+| **Total** | | | **10,000** | **100,000** | **10** | |
 
 ## 7. Open Items (Confirm Before Production)
 
-- **Tablet total:** brief stated "10K tablets"; at 10 tablets per bottle across 10,000 bottles this equals 100,000 tablets. Confirm the intended total.
-- **Label rolls:** 2,000-count roll per flavor. Confirm whether that is one roll per flavor overall, or one roll per flavor per brand, since KR8MX and Sigma 7 labels differ.
 - **Flavor to batch / lot number mapping** for inline printing: TBD.
 - **Closure / cap:** finish and child-resistant spec per approved sample.
 - **Bottle resin, label material and finish, unit and case pack:** to be supplied.
