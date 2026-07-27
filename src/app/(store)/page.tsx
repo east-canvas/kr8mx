@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
+import { CountUp } from "@/components/site/CountUp";
 import { defaultTabletImage, flavorToSlug } from "@/lib/catalog";
 import type { Flavor } from "@/db/schema";
 
@@ -22,6 +23,13 @@ const FLAVOR_CARDS: Card[] = [
   { flavor: "blue_razz", name: "Blue Razz", color: "#12A2C0", tagline: "Cold. Sharp. Electric." },
   { flavor: "peach", name: "Peach", color: "#F0801F", tagline: "Sun-ripe. Smooth." },
   { flavor: "lemon", name: "Lemon", color: "#C79600", tagline: "Bright. Crisp. Dry." },
+];
+
+const STATS = [
+  { to: 0, suffix: "", label: "PPM 7-OH" },
+  { to: 100, suffix: "mg", label: "MitraGen+™ per tab" },
+  { to: 200, suffix: "mg", label: "Minor alkaloids" },
+  { to: 300, suffix: "mg", label: "Total per tab" },
 ];
 
 const VALUE_POINTS = [
@@ -143,6 +151,65 @@ export default function Home() {
           ))}
         </div>
       </div>
+
+      {/* ---- Beyond 7-OH: the new standard ---- */}
+      <section className="relative mt-16 overflow-hidden bg-[#0b0b0d] text-white sm:mt-24">
+        <div
+          aria-hidden
+          className="animate-glow pointer-events-none absolute -right-24 -top-40 h-[560px] w-[560px] rounded-full blur-3xl"
+          style={{ background: `radial-gradient(circle, ${PURPLE}, transparent 62%)` }}
+        />
+        <div
+          aria-hidden
+          className="animate-glow pointer-events-none absolute -left-32 bottom-[-10rem] h-[420px] w-[420px] rounded-full blur-3xl"
+          style={{
+            background: "radial-gradient(circle, #20b1c9, transparent 65%)",
+            animationDelay: "-3.5s",
+          }}
+        />
+        <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-28">
+          <Reveal className="max-w-2xl">
+            <span className="type-kicker" style={{ color: "#c4a3ef" }}>
+              A New Standard
+            </span>
+            <h2
+              className="type-display mt-3 text-white text-4xl leading-[0.95] sm:text-5xl md:text-6xl"
+              style={{ fontWeight: 900 }}
+            >
+              Beyond 7-OH.
+            </h2>
+            <p className="mt-5 max-w-prose text-sm leading-relaxed text-white/70 sm:text-base">
+              The market is moving beyond 7-hydroxymitragynine. KR8MX is built
+              for what comes next: 0 PPM 7-OH, standardized minor alkaloids,
+              solvent-free isolation, and lab-tested every lot. A cleaner,
+              compliant standard, engineered to lead.
+            </p>
+          </Reveal>
+
+          {/* animated stat tiles */}
+          <div className="relative mt-12 grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10 sm:mt-14 sm:grid-cols-4">
+            {STATS.map((s) => (
+              <div
+                key={s.label}
+                className="flex flex-col gap-1.5 bg-[#0b0b0d] p-6 sm:p-8"
+              >
+                <div
+                  className="type-display text-4xl sm:text-5xl"
+                  style={{ color: "#c4a3ef", fontWeight: 800 }}
+                >
+                  <CountUp to={s.to} />
+                  {s.suffix ? (
+                    <span className="ml-0.5 text-2xl sm:text-3xl">{s.suffix}</span>
+                  ) : null}
+                </div>
+                <div className="text-2xs uppercase tracking-wide text-white/55">
+                  {s.label}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
       {/* ---- The lineup ---- */}
       <section className="px-6 py-16 text-center sm:py-24">
