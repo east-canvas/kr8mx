@@ -1,119 +1,207 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
-import { SlashX } from "@/components/brand/SlashX";
-import { Wordmark } from "@/components/brand/Wordmark";
-import { QualityPillars } from "@/components/site/QualityPillars";
 import { Reveal } from "@/components/ui/Reveal";
-import { FLAVOR_META, TABLETS_LINEUP_IMAGE } from "@/lib/catalog";
+import { defaultTabletImage, flavorToSlug } from "@/lib/catalog";
+import type { Flavor } from "@/db/schema";
 
 export const metadata: Metadata = {
   description:
     "KR8MX Tablets deliver 100 mg MitraGen+™ per tablet, in bottle and blister-pack formats. Five flavors: Grape, Lemon, Peach, Strawberry, and Blue Razz. Built with the proprietary MitraGen+™ formula by Mitragen Labs. 21+.",
 };
 
+const PURPLE = "#6C2FB0";
+const HERO_DESKTOP = "/brand/tablets/hero-desktop.jpg";
+const HERO_MOBILE = "/brand/tablets/hero-mobile.jpg";
+const WHOLESALE_MAILTO =
+  "mailto:aj@gelhq.com?subject=KR8MX%20Wholesale%20Inquiry";
+
+type Card = { flavor: Flavor; name: string; color: string; tagline: string };
+const FLAVOR_CARDS: Card[] = [
+  { flavor: "strawberry", name: "Strawberry", color: "#E23140", tagline: "Ripe. Clean. Classic." },
+  { flavor: "grape", name: "Grape", color: "#7A3FB0", tagline: "Deep. Bold. Structured." },
+  { flavor: "blue_razz", name: "Blue Razz", color: "#12A2C0", tagline: "Cold. Sharp. Electric." },
+  { flavor: "peach", name: "Peach", color: "#F0801F", tagline: "Sun-ripe. Smooth." },
+  { flavor: "lemon", name: "Lemon", color: "#C79600", tagline: "Bright. Crisp. Dry." },
+];
+
+const VALUE_POINTS = [
+  { title: "MitraGen+™ Formula", body: "100 mg per tablet, solvent-free.", d: "M9 3v6l-5 8a2 2 0 0 0 1.7 3h12.6a2 2 0 0 0 1.7-3l-5-8V3M7.5 3h9M8 14h8" },
+  { title: "Isolated & Standardized", body: "Minor alkaloids. No synthetics.", d: "M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6zM9 12l2 2 4-4" },
+  { title: "Lab-Tested Every Lot", body: "0 PPM 7-hydroxymitragynine.", d: "M8 3h8M10 3v6l-4 9a2 2 0 0 0 1.8 3h8.4a2 2 0 0 0 1.8-3l-4-9V3" },
+  { title: "Made in the USA", body: "U.S.-grown kratom.", d: "M12 3a9 9 0 100 18 9 9 0 000-18zM3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18" },
+];
+
+function Chevron() {
+  return <span className="font-normal">&rsaquo;</span>;
+}
+
 export default function Home() {
   return (
     <>
-      {/* ---- Hero, light, editorial ---- */}
-      <section className="mx-auto max-w-6xl px-5 pb-16 pt-14 sm:px-6 sm:pb-20 sm:pt-20 md:pb-28 md:pt-28">
-        <div className="flex flex-col items-center gap-6 text-center sm:gap-8">
-          <div className="animate-rise" style={{ animationDelay: "0ms" }}>
-            <Wordmark height={44} href={null} priority />
+      {/* ---- Hero: full-panel image, copy overlaid on desktop ---- */}
+      <section className="relative overflow-hidden">
+        {/* desktop full-panel background */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 hidden bg-cover bg-right bg-no-repeat md:block"
+          style={{
+            backgroundImage: `linear-gradient(90deg, rgba(250,251,252,.95) 0%, rgba(250,251,252,.72) 34%, rgba(250,251,252,0) 56%), url('${HERO_DESKTOP}')`,
+          }}
+        />
+        <div className="relative mx-auto flex w-full max-w-[1280px] flex-col px-6 pt-6 sm:pt-8 md:min-h-[620px] md:justify-center md:pt-0">
+          <div className="md:max-w-[52%]">
+            <span className="type-kicker" style={{ color: PURPLE }}>
+              Premium Kratom Tablets
+            </span>
+            <h1
+              className="type-display mt-4 text-primary text-5xl leading-[0.92] [overflow-wrap:normal] sm:text-6xl md:text-7xl"
+              style={{ fontWeight: 900 }}
+            >
+              PURE
+              <br />
+              SCIENCE.
+            </h1>
+            <div
+              className="mt-6 h-[5px] w-16 rounded-full"
+              style={{ background: PURPLE }}
+            />
+            <p className="mt-5 max-w-[44ch] text-sm leading-relaxed text-secondary sm:text-base">
+              <span className="font-semibold text-primary">
+                Built with MitraGen+&trade;.
+              </span>{" "}
+              A proprietary, solvent-free formulation of isolated, standardized
+              alkaloids. U.S.-grown kratom. Made in the USA. Lab-tested every
+              lot.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link
+                href="/tablets"
+                className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+                style={{ background: PURPLE }}
+              >
+                Explore Tablets <Chevron />
+              </Link>
+              <a
+                href={WHOLESALE_MAILTO}
+                className="inline-flex items-center justify-center gap-2 rounded-lg border-[1.5px] bg-white px-6 py-3.5 text-sm font-semibold transition-colors hover:bg-surface-raised"
+                style={{ color: PURPLE, borderColor: PURPLE }}
+              >
+                Wholesale Pricing <Chevron />
+              </a>
+            </div>
           </div>
-          <div
-            className="flex animate-rise items-center gap-3 text-muted"
-            style={{ animationDelay: "80ms" }}
-          >
-            <SlashX size={16} accent />
-            <span className="type-kicker">Pure Science.</span>
+
+          {/* mobile hero image */}
+          <div className="mt-7 overflow-hidden rounded-xl md:hidden">
+            <Image
+              src={HERO_MOBILE}
+              alt="KR8MX Tablets, five flavors"
+              width={1200}
+              height={800}
+              priority
+              sizes="100vw"
+              className="w-full"
+            />
           </div>
-          <h1
-            className="type-display max-w-[14ch] animate-rise text-balance text-primary text-4xl sm:text-5xl md:text-6xl"
-            style={{ animationDelay: "150ms" }}
-          >
-            Built for what&rsquo;s next.
-          </h1>
-          <p
-            className="max-w-md animate-rise text-sm text-secondary sm:text-base"
-            style={{ animationDelay: "240ms" }}
-          >
-            The precision tablet line: lighter format, higher standards,
-            engineered to a single standard. Five flavors. 21+.
-          </p>
         </div>
       </section>
 
-      {/* ---- Tablets spotlight, the live precision line ---- */}
-      <section aria-label="Product line" className="mx-auto max-w-6xl px-6 pb-24">
-        <Reveal>
-          <div className="relative flex min-h-[360px] flex-col justify-between gap-8 overflow-hidden rounded-xl border border-hairline bg-surface p-7 sm:min-h-[440px] sm:gap-10 sm:p-10 lg:flex-row lg:items-center lg:gap-12">
-            {/* soft flavor-gradient accents */}
+      {/* ---- Value points ---- */}
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="relative z-10 -mt-2 grid grid-cols-1 rounded-xl border border-hairline bg-surface shadow-[0_24px_50px_rgba(20,30,40,0.08)] sm:grid-cols-2 lg:grid-cols-4 md:-mt-10">
+          {VALUE_POINTS.map((p, i) => (
             <div
-              aria-hidden
-              className="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full opacity-60 blur-3xl"
-              style={{
-                background: `radial-gradient(circle, ${FLAVOR_META.blue_razz.hex}33, transparent 70%)`,
-              }}
-            />
-            <div
-              aria-hidden
-              className="pointer-events-none absolute -bottom-20 -left-10 h-64 w-64 rounded-full opacity-50 blur-3xl"
-              style={{
-                background: `radial-gradient(circle, ${FLAVOR_META.grape.hex}2e, transparent 70%)`,
-              }}
-            />
-
-            <div className="relative flex flex-1 flex-col gap-5 lg:max-w-sm">
-              <div className="flex items-center justify-between gap-3">
-                <span className="type-kicker text-muted">The Precision Line</span>
-                <SlashX size={22} accent />
-              </div>
-              <h2 className="type-display text-primary text-3xl sm:text-4xl md:text-5xl">
-                Tablets
-              </h2>
-              <p className="max-w-[34ch] text-sm text-secondary">
-                Lighter format. Higher standards. Five flavors, built with
-                MitraGen+&trade;. 21+ adult use only.
-              </p>
-              <Button href="/tablets" variant="solid" size="md">
-                Explore Tablets
-              </Button>
-            </div>
-
-            <div className="relative -mx-1 flex-1 overflow-hidden rounded-lg">
-              <div className="relative aspect-[16/9]">
-                <Image
-                  src={TABLETS_LINEUP_IMAGE}
-                  alt="KR8MX tablets, five flavors"
-                  fill
-                  sizes="(max-width: 1024px) 100vw, 45vw"
-                  className="object-cover object-center"
-                />
+              key={p.title}
+              className={`flex items-start gap-3.5 p-6 ${
+                i > 0 ? "border-t border-hairline lg:border-l lg:border-t-0" : ""
+              } ${i === 2 ? "sm:border-t-0 sm:border-l lg:border-l" : ""} ${
+                i === 1 || i === 3 ? "sm:border-l" : ""
+              }`}
+            >
+              <svg
+                width={30}
+                height={30}
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke={PURPLE}
+                strokeWidth={1.5}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="mt-0.5 shrink-0"
+              >
+                <path d={p.d} />
+              </svg>
+              <div>
+                <span className="block text-sm text-primary">{p.title}</span>
+                <span className="mt-0.5 block text-2xs leading-relaxed text-muted">
+                  {p.body}
+                </span>
               </div>
             </div>
-          </div>
-        </Reveal>
-      </section>
+          ))}
+        </div>
+      </div>
 
-      {/* ---- Quality pillars ---- */}
-      <Reveal>
-        <QualityPillars />
-      </Reveal>
-
-      {/* ---- Standard callout ---- */}
-      <section className="mx-auto max-w-6xl px-6 py-16 sm:py-24">
-        <Reveal className="flex flex-col items-center gap-6 text-center">
-          <span className="type-kicker text-muted">The Standard</span>
-          <p className="type-display max-w-[20ch] text-primary text-2xl md:text-3xl">
-            One standard. Every format.
+      {/* ---- The lineup ---- */}
+      <section className="px-6 py-16 text-center sm:py-24">
+        <Reveal className="mx-auto max-w-6xl">
+          <span className="type-kicker" style={{ color: PURPLE }}>
+            The KR8MX&trade; Lineup
+          </span>
+          <h2 className="type-display mt-3 text-primary text-3xl sm:text-4xl md:text-[40px]">
+            Premium Kratom Tablets. Purpose-Built.
+          </h2>
+          <p className="mx-auto mt-4 max-w-[64ch] text-sm leading-relaxed text-secondary sm:text-base">
+            Each tablet delivers 100 mg MitraGen+&trade; plus 200 mg
+            standardized minor alkaloids, 300 mg total, in a solvent-free
+            formula crafted for consistency, purity, and precision.
           </p>
+
+          {/* cards: desktop grid */}
+          <div className="mt-11 hidden gap-4 sm:grid sm:grid-cols-3 lg:grid-cols-5">
+            {FLAVOR_CARDS.map((c) => (
+              <Link
+                key={c.flavor}
+                href={`/tablets/${flavorToSlug(c.flavor)}`}
+                className="group flex flex-col rounded-xl border border-hairline bg-surface p-4 pb-5 text-center shadow-[0_10px_26px_rgba(20,30,40,0.05)] transition-transform hover:-translate-y-1"
+              >
+                <div
+                  className="flex h-44 items-end justify-center rounded-lg p-3.5"
+                  style={{ background: "linear-gradient(180deg,#fbfcfd,#eef1f4)" }}
+                >
+                  <Image
+                    src={defaultTabletImage(c.flavor)}
+                    alt={`KR8MX ${c.name} Tablets`}
+                    width={130}
+                    height={190}
+                    className="h-full w-auto object-contain drop-shadow-[0_12px_14px_rgba(0,0,0,0.18)]"
+                  />
+                </div>
+                <span
+                  className="type-display mt-4 text-base tracking-wide"
+                  style={{ color: c.color, fontWeight: 800 }}
+                >
+                  {c.name.toUpperCase()}
+                </span>
+                <span className="mt-1 text-2xs text-muted">{c.tagline}</span>
+                <span
+                  className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg border-[1.5px] px-3.5 py-2.5 text-xs font-semibold"
+                  style={{ color: c.color, borderColor: c.color }}
+                >
+                  View Product <Chevron />
+                </span>
+              </Link>
+            ))}
+          </div>
+
+          {/* cards: mobile CTA */}
           <Link
-            href="/standard"
-            className="text-xs uppercase tracking-wide text-secondary underline-offset-4 transition-colors duration-base ease-out-brand hover:text-primary hover:underline"
+            href="/tablets"
+            className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-lg border-[1.5px] bg-white px-6 py-3.5 text-sm font-semibold sm:hidden"
+            style={{ color: PURPLE, borderColor: PURPLE }}
           >
-            How we build
+            View All Flavors <Chevron />
           </Link>
         </Reveal>
       </section>

@@ -3,11 +3,37 @@ import { Wordmark } from "@/components/brand/Wordmark";
 import { CartButton } from "@/components/site/CartButton";
 
 const NAV = [
-  // Drinks (Energy Drink line) hidden until market-ready, restore when launching.
-  { href: "/tablets", label: "Tablets" },
-  { href: "/standard", label: "The Standard" },
-  { href: "/access", label: "Access" },
+  { href: "/tablets", label: "Products" },
+  { href: "/about", label: "Formula" },
+  { href: "mailto:aj@gelhq.com?subject=KR8MX%20Wholesale%20Inquiry", label: "Wholesale", external: true },
+  { href: "mailto:aj@gelhq.com", label: "Contact", external: true },
 ];
+
+/** Renders a nav item as a plain anchor for mailto/external, else a Link. */
+function NavItem({
+  href,
+  external,
+  className,
+  children,
+}: {
+  href: string;
+  external?: boolean;
+  className: string;
+  children: React.ReactNode;
+}) {
+  if (external) {
+    return (
+      <a href={href} className={className}>
+        {children}
+      </a>
+    );
+  }
+  return (
+    <Link href={href} className={className}>
+      {children}
+    </Link>
+  );
+}
 
 /**
  * Site header, minimal, precision theme. Wordmark, primary nav, cart. Generous
@@ -20,18 +46,16 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-8 px-6">
         <Wordmark height={20} priority sizeClassName="h-[22px] w-auto md:h-5" />
 
-        <nav
-          aria-label="Primary"
-          className="hidden items-center gap-9 md:flex"
-        >
+        <nav aria-label="Primary" className="hidden items-center gap-9 md:flex">
           {NAV.map((item) => (
-            <Link
-              key={item.href}
+            <NavItem
+              key={item.label}
               href={item.href}
+              external={item.external}
               className="text-xs uppercase tracking-wide text-secondary transition-colors duration-base ease-out-brand hover:text-primary"
             >
               {item.label}
-            </Link>
+            </NavItem>
           ))}
         </nav>
 
@@ -46,13 +70,14 @@ export function Header() {
         className="flex items-center justify-center gap-7 border-t border-hairline px-6 py-2.5 md:hidden"
       >
         {NAV.map((item) => (
-          <Link
-            key={item.href}
+          <NavItem
+            key={item.label}
             href={item.href}
+            external={item.external}
             className="text-2xs uppercase tracking-wide text-secondary transition-colors duration-base ease-out-brand hover:text-primary"
           >
             {item.label}
-          </Link>
+          </NavItem>
         ))}
       </nav>
     </header>
