@@ -1,4 +1,5 @@
 import { SlashX } from "@/components/brand/SlashX";
+import { CountUp } from "@/components/site/CountUp";
 
 /* =============================================================================
    The MitraGen+™ Standard, the formulation-technology story shared across the
@@ -8,17 +9,20 @@ import { SlashX } from "@/components/brand/SlashX";
 
 const COMPOSITION = [
   {
-    mg: "100 mg",
+    to: 100,
+    suffix: "mg",
     label: "MitraGen+™",
     note: "Proprietary formulation",
   },
   {
-    mg: "200 mg",
+    to: 200,
+    suffix: "mg",
     label: "Minor alkaloids",
     note: "Standardized, incl. Speciociliatine, Mitragynine",
   },
   {
-    mg: "300 mg",
+    to: 300,
+    suffix: "mg",
     label: "Total per tablet",
     note: "Scored for ½-tablet servings",
   },
@@ -61,7 +65,12 @@ export function MitraGenStandard({ accent = "#1e2528" }: { accent?: string }) {
         background: `radial-gradient(120% 90% at 100% 0%, ${accent}12, transparent 60%)`,
       }}
     >
-      <div className="flex flex-col gap-3">
+      <div
+        aria-hidden
+        className="animate-glow pointer-events-none absolute -right-24 -top-28 h-[420px] w-[420px] rounded-full blur-3xl"
+        style={{ background: `radial-gradient(circle, ${accent}, transparent 68%)` }}
+      />
+      <div className="relative flex flex-col gap-3">
         <div className="flex items-center gap-2.5">
           <SlashX size={14} accent />
           <span className="type-kicker" style={{ color: accent }}>
@@ -81,7 +90,7 @@ export function MitraGenStandard({ accent = "#1e2528" }: { accent?: string }) {
       </div>
 
       {/* composition */}
-      <div className="mt-8 grid gap-3 sm:grid-cols-3">
+      <div className="relative mt-8 grid gap-3 sm:grid-cols-3">
         {COMPOSITION.map((row) => (
           <div
             key={row.label}
@@ -91,7 +100,8 @@ export function MitraGenStandard({ accent = "#1e2528" }: { accent?: string }) {
               className="type-display text-2xl sm:text-3xl"
               style={{ color: accent }}
             >
-              {row.mg}
+              <CountUp to={row.to} />
+              <span className="ml-0.5 text-lg sm:text-xl">{row.suffix}</span>
             </span>
             <span className="text-sm text-primary">{row.label}</span>
             <span className="text-2xs text-muted">{row.note}</span>

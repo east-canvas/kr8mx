@@ -170,19 +170,20 @@ export default function Home() {
         <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-28">
           <Reveal className="max-w-2xl">
             <span className="type-kicker" style={{ color: "#c4a3ef" }}>
-              A New Standard
+              The New Standard
             </span>
             <h2
-              className="type-display mt-3 text-white text-4xl leading-[0.95] sm:text-5xl md:text-6xl"
+              className="type-display mt-3 whitespace-nowrap text-white text-[min(8.5vw,3.75rem)] leading-none"
               style={{ fontWeight: 900 }}
             >
               Beyond 7-OH.
             </h2>
             <p className="mt-5 max-w-prose text-sm leading-relaxed text-white/70 sm:text-base">
-              The market is moving beyond 7-hydroxymitragynine. KR8MX is built
-              for what comes next: 0 PPM 7-OH, standardized minor alkaloids,
-              solvent-free isolation, and lab-tested every lot. A cleaner,
-              compliant standard, engineered to lead.
+              New laws are moving the market away from 7-OH. KR8MX is the
+              replacement, and the new standard for kratom tablets: 0 PPM
+              7-hydroxymitragynine, standardized minor alkaloids, solvent-free
+              isolation, and lab-tested every lot. Compliant, precise, and built
+              to lead the category.
             </p>
           </Reveal>
 
