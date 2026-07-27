@@ -2,35 +2,52 @@ import Link from "next/link";
 import { Wordmark } from "@/components/brand/Wordmark";
 import { CartButton } from "@/components/site/CartButton";
 
-const NAV = [
+type NavLink = {
+  label: string;
+  href?: string;
+  external?: boolean;
+  disabled?: boolean;
+};
+
+const NAV: NavLink[] = [
   { href: "/tablets", label: "Products" },
   { href: "/about", label: "Formula" },
-  { href: "mailto:aj@gelhq.com?subject=KR8MX%20Wholesale%20Inquiry", label: "Wholesale", external: true },
-  { href: "mailto:aj@gelhq.com", label: "Contact", external: true },
+  {
+    href: "https://www.naturesbridgegroup.com/wholesale",
+    label: "Wholesale",
+    external: true,
+  },
+  // Contact destination undecided; shown but not linked for now.
+  { label: "Contact", disabled: true },
 ];
 
-/** Renders a nav item as a plain anchor for mailto/external, else a Link. */
+/** Renders a nav item: external anchor (new tab), internal Link, or an inert
+ *  span for items whose destination isn't set yet. */
 function NavItem({
-  href,
-  external,
+  item,
   className,
-  children,
 }: {
-  href: string;
-  external?: boolean;
+  item: NavLink;
   className: string;
-  children: React.ReactNode;
 }) {
-  if (external) {
+  if (item.disabled || !item.href) {
+    return <span className={`${className} cursor-default`}>{item.label}</span>;
+  }
+  if (item.external) {
     return (
-      <a href={href} className={className}>
-        {children}
+      <a
+        href={item.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={className}
+      >
+        {item.label}
       </a>
     );
   }
   return (
-    <Link href={href} className={className}>
-      {children}
+    <Link href={item.href} className={className}>
+      {item.label}
     </Link>
   );
 }
@@ -50,12 +67,9 @@ export function Header() {
           {NAV.map((item) => (
             <NavItem
               key={item.label}
-              href={item.href}
-              external={item.external}
+              item={item}
               className="text-xs uppercase tracking-wide text-secondary transition-colors duration-base ease-out-brand hover:text-primary"
-            >
-              {item.label}
-            </NavItem>
+            />
           ))}
         </nav>
 
@@ -72,12 +86,9 @@ export function Header() {
         {NAV.map((item) => (
           <NavItem
             key={item.label}
-            href={item.href}
-            external={item.external}
+            item={item}
             className="text-2xs uppercase tracking-wide text-secondary transition-colors duration-base ease-out-brand hover:text-primary"
-          >
-            {item.label}
-          </NavItem>
+          />
         ))}
       </nav>
     </header>
