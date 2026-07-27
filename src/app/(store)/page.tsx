@@ -59,15 +59,15 @@ export default function Home() {
         <div className="relative mx-auto flex w-full max-w-[1280px] flex-col px-6 pt-6 sm:pt-8 md:min-h-[620px] md:justify-center md:pt-0">
           <div className="md:max-w-[52%]">
             <span className="type-kicker" style={{ color: PURPLE }}>
-              Premium Kratom Tablets
+              The New Standard
             </span>
             <h1
               className="type-display mt-4 text-primary text-5xl leading-[0.92] [overflow-wrap:normal] sm:text-6xl md:text-7xl"
               style={{ fontWeight: 900 }}
             >
-              PURE
+              BEYOND
               <br />
-              SCIENCE.
+              7-OH.
             </h1>
             <div
               className="mt-6 h-[5px] w-16 rounded-full"
@@ -75,11 +75,11 @@ export default function Home() {
             />
             <p className="mt-5 max-w-[44ch] text-sm leading-relaxed text-secondary sm:text-base">
               <span className="font-semibold text-primary">
-                Built with MitraGen+&trade;.
+                The market is moving beyond 7-OH.
               </span>{" "}
-              A proprietary, solvent-free formulation of isolated, standardized
-              alkaloids. U.S.-grown kratom. Made in the USA. Lab-tested every
-              lot.
+              KR8MX is the replacement, and the new standard for kratom tablets:
+              0 PPM 7-hydroxymitragynine, standardized minor alkaloids, and
+              lab-tested every lot. Compliant, precise, and built to lead.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
@@ -170,20 +170,19 @@ export default function Home() {
         <div className="relative mx-auto max-w-6xl px-6 py-20 sm:py-28">
           <Reveal className="max-w-2xl">
             <span className="type-kicker" style={{ color: "#c4a3ef" }}>
-              The New Standard
+              Built With MitraGen+&trade;
             </span>
             <h2
               className="type-display mt-3 whitespace-nowrap text-white text-[min(8.5vw,3.75rem)] leading-none"
               style={{ fontWeight: 900 }}
             >
-              Beyond 7-OH.
+              Pure Science.
             </h2>
             <p className="mt-5 max-w-prose text-sm leading-relaxed text-white/70 sm:text-base">
-              New laws are moving the market away from 7-OH. KR8MX is the
-              replacement, and the new standard for kratom tablets: 0 PPM
-              7-hydroxymitragynine, standardized minor alkaloids, solvent-free
-              isolation, and lab-tested every lot. Compliant, precise, and built
-              to lead the category.
+              Every KR8MX tablet is built with MitraGen+&trade;, a proprietary,
+              solvent-free formulation of isolated, standardized alkaloids.
+              U.S.-grown kratom, made in the USA, and lab-tested every lot.
+              Precision engineered into every tablet.
             </p>
           </Reveal>
 
