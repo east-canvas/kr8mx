@@ -4,6 +4,7 @@ import { SlashX } from "@/components/brand/SlashX";
 import { HairlineRule } from "@/components/ui/HairlineRule";
 import { Button } from "@/components/ui/Button";
 import { MitraGenStandard } from "@/components/product/MitraGenStandard";
+import { CtaBand } from "@/components/site/CtaBand";
 import { aboutPageJsonLd, breadcrumbJsonLd, SITE } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -26,7 +27,8 @@ export default function AboutPage() {
   ]);
 
   return (
-    <div className="mx-auto max-w-4xl px-6 py-16">
+    <>
+      <div className="mx-auto max-w-4xl px-6 py-16">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(aboutPageJsonLd()) }}
@@ -86,6 +88,9 @@ export default function AboutPage() {
           of Mitragen Labs. 21+ adult use only.
         </p>
       </section>
-    </div>
+      </div>
+
+      <CtaBand />
+    </>
   );
 }

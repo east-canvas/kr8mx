@@ -3,12 +3,17 @@
 import { useEffect, useRef } from "react";
 
 /**
- * Thin brand-purple reading-progress bar pinned to the very top of the viewport,
- * above the sticky header. Smoothness notes: it drives a GPU-composited
- * `transform: scaleX()` (not `width`), carries no CSS transition (so it tracks
- * the scroll position 1:1 instead of chasing it), and writes straight to the DOM
- * via a ref inside a single rAF per frame, so it never re-renders React while
- * scrolling. Decorative, so hidden from assistive tech.
+ * Thin brand-purple reading-progress bar pinned to the top of the viewport,
+ * above the sticky header.
+ *
+ * Smoothness: where the browser supports scroll-driven animations, the bar is
+ * driven entirely by CSS `animation-timeline: scroll()` (see .scroll-progress in
+ * globals.css). The compositor maps scroll position onto `scaleX` off the main
+ * thread, so there are no scroll listeners, no per-frame React renders, and no
+ * repaints. The effect below is a pure fallback that only runs when that CSS
+ * feature is unavailable, driving `scaleX` via a single rAF per frame. The bar
+ * carries no box-shadow on purpose: a blurred shadow repaints every frame and
+ * was the source of the earlier flicker. Decorative, so hidden from a11y.
  */
 const PURPLE = "#6C2FB0";
 
@@ -18,9 +23,18 @@ export function ScrollProgress() {
   useEffect(() => {
     const bar = barRef.current;
     if (!bar) return;
+
+    // Native scroll-timeline handles it; nothing to do on the main thread.
+    if (
+      typeof CSS !== "undefined" &&
+      typeof CSS.supports === "function" &&
+      CSS.supports("animation-timeline: scroll()")
+    ) {
+      return;
+    }
+
     const el = document.documentElement;
     let frame = 0;
-
     const update = () => {
       frame = 0;
       const max = el.scrollHeight - el.clientHeight;
@@ -49,12 +63,8 @@ export function ScrollProgress() {
     >
       <div
         ref={barRef}
-        className="h-full w-full origin-left will-change-transform"
-        style={{
-          transform: "scaleX(0)",
-          background: `linear-gradient(90deg, ${PURPLE}, #9b5fd6)`,
-          boxShadow: `0 0 10px ${PURPLE}66`,
-        }}
+        className="scroll-progress h-full w-full"
+        style={{ background: `linear-gradient(90deg, ${PURPLE}, #9b5fd6)` }}
       />
     </div>
   );

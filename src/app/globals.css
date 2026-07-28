@@ -131,6 +131,33 @@
     animation: kr8-marquee 38s linear infinite;
   }
 
+  /* Reading-progress bar. Where the browser supports scroll-driven animations,
+     the compositor maps the document's scroll position straight onto scaleX with
+     zero JS in the hot path (no scroll listeners, no per-frame repaint), so it is
+     perfectly smooth. Elsewhere the ScrollProgress component drives scaleX via
+     rAF as a fallback. No box-shadow: a blurred shadow forces a main-thread
+     repaint every frame and is what made the old bar flicker. */
+  @keyframes kr8-progress {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+  .scroll-progress {
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress {
+      animation: kr8-progress linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+
   /* Slow pulsing glow for the brand-statement band background. */
   @keyframes kr8-glow {
     0%,

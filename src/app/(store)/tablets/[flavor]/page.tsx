@@ -6,6 +6,7 @@ import { SlashX } from "@/components/brand/SlashX";
 import { HairlineRule } from "@/components/ui/HairlineRule";
 import { Badge } from "@/components/ui/Badge";
 import { NotifyForm } from "@/components/site/NotifyForm";
+import { CtaBand } from "@/components/site/CtaBand";
 import { MitraGenStandard } from "@/components/product/MitraGenStandard";
 import { ChevronDownIcon, ExternalIcon } from "@/components/icons/Icons";
 import {
@@ -95,7 +96,8 @@ export default async function TabletPdpPage({
   ]);
 
   return (
-    <div className="mx-auto max-w-6xl px-6 py-14">
+    <>
+      <div className="mx-auto max-w-6xl px-6 py-14">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
@@ -248,6 +250,9 @@ export default async function TabletPdpPage({
       <div className="mt-14">
         <MitraGenStandard accent={c.hex} />
       </div>
-    </div>
+      </div>
+
+      <CtaBand />
+    </>
   );
 }
