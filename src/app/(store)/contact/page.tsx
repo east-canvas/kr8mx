@@ -36,7 +36,7 @@ export default function ContactPage() {
         <span className="type-kicker">Get In Touch</span>
       </div>
       <h1 className="type-display mt-5 max-w-[18ch] text-primary text-4xl sm:text-5xl">
-        Let us talk.
+        Let&rsquo;s talk.
       </h1>
       <p className="mt-5 max-w-xl text-sm leading-relaxed text-secondary sm:text-base">
         Wholesale, retail, or a general question. Tell us a bit about you and our
