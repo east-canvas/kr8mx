@@ -53,7 +53,7 @@ export default function AboutPage() {
       <HairlineRule className="my-10" />
 
       {/* the formula + the standard */}
-      <MitraGenStandard />
+      <MitraGenStandard accent="#6C2FB0" />
 
       {/* the line */}
       <section className="mt-12 flex flex-col gap-3">

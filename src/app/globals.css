@@ -110,6 +110,20 @@
     animation: kr8-rise 0.6s var(--ease-out) both;
   }
 
+  /* Seamless horizontal ticker for the trust marquee. The track holds two
+     identical halves; translating -50% loops with no visible seam. */
+  @keyframes kr8-marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  .animate-marquee {
+    animation: kr8-marquee 38s linear infinite;
+  }
+
   /* Slow pulsing glow for the brand-statement band background. */
   @keyframes kr8-glow {
     0%,
@@ -130,7 +144,8 @@
     .reveal,
     .reveal-hidden,
     .animate-rise,
-    .animate-glow {
+    .animate-glow,
+    .animate-marquee {
       animation: none !important;
       transition: none !important;
       opacity: 1 !important;

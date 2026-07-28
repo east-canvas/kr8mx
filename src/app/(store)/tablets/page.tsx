@@ -7,6 +7,7 @@ import { HairlineRule } from "@/components/ui/HairlineRule";
 import { Badge } from "@/components/ui/Badge";
 import { Reveal } from "@/components/ui/Reveal";
 import { NotifyForm } from "@/components/site/NotifyForm";
+import { MarqueeStrip } from "@/components/site/MarqueeStrip";
 import { MitraGenStandard } from "@/components/product/MitraGenStandard";
 import {
   getTabletsCatalog,
@@ -76,11 +77,11 @@ export default async function TabletsCollectionPage() {
         </div>
       </section>
 
-      <HairlineRule />
+      <MarqueeStrip />
 
       {/* The MitraGen+ Standard, formulation intro */}
       <section className="mx-auto max-w-6xl px-6 py-14">
-        <MitraGenStandard />
+        <MitraGenStandard accent="#6C2FB0" />
       </section>
 
       <HairlineRule />
@@ -104,7 +105,16 @@ export default async function TabletsCollectionPage() {
                   } 30%, ${c.hex}1f, transparent 60%)`,
                 }}
               >
-                <Reveal className={flip ? "md:order-2" : ""}>
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-slow ease-out-brand group-hover:opacity-100"
+                  style={{
+                    background: `radial-gradient(120% 120% at ${
+                      flip ? "85%" : "15%"
+                    } 30%, ${c.hex}33, transparent 62%)`,
+                  }}
+                />
+                <Reveal className={`relative ${flip ? "md:order-2" : ""}`}>
                   <ProductVisual
                     imageUrl={c.imageUrl ?? defaultTabletImage(item.flavor)}
                     alt={`KR8MX Tablets, ${c.name}`}
@@ -118,7 +128,9 @@ export default async function TabletsCollectionPage() {
 
                 <Reveal
                   delay={120}
-                  className={`flex flex-col gap-5 ${flip ? "md:order-1" : ""}`}
+                  className={`relative flex flex-col gap-5 ${
+                    flip ? "md:order-1" : ""
+                  }`}
                 >
                   <span className="type-kicker" style={{ color: c.hex }}>
                     {c.tagline ?? `${String(i + 1).padStart(2, "0")} / Flavor`}

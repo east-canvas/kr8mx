@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
 import { CountUp } from "@/components/site/CountUp";
+import { MarqueeStrip } from "@/components/site/MarqueeStrip";
 import { defaultTabletImage, flavorToSlug } from "@/lib/catalog";
 import type { Flavor } from "@/db/schema";
 
@@ -58,22 +59,28 @@ export default function Home() {
         />
         <div className="relative mx-auto flex w-full max-w-[1280px] flex-col px-6 pt-6 sm:pt-8 md:min-h-[620px] md:justify-center md:pt-0">
           <div className="md:max-w-[52%]">
-            <span className="type-kicker" style={{ color: PURPLE }}>
+            <span
+              className="type-kicker animate-rise inline-block"
+              style={{ color: PURPLE, animationDelay: "40ms" }}
+            >
               The New Standard
             </span>
             <h1
-              className="type-display mt-4 text-primary text-5xl leading-[0.92] [overflow-wrap:normal] sm:text-6xl md:text-7xl"
-              style={{ fontWeight: 900 }}
+              className="type-display animate-rise mt-4 text-primary text-5xl leading-[0.92] [overflow-wrap:normal] sm:text-6xl md:text-7xl"
+              style={{ fontWeight: 900, animationDelay: "120ms" }}
             >
               BEYOND
               <br />
               7-OH.
             </h1>
             <div
-              className="mt-6 h-[5px] w-16 rounded-full"
-              style={{ background: PURPLE }}
+              className="animate-rise mt-6 h-[5px] w-16 rounded-full"
+              style={{ background: PURPLE, animationDelay: "220ms" }}
             />
-            <p className="mt-5 max-w-[44ch] text-sm leading-relaxed text-secondary sm:text-base">
+            <p
+              className="animate-rise mt-5 max-w-[44ch] text-sm leading-relaxed text-secondary sm:text-base"
+              style={{ animationDelay: "300ms" }}
+            >
               <span className="font-semibold text-primary">
                 The market is moving beyond 7-OH.
               </span>{" "}
@@ -81,7 +88,10 @@ export default function Home() {
               0 PPM 7-hydroxymitragynine, standardized minor alkaloids, and
               lab-tested every lot. Compliant, precise, and built to lead.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+            <div
+              className="animate-rise mt-8 flex flex-col gap-3 sm:flex-row"
+              style={{ animationDelay: "400ms" }}
+            >
               <Link
                 href="/tablets"
                 className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
@@ -117,12 +127,12 @@ export default function Home() {
       </section>
 
       {/* ---- Value points ---- */}
-      <div className="mx-auto max-w-6xl px-6">
-        <div className="relative z-10 -mt-2 grid grid-cols-1 rounded-xl border border-hairline bg-surface shadow-[0_24px_50px_rgba(20,30,40,0.08)] sm:grid-cols-2 lg:grid-cols-4 md:-mt-10">
+      <Reveal className="mx-auto max-w-6xl px-6">
+        <div className="relative z-10 -mt-2 grid grid-cols-1 overflow-hidden rounded-xl border border-hairline bg-surface shadow-[0_24px_50px_rgba(20,30,40,0.08)] sm:grid-cols-2 lg:grid-cols-4 md:-mt-10">
           {VALUE_POINTS.map((p, i) => (
             <div
               key={p.title}
-              className={`flex items-start gap-3.5 p-6 ${
+              className={`group/vp flex items-start gap-3.5 p-6 transition-colors duration-base ease-out-brand hover:bg-surface-raised ${
                 i > 0 ? "border-t border-hairline lg:border-l lg:border-t-0" : ""
               } ${i === 2 ? "sm:border-t-0 sm:border-l lg:border-l" : ""} ${
                 i === 1 || i === 3 ? "sm:border-l" : ""
@@ -137,7 +147,7 @@ export default function Home() {
                 strokeWidth={1.5}
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="mt-0.5 shrink-0"
+                className="mt-0.5 shrink-0 transition-transform duration-base ease-out-brand group-hover/vp:scale-110"
               >
                 <path d={p.d} />
               </svg>
@@ -150,6 +160,11 @@ export default function Home() {
             </div>
           ))}
         </div>
+      </Reveal>
+
+      {/* ---- Trust ticker ---- */}
+      <div className="mt-14 sm:mt-20">
+        <MarqueeStrip />
       </div>
 
       {/* ---- Beyond 7-OH: the new standard ---- */}
@@ -225,53 +240,65 @@ export default function Home() {
             standardized minor alkaloids, 300 mg total, in a solvent-free
             formula crafted for consistency, purity, and precision.
           </p>
-
-          {/* cards: desktop grid */}
-          <div className="mt-11 hidden gap-4 sm:grid sm:grid-cols-3 lg:grid-cols-5">
-            {FLAVOR_CARDS.map((c) => (
-              <Link
-                key={c.flavor}
-                href={`/tablets/${flavorToSlug(c.flavor)}`}
-                className="group flex flex-col rounded-xl border border-hairline bg-surface p-4 pb-5 text-center shadow-[0_10px_26px_rgba(20,30,40,0.05)] transition-transform hover:-translate-y-1"
-              >
-                <div
-                  className="flex h-44 items-end justify-center rounded-lg p-3.5"
-                  style={{ background: "linear-gradient(180deg,#fbfcfd,#eef1f4)" }}
-                >
-                  <Image
-                    src={defaultTabletImage(c.flavor)}
-                    alt={`KR8MX ${c.name} Tablets`}
-                    width={130}
-                    height={190}
-                    className="h-full w-auto object-contain drop-shadow-[0_12px_14px_rgba(0,0,0,0.18)]"
-                  />
-                </div>
-                <span
-                  className="type-display mt-4 text-base tracking-wide"
-                  style={{ color: c.color, fontWeight: 800 }}
-                >
-                  {c.name.toUpperCase()}
-                </span>
-                <span className="mt-1 text-2xs text-muted">{c.tagline}</span>
-                <span
-                  className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg border-[1.5px] px-3.5 py-2.5 text-xs font-semibold"
-                  style={{ color: c.color, borderColor: c.color }}
-                >
-                  View Product <Chevron />
-                </span>
-              </Link>
-            ))}
-          </div>
-
-          {/* cards: mobile CTA */}
-          <Link
-            href="/tablets"
-            className="mt-8 inline-flex w-full items-center justify-center gap-2 rounded-lg border-[1.5px] bg-white px-6 py-3.5 text-sm font-semibold sm:hidden"
-            style={{ color: PURPLE, borderColor: PURPLE }}
-          >
-            View All Flavors <Chevron />
-          </Link>
         </Reveal>
+
+        {/* cards: desktop grid, staggered reveal */}
+        <div className="mx-auto mt-11 hidden max-w-6xl gap-4 sm:grid sm:grid-cols-3 lg:grid-cols-5">
+          {FLAVOR_CARDS.map((c, i) => (
+            <Reveal key={c.flavor} delay={i * 70} className="h-full">
+              <Link
+                href={`/tablets/${flavorToSlug(c.flavor)}`}
+                className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-hairline bg-surface p-4 pb-5 text-center shadow-[0_10px_26px_rgba(20,30,40,0.05)] transition-transform duration-base ease-out-brand hover:-translate-y-1"
+              >
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-slow ease-out-brand group-hover:opacity-100"
+                  style={{
+                    background: `radial-gradient(120% 70% at 50% 0%, ${c.color}24, transparent 68%)`,
+                  }}
+                />
+                <div className="relative flex flex-1 flex-col">
+                  <div
+                    className="flex h-44 items-end justify-center overflow-hidden rounded-lg p-3.5"
+                    style={{
+                      background: "linear-gradient(180deg,#fbfcfd,#eef1f4)",
+                    }}
+                  >
+                    <Image
+                      src={defaultTabletImage(c.flavor)}
+                      alt={`KR8MX ${c.name} Tablets`}
+                      width={130}
+                      height={190}
+                      className="h-full w-auto object-contain drop-shadow-[0_12px_14px_rgba(0,0,0,0.18)] transition-transform duration-slow ease-out-brand group-hover:scale-[1.05]"
+                    />
+                  </div>
+                  <span
+                    className="type-display mt-4 text-base tracking-wide"
+                    style={{ color: c.color, fontWeight: 800 }}
+                  >
+                    {c.name.toUpperCase()}
+                  </span>
+                  <span className="mt-1 text-2xs text-muted">{c.tagline}</span>
+                  <span
+                    className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-lg border-[1.5px] px-3.5 py-2.5 text-xs font-semibold transition-colors duration-base ease-out-brand"
+                    style={{ color: c.color, borderColor: c.color }}
+                  >
+                    View Product <Chevron />
+                  </span>
+                </div>
+              </Link>
+            </Reveal>
+          ))}
+        </div>
+
+        {/* cards: mobile CTA */}
+        <Link
+          href="/tablets"
+          className="mx-auto mt-8 inline-flex w-full max-w-6xl items-center justify-center gap-2 rounded-lg border-[1.5px] bg-white px-6 py-3.5 text-sm font-semibold sm:hidden"
+          style={{ color: PURPLE, borderColor: PURPLE }}
+        >
+          View All Flavors <Chevron />
+        </Link>
       </section>
     </>
   );

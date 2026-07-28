@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
+import { ScrollProgress } from "@/components/site/ScrollProgress";
 import { AgeGate } from "@/components/compliance/AgeGate";
 import {
   AGE_GATE_COOKIE,
@@ -24,6 +25,7 @@ export default async function StoreLayout({
 
   return (
     <div className="flex min-h-screen flex-col">
+      <ScrollProgress />
       <Header />
       <main className="flex-1">{children}</main>
       <Footer />
