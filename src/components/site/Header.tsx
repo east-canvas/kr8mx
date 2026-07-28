@@ -11,8 +11,7 @@ const NAV: NavLink[] = [
     label: "Wholesale",
     external: true,
   },
-  // Contact destination undecided; shown but not linked for now.
-  { label: "Contact", disabled: true },
+  { href: "/contact", label: "Contact" },
 ];
 
 /**

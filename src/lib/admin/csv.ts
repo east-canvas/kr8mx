@@ -28,3 +28,45 @@ export function notifyListToCsv(rows: NotifyCsvRow[]): string {
   }
   return lines.join("\n");
 }
+
+/** CSV export for the sales leads pipeline. */
+export type LeadCsvRow = {
+  createdAt: Date | string;
+  type: string;
+  status: string;
+  name: string;
+  email: string;
+  company: string | null;
+  phone: string | null;
+  message: string | null;
+};
+
+const LEAD_HEADER = [
+  "created_at",
+  "type",
+  "status",
+  "name",
+  "email",
+  "company",
+  "phone",
+  "message",
+];
+
+export function leadsToCsv(rows: LeadCsvRow[]): string {
+  const lines = [LEAD_HEADER.join(",")];
+  for (const r of rows) {
+    lines.push(
+      [
+        cell(new Date(r.createdAt).toISOString()),
+        cell(r.type),
+        cell(r.status),
+        cell(r.name),
+        cell(r.email),
+        cell(r.company ?? ""),
+        cell(r.phone ?? ""),
+        cell(r.message ?? ""),
+      ].join(","),
+    );
+  }
+  return lines.join("\n");
+}

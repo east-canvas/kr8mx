@@ -7,6 +7,7 @@ const LEGAL_LINKS = [
   { href: "/about", label: "About" },
   { href: "/tablets", label: "Tablets" },
   { href: "/coa", label: "COAs" },
+  { href: "/contact", label: "Contact" },
   { href: "/legal/terms", label: "Terms" },
   { href: "/legal/privacy", label: "Privacy" },
   { href: "/legal/shipping", label: "Shipping" },

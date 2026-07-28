@@ -52,6 +52,18 @@ export const productCategoryEnum = pgEnum("product_category", [
   "tablets",
 ]);
 
+export const leadTypeEnum = pgEnum("lead_type", [
+  "wholesale",
+  "retail",
+  "general",
+]);
+
+export const leadStatusEnum = pgEnum("lead_status", [
+  "new",
+  "contacted",
+  "closed",
+]);
+
 /* ------------------------------------------------------------ catalog ----- */
 
 export const productLines = pgTable("product_lines", {
@@ -283,6 +295,35 @@ export const notifyList = pgTable(
       t.email,
       t.variantId,
     ),
+  }),
+);
+
+/* ------------------------------------------------- leads / inquiries ------ */
+
+/**
+ * Inbound wholesale / retail / general inquiries from the public contact form.
+ * Feeds the sales console; each new row also fires an internal notification
+ * email. This is a sales pipeline record, not marketing consent (that lives in
+ * notify_list).
+ */
+export const leads = pgTable(
+  "leads",
+  {
+    id: serial("id").primaryKey(),
+    type: leadTypeEnum("type").notNull().default("general"),
+    name: text("name").notNull(),
+    email: text("email").notNull(),
+    company: text("company"),
+    phone: varchar("phone", { length: 40 }),
+    message: text("message"),
+    status: leadStatusEnum("status").notNull().default("new"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => ({
+    createdIdx: index("leads_created_idx").on(t.createdAt),
+    statusIdx: index("leads_status_idx").on(t.status),
   }),
 );
 
@@ -581,6 +622,7 @@ export type Cart = typeof carts.$inferSelect;
 export type CartItem = typeof cartItems.$inferSelect;
 export type NotifyListEntry = typeof notifyList.$inferSelect;
 export type ShippingRestriction = typeof shippingRestrictions.$inferSelect;
+export type Lead = typeof leads.$inferSelect;
 
 export type ProductContent = typeof productContent.$inferSelect;
 export type SalesRep = typeof salesReps.$inferSelect;
@@ -596,3 +638,5 @@ export type Flavor = (typeof flavorEnum.enumValues)[number];
 export type VariantStatus = (typeof variantStatusEnum.enumValues)[number];
 export type OrderStatus = (typeof orderStatusEnum.enumValues)[number];
 export type ProductCategory = (typeof productCategoryEnum.enumValues)[number];
+export type LeadType = (typeof leadTypeEnum.enumValues)[number];
+export type LeadStatus = (typeof leadStatusEnum.enumValues)[number];

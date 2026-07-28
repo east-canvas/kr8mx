@@ -7,6 +7,7 @@ import {
   orderEvents,
   sentEmails,
   notifyList,
+  leads,
   shippingRestrictions,
   inventory,
   productVariants,
@@ -16,6 +17,7 @@ import {
 } from "@/db/schema";
 import type {
   Flavor,
+  LeadStatus,
   Order,
   OrderStatus,
   ProductCategory,
@@ -91,6 +93,39 @@ export async function getNotifyOverview() {
     return { rows, subscribed, unsubscribed: rows.length - subscribed, byVariant };
   } catch {
     return { rows: [], subscribed: 0, unsubscribed: 0, byVariant: [] };
+  }
+}
+
+export async function getLeadsOverview() {
+  try {
+    const db = getDb();
+    const rows = await db
+      .select()
+      .from(leads)
+      .orderBy(desc(leads.createdAt))
+      .limit(500);
+    const count = (s: LeadStatus) => rows.filter((r) => r.status === s).length;
+    const byType = await db
+      .select({ type: leads.type, count: sql<number>`count(*)::int` })
+      .from(leads)
+      .groupBy(leads.type);
+    return {
+      rows,
+      total: rows.length,
+      newCount: count("new"),
+      contacted: count("contacted"),
+      closed: count("closed"),
+      byType,
+    };
+  } catch {
+    return {
+      rows: [],
+      total: 0,
+      newCount: 0,
+      contacted: 0,
+      closed: 0,
+      byType: [],
+    };
   }
 }
 

@@ -151,6 +151,47 @@ export function tabletsLaunchEmail(unsubscribeUrl: string): RenderedEmail {
   };
 }
 
+export function leadNotificationEmail(lead: {
+  type: string;
+  name: string;
+  email: string;
+  company: string | null;
+  phone: string | null;
+  message: string | null;
+}): RenderedEmail {
+  const th: Theme = "precision";
+  const t = THEME[th];
+  const base = resolveBaseUrl();
+  const row = (label: string, value: string) =>
+    `<tr>` +
+    `<td style="padding:6px 14px 6px 0;font-size:13px;color:${t.muted};white-space:nowrap;vertical-align:top">${esc(label)}</td>` +
+    `<td style="padding:6px 0;font-size:14px;color:${t.text}">${value}</td>` +
+    `</tr>`;
+  const details =
+    `<table style="width:100%;border-collapse:collapse;margin:4px 0 22px"><tbody>` +
+    row("Type", esc(lead.type)) +
+    row("Name", esc(lead.name)) +
+    row(
+      "Email",
+      `<a href="mailto:${esc(lead.email)}" style="color:${t.text}">${esc(lead.email)}</a>`,
+    ) +
+    (lead.company ? row("Company", esc(lead.company)) : "") +
+    (lead.phone ? row("Phone", esc(lead.phone)) : "") +
+    (lead.message
+      ? row("Message", esc(lead.message).replace(/\n/g, "<br/>"))
+      : "") +
+    `</tbody></table>`;
+  const inner =
+    kicker(th, `New ${esc(lead.type)} lead`) +
+    h1(th, "New inquiry.") +
+    details +
+    cta(th, "Open Sales Console", `${base}/admin/leads`);
+  return {
+    subject: `New ${lead.type} lead: ${lead.name}`,
+    html: layout(th, inner),
+  };
+}
+
 export function drinksCampaignEmail(args: {
   heading: string;
   body: string;

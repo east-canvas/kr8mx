@@ -10,8 +10,9 @@ import {
   orderEvents,
   shippingRestrictions,
   inventory,
+  leads,
 } from "@/db/schema";
-import type { OrderStatus } from "@/db/schema";
+import type { LeadStatus, OrderStatus } from "@/db/schema";
 import { ADMIN_COOKIE, isAuthed } from "@/lib/admin/auth";
 import { canTransition } from "@/db/order-state";
 import { logAudit } from "@/lib/admin/audit";
@@ -46,6 +47,24 @@ export async function sendTestEmailAction(formData: FormData) {
   redirect(
     `/admin?ok=test&provider=${provider.name}&result=${res.ok ? "sent" : "failed"}`,
   );
+}
+
+/** Update a lead's pipeline status (new / contacted / closed) from the sales
+ *  console. Ignores unknown values. */
+export async function updateLeadStatusAction(formData: FormData) {
+  await assertAuthed();
+  const id = Number(str(formData.get("id")));
+  const status = str(formData.get("status")) as LeadStatus;
+  const allowed: LeadStatus[] = ["new", "contacted", "closed"];
+  if (Number.isFinite(id) && allowed.includes(status)) {
+    try {
+      const db = getDb();
+      await db.update(leads).set({ status }).where(eq(leads.id, id));
+    } catch {
+      /* ignore */
+    }
+  }
+  revalidatePath("/admin/leads");
 }
 
 /** Manual order transition via the state machine. Illegal edges are rejected
