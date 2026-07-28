@@ -1,7 +1,8 @@
 "use server";
 
+import { randomBytes } from "node:crypto";
 import { getDb } from "@/db/client";
-import { leads } from "@/db/schema";
+import { leads, notifyList } from "@/db/schema";
 import { getEmailProvider } from "@/lib/email/providers";
 import {
   leadNotificationEmail,
@@ -43,6 +44,7 @@ export async function submitLead(input: {
   volume?: string;
   location?: string;
   message?: string;
+  subscribe?: boolean;
 }): Promise<{ ok: boolean; error?: string }> {
   const name = input.name?.trim();
   const email = input.email?.trim().toLowerCase();
@@ -83,6 +85,23 @@ export async function submitLead(input: {
     lead = row;
   } catch {
     return { ok: false, error: "Something went wrong. Try again." };
+  }
+
+  // Optional marketing opt-in (explicit, unchecked by default). Best-effort.
+  if (input.subscribe) {
+    try {
+      const db = getDb();
+      await db
+        .insert(notifyList)
+        .values({
+          email,
+          subscribed: true,
+          unsubscribeToken: randomBytes(16).toString("hex"),
+        })
+        .onConflictDoNothing();
+    } catch {
+      /* ignore: opt-in is secondary to the lead */
+    }
   }
 
   // Best-effort emails; the lead is already saved.

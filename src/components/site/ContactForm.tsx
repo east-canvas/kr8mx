@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { submitLead } from "@/lib/actions/lead";
 
+const PURPLE = "#6C2FB0";
+
 const TYPES = [
   { value: "wholesale", label: "Wholesale" },
   { value: "retail", label: "Retail" },
@@ -37,20 +39,22 @@ const STATES = [
 ];
 
 const fieldCls =
-  "w-full rounded-md border border-hairline bg-surface px-4 py-3 text-sm text-primary outline-none transition-colors focus-visible:border-accent";
+  "w-full rounded-lg border border-hairline bg-surface px-4 py-3 text-sm text-primary outline-none transition-colors focus-visible:border-[#6C2FB0]";
 const labelCls = "mb-2 block text-2xs uppercase tracking-wide text-muted";
 
 function Choice({
   options,
   value,
   onChange,
+  className,
 }: {
   options: readonly string[];
   value: string;
   onChange: (v: string) => void;
+  className: string;
 }) {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className={className}>
       {options.map((o) => {
         const active = value === o;
         return (
@@ -59,10 +63,15 @@ function Choice({
             type="button"
             onClick={() => onChange(active ? "" : o)}
             aria-pressed={active}
-            className={`rounded-lg border px-4 py-2 text-sm transition-colors duration-base ease-out-brand ${
+            style={
               active
-                ? "border-accent bg-accent text-accent-contrast"
-                : "border-hairline text-secondary hover:text-primary"
+                ? { background: PURPLE, borderColor: PURPLE, color: "#fff" }
+                : undefined
+            }
+            className={`w-full rounded-lg border px-3 py-2.5 text-center text-sm transition-all duration-base ease-out-brand ${
+              active
+                ? "shadow-[0_6px_16px_rgba(108,47,176,0.28)]"
+                : "border-hairline text-secondary hover:border-[#6C2FB0]/50 hover:text-primary"
             }`}
           >
             {o}
@@ -83,6 +92,7 @@ export function ContactForm() {
   const [volume, setVolume] = useState("");
   const [location, setLocation] = useState("");
   const [message, setMessage] = useState("");
+  const [subscribe, setSubscribe] = useState(false);
   const [state, setState] = useState<"idle" | "busy" | "done" | "error">("idle");
   const [msg, setMsg] = useState("");
 
@@ -101,6 +111,7 @@ export function ContactForm() {
       volume: showSegments ? volume : "",
       location,
       message,
+      subscribe,
     });
     if (res.ok) {
       setState("done");
@@ -117,7 +128,8 @@ export function ContactForm() {
         className="animate-rise flex items-start gap-4 rounded-xl border border-hairline bg-surface p-6"
       >
         <span
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-accent text-accent-contrast"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-white"
+          style={{ background: PURPLE }}
           aria-hidden
         >
           <svg
@@ -153,6 +165,7 @@ export function ContactForm() {
           onChange={(label) =>
             setType(TYPES.find((t) => t.label === label)?.value ?? "general")
           }
+          className="grid grid-cols-3 gap-2.5"
         />
       </div>
 
@@ -164,11 +177,17 @@ export function ContactForm() {
               options={BUSINESS_TYPES}
               value={businessType}
               onChange={setBusinessType}
+              className="grid grid-cols-2 gap-2.5 sm:grid-cols-3"
             />
           </div>
           <div>
             <span className={labelCls}>Estimated volume</span>
-            <Choice options={VOLUMES} value={volume} onChange={setVolume} />
+            <Choice
+              options={VOLUMES}
+              value={volume}
+              onChange={setVolume}
+              className="grid grid-cols-2 gap-2.5 sm:grid-cols-3"
+            />
           </div>
         </>
       ) : null}
@@ -226,25 +245,24 @@ export function ContactForm() {
             className={fieldCls}
           />
         </div>
-      </div>
-
-      <div>
-        <label htmlFor="lead-location" className={labelCls}>
-          Location <span className="text-muted">(optional)</span>
-        </label>
-        <select
-          id="lead-location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          className={`${fieldCls} appearance-none`}
-        >
-          <option value="">Select a state</option>
-          {STATES.map((s) => (
-            <option key={s} value={s}>
-              {s}
-            </option>
-          ))}
-        </select>
+        <div className="sm:col-span-2">
+          <label htmlFor="lead-location" className={labelCls}>
+            Location <span className="text-muted">(optional)</span>
+          </label>
+          <select
+            id="lead-location"
+            value={location}
+            onChange={(e) => setLocation(e.target.value)}
+            className={`${fieldCls} appearance-none`}
+          >
+            <option value="">Select a state</option>
+            {STATES.map((s) => (
+              <option key={s} value={s}>
+                {s}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
 
       <div>
@@ -261,6 +279,43 @@ export function ContactForm() {
         />
       </div>
 
+      {/* marketing opt-in */}
+      <label className="flex cursor-pointer select-none items-start gap-3">
+        <input
+          type="checkbox"
+          checked={subscribe}
+          onChange={(e) => setSubscribe(e.target.checked)}
+          className="sr-only"
+        />
+        <span
+          aria-hidden
+          className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border text-white transition-colors"
+          style={
+            subscribe
+              ? { background: PURPLE, borderColor: PURPLE }
+              : { borderColor: "var(--color-hairline)" }
+          }
+        >
+          {subscribe ? (
+            <svg
+              width={13}
+              height={13}
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth={3}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <path d="M5 13l4 4L19 7" />
+            </svg>
+          ) : null}
+        </span>
+        <span className="text-sm text-secondary">
+          Send me KR8MX news and product alerts. You can unsubscribe anytime.
+        </span>
+      </label>
+
       {state === "error" ? (
         <p className="text-sm text-strawberry" role="alert">
           {msg}
@@ -271,7 +326,8 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={state === "busy"}
-          className="rounded-lg bg-accent px-7 py-3.5 text-sm font-semibold text-accent-contrast transition-opacity duration-base ease-out-brand hover:opacity-90 disabled:opacity-50"
+          style={{ background: PURPLE }}
+          className="rounded-lg px-7 py-3.5 text-sm font-semibold text-white transition-opacity duration-base ease-out-brand hover:opacity-90 disabled:opacity-50"
         >
           {state === "busy" ? "Sending…" : "Send inquiry"}
         </button>

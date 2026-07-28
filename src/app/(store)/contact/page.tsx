@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { SlashX } from "@/components/brand/SlashX";
 import { HairlineRule } from "@/components/ui/HairlineRule";
 import { ContactForm } from "@/components/site/ContactForm";
-import { TrustBadges } from "@/components/site/TrustBadges";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -43,10 +42,6 @@ export default function ContactPage() {
         Wholesale, retail, or a general question. Tell us a bit about you and our
         team will reach out. 21+ adult use only.
       </p>
-
-      <div className="mt-8">
-        <TrustBadges />
-      </div>
 
       <HairlineRule className="my-10" />
 
