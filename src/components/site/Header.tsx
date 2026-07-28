@@ -1,13 +1,7 @@
-import Link from "next/link";
 import { Wordmark } from "@/components/brand/Wordmark";
 import { CartButton } from "@/components/site/CartButton";
-
-type NavLink = {
-  label: string;
-  href?: string;
-  external?: boolean;
-  disabled?: boolean;
-};
+import { DesktopNav, type NavLink } from "@/components/site/DesktopNav";
+import { MobileMenu } from "@/components/site/MobileMenu";
 
 const NAV: NavLink[] = [
   { href: "/tablets", label: "Products" },
@@ -21,41 +15,10 @@ const NAV: NavLink[] = [
   { label: "Contact", disabled: true },
 ];
 
-/** Renders a nav item: external anchor (new tab), internal Link, or an inert
- *  span for items whose destination isn't set yet. */
-function NavItem({
-  item,
-  className,
-}: {
-  item: NavLink;
-  className: string;
-}) {
-  if (item.disabled || !item.href) {
-    return <span className={`${className} cursor-default`}>{item.label}</span>;
-  }
-  if (item.external) {
-    return (
-      <a
-        href={item.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={className}
-      >
-        {item.label}
-      </a>
-    );
-  }
-  return (
-    <Link href={item.href} className={className}>
-      {item.label}
-    </Link>
-  );
-}
-
 /**
- * Site header, minimal, precision theme. Wordmark, primary nav, cart. Generous
- * spacing and a single hairline divider beneath. Server component; only the cart
- * count hydrates.
+ * Site header, minimal, precision theme. Wordmark, primary nav, cart. On desktop
+ * the nav shows an animated active-page underline; on mobile it collapses into a
+ * slide-out drawer. Server component; only the nav, cart, and drawer hydrate.
  */
 export function Header() {
   return (
@@ -63,34 +26,13 @@ export function Header() {
       <div className="mx-auto flex h-16 max-w-6xl items-center justify-between gap-8 px-6">
         <Wordmark height={20} priority sizeClassName="h-[22px] w-auto md:h-5" />
 
-        <nav aria-label="Primary" className="hidden items-center gap-9 md:flex">
-          {NAV.map((item) => (
-            <NavItem
-              key={item.label}
-              item={item}
-              className="text-xs uppercase tracking-wide text-secondary transition-colors duration-base ease-out-brand hover:text-primary"
-            />
-          ))}
-        </nav>
+        <DesktopNav items={NAV} />
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <CartButton />
+          <MobileMenu items={NAV} />
         </div>
       </div>
-
-      {/* Mobile nav, compact row */}
-      <nav
-        aria-label="Primary mobile"
-        className="flex items-center justify-center gap-7 border-t border-hairline px-6 py-2.5 md:hidden"
-      >
-        {NAV.map((item) => (
-          <NavItem
-            key={item.label}
-            item={item}
-            className="text-2xs uppercase tracking-wide text-secondary transition-colors duration-base ease-out-brand hover:text-primary"
-          />
-        ))}
-      </nav>
     </header>
   );
 }

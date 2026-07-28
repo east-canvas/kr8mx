@@ -2,6 +2,7 @@ import { cookies } from "next/headers";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { ScrollProgress } from "@/components/site/ScrollProgress";
+import { BackToTop } from "@/components/site/BackToTop";
 import { AgeGate } from "@/components/compliance/AgeGate";
 import {
   AGE_GATE_COOKIE,
@@ -28,6 +29,7 @@ export default async function StoreLayout({
       <ScrollProgress />
       <Header />
       <main className="flex-1">{children}</main>
+      <BackToTop />
       <Footer />
       <AgeGate initiallyConfirmed={ageConfirmed} />
     </div>

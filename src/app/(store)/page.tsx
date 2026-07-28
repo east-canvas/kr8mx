@@ -306,6 +306,9 @@ export default function Home() {
         </Link>
       </section>
 
+      {/* ---- Divider ---- */}
+      <SectionDivider className="pb-16 sm:pb-20" />
+
       {/* ---- Closing CTA ---- */}
       <CtaBand />
     </>
