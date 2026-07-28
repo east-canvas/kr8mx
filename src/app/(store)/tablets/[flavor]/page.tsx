@@ -7,6 +7,7 @@ import { HairlineRule } from "@/components/ui/HairlineRule";
 import { Badge } from "@/components/ui/Badge";
 import { NotifyForm } from "@/components/site/NotifyForm";
 import { CtaBand } from "@/components/site/CtaBand";
+import { PdpStickyBar } from "@/components/product/PdpStickyBar";
 import { MitraGenStandard } from "@/components/product/MitraGenStandard";
 import { ChevronDownIcon, ExternalIcon } from "@/components/icons/Icons";
 import {
@@ -139,9 +140,10 @@ export default async function TabletPdpPage({
       <div className="grid gap-12 lg:grid-cols-2">
         {/* visual */}
         <div
-          className="relative flex items-center justify-center overflow-hidden rounded-xl border border-hairline py-16"
+          className="animate-rise relative flex items-center justify-center overflow-hidden rounded-xl border border-hairline py-16"
           style={{
             background: `radial-gradient(90% 90% at 50% 25%, ${c.hex}26, transparent 65%)`,
+            animationDelay: "60ms",
           }}
         >
           <ProductVisual
@@ -157,7 +159,10 @@ export default async function TabletPdpPage({
 
         {/* info + notify */}
         <div className="flex flex-col gap-8">
-          <div className="flex flex-col gap-4">
+          <div
+            className="animate-rise flex flex-col gap-4"
+            style={{ animationDelay: "160ms" }}
+          >
             <div className="flex items-center gap-2.5">
               <SlashX size={14} accent />
               <span className="type-kicker" style={{ color: c.hex }}>
@@ -198,7 +203,10 @@ export default async function TabletPdpPage({
           </div>
 
           {/* notify */}
-          <div className="flex flex-col gap-3 rounded-lg border border-hairline p-5">
+          <div
+            id="notify"
+            className="flex scroll-mt-28 flex-col gap-3 rounded-lg border border-hairline p-5"
+          >
             <span className="type-kicker text-muted">Be first in line</span>
             <p className="text-sm text-secondary">
               Join the list for {c.name} launch updates and early access.
@@ -253,6 +261,7 @@ export default async function TabletPdpPage({
       </div>
 
       <CtaBand />
+      <PdpStickyBar name={`KR8MX ${c.name} Tablets`} accent={c.hex} />
     </>
   );
 }
