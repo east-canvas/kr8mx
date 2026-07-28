@@ -30,7 +30,31 @@ export function NotifyForm({
   }
 
   if (state === "done") {
-    return <p className="text-sm text-primary">{msg}</p>;
+    return (
+      <div
+        role="status"
+        className="animate-rise flex items-center gap-3 rounded-md border border-hairline bg-surface px-4 py-3"
+      >
+        <span
+          className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-accent text-accent-contrast"
+          aria-hidden
+        >
+          <svg
+            width={16}
+            height={16}
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={3}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M5 13l4 4L19 7" />
+          </svg>
+        </span>
+        <p className="text-sm text-primary">{msg}</p>
+      </div>
+    );
   }
 
   return (

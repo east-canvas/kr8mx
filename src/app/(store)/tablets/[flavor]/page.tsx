@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProductVisual } from "@/components/brand/ProductVisual";
+import { Tilt } from "@/components/brand/Tilt";
 import { SlashX } from "@/components/brand/SlashX";
 import { HairlineRule } from "@/components/ui/HairlineRule";
 import { Badge } from "@/components/ui/Badge";
@@ -148,15 +149,17 @@ export default async function TabletPdpPage({
             animationDelay: "60ms",
           }}
         >
-          <ProductVisual
-            imageUrl={c.imageUrl ?? defaultTabletImage(flavor)}
-            alt={`KR8MX Tablets, ${c.name}`}
-            accent={c.hex}
-            height={420}
-            idKey={`tab-pdp-${flavor}`}
-            shape="tablet"
-            priority
-          />
+          <Tilt>
+            <ProductVisual
+              imageUrl={c.imageUrl ?? defaultTabletImage(flavor)}
+              alt={`KR8MX Tablets, ${c.name}`}
+              accent={c.hex}
+              height={420}
+              idKey={`tab-pdp-${flavor}`}
+              shape="tablet"
+              priority
+            />
+          </Tilt>
         </div>
 
         {/* info + notify */}
