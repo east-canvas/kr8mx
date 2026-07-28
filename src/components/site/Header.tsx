@@ -6,11 +6,6 @@ import { MobileMenu } from "@/components/site/MobileMenu";
 const NAV: NavLink[] = [
   { href: "/tablets", label: "Products" },
   { href: "/about", label: "Formula" },
-  {
-    href: "https://www.naturesbridgegroup.com/wholesale",
-    label: "Wholesale",
-    external: true,
-  },
   { href: "/contact", label: "Contact" },
 ];
 

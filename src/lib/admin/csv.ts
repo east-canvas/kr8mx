@@ -38,6 +38,9 @@ export type LeadCsvRow = {
   email: string;
   company: string | null;
   phone: string | null;
+  businessType: string | null;
+  volume: string | null;
+  location: string | null;
   message: string | null;
 };
 
@@ -49,6 +52,9 @@ const LEAD_HEADER = [
   "email",
   "company",
   "phone",
+  "business_type",
+  "volume",
+  "location",
   "message",
 ];
 
@@ -64,6 +70,9 @@ export function leadsToCsv(rows: LeadCsvRow[]): string {
         cell(r.email),
         cell(r.company ?? ""),
         cell(r.phone ?? ""),
+        cell(r.businessType ?? ""),
+        cell(r.volume ?? ""),
+        cell(r.location ?? ""),
         cell(r.message ?? ""),
       ].join(","),
     );

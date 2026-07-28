@@ -315,6 +315,10 @@ export const leads = pgTable(
     email: text("email").notNull(),
     company: text("company"),
     phone: varchar("phone", { length: 40 }),
+    // structured, button-selected segmentation from the contact form
+    businessType: text("business_type"),
+    volume: text("volume"),
+    location: text("location"),
     message: text("message"),
     status: leadStatusEnum("status").notNull().default("new"),
     createdAt: timestamp("created_at", { withTimezone: true })

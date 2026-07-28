@@ -8,7 +8,6 @@ import { SlashX } from "@/components/brand/SlashX";
    ============================================================================= */
 
 const PURPLE = "#6C2FB0";
-const WHOLESALE_URL = "https://www.naturesbridgegroup.com/wholesale";
 
 function Chevron() {
   return <span className="font-normal">&rsaquo;</span>;
@@ -59,14 +58,12 @@ export function CtaBand({
           >
             Explore Tablets <Chevron />
           </Link>
-          <a
-            href={WHOLESALE_URL}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/contact"
             className="inline-flex items-center justify-center gap-2 rounded-lg border-[1.5px] border-white/70 px-6 py-3.5 text-sm font-semibold text-white transition-colors duration-base ease-out-brand hover:bg-white/10"
           >
-            Wholesale Pricing <Chevron />
-          </a>
+            Wholesale <Chevron />
+          </Link>
         </div>
       </div>
     </section>

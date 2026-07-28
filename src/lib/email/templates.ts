@@ -151,14 +151,19 @@ export function tabletsLaunchEmail(unsubscribeUrl: string): RenderedEmail {
   };
 }
 
-export function leadNotificationEmail(lead: {
+type LeadFields = {
   type: string;
   name: string;
   email: string;
   company: string | null;
   phone: string | null;
+  businessType?: string | null;
+  volume?: string | null;
+  location?: string | null;
   message: string | null;
-}): RenderedEmail {
+};
+
+export function leadNotificationEmail(lead: LeadFields): RenderedEmail {
   const th: Theme = "precision";
   const t = THEME[th];
   const base = resolveBaseUrl();
@@ -177,6 +182,9 @@ export function leadNotificationEmail(lead: {
     ) +
     (lead.company ? row("Company", esc(lead.company)) : "") +
     (lead.phone ? row("Phone", esc(lead.phone)) : "") +
+    (lead.businessType ? row("Business", esc(lead.businessType)) : "") +
+    (lead.volume ? row("Volume", esc(lead.volume)) : "") +
+    (lead.location ? row("Location", esc(lead.location)) : "") +
     (lead.message
       ? row("Message", esc(lead.message).replace(/\n/g, "<br/>"))
       : "") +
@@ -188,6 +196,26 @@ export function leadNotificationEmail(lead: {
     cta(th, "Open Sales Console", `${base}/admin/leads`);
   return {
     subject: `New ${lead.type} lead: ${lead.name}`,
+    html: layout(th, inner),
+  };
+}
+
+/** Branded auto-reply to the person who submitted the contact form. */
+export function leadAutoReplyEmail(lead: {
+  name: string;
+  type: string;
+}): RenderedEmail {
+  const th: Theme = "precision";
+  const t = THEME[th];
+  const first = lead.name.split(/\s+/)[0] || "there";
+  const inner =
+    kicker(th, "We got your message") +
+    h1(th, "Thank you.") +
+    `<p style="font-size:15px;color:${t.text};margin:0 0 14px">Hi ${esc(first)},</p>` +
+    `<p style="font-size:14px;line-height:1.6;color:${t.muted};margin:0 0 14px">Thanks for reaching out to KR8MX. We have your message and someone from our team will get back to you within 24 hours.</p>` +
+    `<p style="font-size:14px;line-height:1.6;color:${t.muted};margin:0">Talk soon,<br/>The KR8MX Team</p>`;
+  return {
+    subject: "Thanks for reaching out to KR8MX",
     html: layout(th, inner),
   };
 }

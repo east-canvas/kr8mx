@@ -38,6 +38,9 @@ async function getRows() {
       email: leads.email,
       company: leads.company,
       phone: leads.phone,
+      businessType: leads.businessType,
+      volume: leads.volume,
+      location: leads.location,
       message: leads.message,
     })
     .from(leads)

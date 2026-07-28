@@ -43,6 +43,13 @@
       "when": 1785257343845,
       "tag": "0005_fantastic_silver_centurion",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1785261974863,
+      "tag": "0006_chemical_black_knight",
+      "breakpoints": true
     }
   ]
 }

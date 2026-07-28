@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { SlashX } from "@/components/brand/SlashX";
 import { HairlineRule } from "@/components/ui/HairlineRule";
 import { ContactForm } from "@/components/site/ContactForm";
+import { TrustBadges } from "@/components/site/TrustBadges";
 import { breadcrumbJsonLd } from "@/lib/seo";
 
 export const metadata: Metadata = {
@@ -38,11 +39,14 @@ export default function ContactPage() {
       <h1 className="type-display mt-5 max-w-[18ch] text-primary text-4xl sm:text-5xl">
         Let us talk.
       </h1>
-      <p className="mt-5 max-w-2xl text-sm leading-relaxed text-secondary sm:text-base">
-        Wholesale, retail, or a general question. Tell us what you need and the
-        KR8MX team will follow up by email. For wholesale, we will send pricing
-        and availability. 21+ adult use only.
+      <p className="mt-5 max-w-xl text-sm leading-relaxed text-secondary sm:text-base">
+        Wholesale, retail, or a general question. Tell us a bit about you and our
+        team will reach out. 21+ adult use only.
       </p>
+
+      <div className="mt-8">
+        <TrustBadges />
+      </div>
 
       <HairlineRule className="my-10" />
 

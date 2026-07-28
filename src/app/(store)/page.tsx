@@ -17,7 +17,6 @@ export const metadata: Metadata = {
 const PURPLE = "#6C2FB0";
 const HERO_DESKTOP = "/brand/tablets/hero-desktop.jpg";
 const HERO_MOBILE = "/brand/tablets/hero-mobile.jpg";
-const WHOLESALE_URL = "https://www.naturesbridgegroup.com/wholesale";
 
 type Card = { flavor: Flavor; name: string; color: string; tagline: string };
 const FLAVOR_CARDS: Card[] = [
@@ -101,15 +100,13 @@ export default function Home() {
               >
                 Explore Tablets <Chevron />
               </Link>
-              <a
-                href={WHOLESALE_URL}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/contact"
                 className="inline-flex items-center justify-center gap-2 rounded-lg border-[1.5px] bg-white px-6 py-3.5 text-sm font-semibold transition-colors hover:bg-surface-raised"
                 style={{ color: PURPLE, borderColor: PURPLE }}
               >
-                Wholesale Pricing <Chevron />
-              </a>
+                Wholesale <Chevron />
+              </Link>
             </div>
           </div>
 

@@ -83,7 +83,7 @@ export default async function AdminLeadsPage() {
                 <th className="py-2 pr-4">Type</th>
                 <th className="py-2 pr-4">Name</th>
                 <th className="py-2 pr-4">Contact</th>
-                <th className="py-2 pr-4">Message</th>
+                <th className="py-2 pr-4">Details</th>
                 <th className="py-2 pr-4">Status</th>
                 <th className="py-2">Update</th>
               </tr>
@@ -115,7 +115,15 @@ export default async function AdminLeadsPage() {
                     ) : null}
                   </td>
                   <td className="max-w-xs py-3 pr-4 text-2xs text-secondary">
-                    {r.message ?? "-"}
+                    {r.businessType || r.volume || r.location ? (
+                      <div className="mb-1 flex flex-wrap gap-x-1.5 text-muted">
+                        {[r.businessType, r.volume, r.location]
+                          .filter(Boolean)
+                          .join(" · ")}
+                      </div>
+                    ) : null}
+                    {r.message ??
+                      (r.businessType || r.volume || r.location ? "" : "-")}
                   </td>
                   <td className="py-3 pr-4">
                     <Badge variant={STATUS_VARIANT[r.status]}>{r.status}</Badge>
