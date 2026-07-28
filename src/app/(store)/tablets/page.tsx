@@ -8,6 +8,7 @@ import { Badge } from "@/components/ui/Badge";
 import { Reveal } from "@/components/ui/Reveal";
 import { NotifyForm } from "@/components/site/NotifyForm";
 import { MarqueeStrip } from "@/components/site/MarqueeStrip";
+import { CtaBand } from "@/components/site/CtaBand";
 import { MitraGenStandard } from "@/components/product/MitraGenStandard";
 import {
   getTabletsCatalog,
@@ -174,6 +175,8 @@ export default async function TabletsCollectionPage() {
           </p>
         </div>
       </section>
+
+      <CtaBand />
     </div>
   );
 }

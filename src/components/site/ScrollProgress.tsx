@@ -1,30 +1,37 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 /**
- * Thin brand-purple reading-progress bar pinned to the very top of the viewport.
- * Client-only; renders nothing meaningful for assistive tech (decorative). Sits
- * above the sticky header. Under prefers-reduced-motion it still tracks position
- * (it is a status indicator, not an animation), just without an easing tween.
+ * Thin brand-purple reading-progress bar pinned to the very top of the viewport,
+ * above the sticky header. Smoothness notes: it drives a GPU-composited
+ * `transform: scaleX()` (not `width`), carries no CSS transition (so it tracks
+ * the scroll position 1:1 instead of chasing it), and writes straight to the DOM
+ * via a ref inside a single rAF per frame, so it never re-renders React while
+ * scrolling. Decorative, so hidden from assistive tech.
  */
 const PURPLE = "#6C2FB0";
 
 export function ScrollProgress() {
-  const [pct, setPct] = useState(0);
+  const barRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const bar = barRef.current;
+    if (!bar) return;
     const el = document.documentElement;
     let frame = 0;
+
     const update = () => {
       frame = 0;
       const max = el.scrollHeight - el.clientHeight;
-      setPct(max > 0 ? Math.min(100, (el.scrollTop / max) * 100) : 0);
+      const p = max > 0 ? Math.min(1, Math.max(0, el.scrollTop / max)) : 0;
+      bar.style.transform = `scaleX(${p})`;
     };
     const onScroll = () => {
       if (frame) return;
       frame = requestAnimationFrame(update);
     };
+
     update();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
@@ -41,9 +48,10 @@ export function ScrollProgress() {
       className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[3px]"
     >
       <div
-        className="h-full origin-left transition-[width] duration-150 ease-out"
+        ref={barRef}
+        className="h-full w-full origin-left will-change-transform"
         style={{
-          width: `${pct}%`,
+          transform: "scaleX(0)",
           background: `linear-gradient(90deg, ${PURPLE}, #9b5fd6)`,
           boxShadow: `0 0 10px ${PURPLE}66`,
         }}

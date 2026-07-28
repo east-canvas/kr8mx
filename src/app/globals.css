@@ -53,6 +53,13 @@
     color: var(--color-accent-contrast);
   }
 
+  /* When a page closes with the full-bleed CTA band, seat the footer flush
+     against it so there is no light gap between the colored band and the
+     footer. Every other page keeps the footer's default top spacing. */
+  main:has([data-cta-band]) + footer {
+    margin-top: 0;
+  }
+
   :focus-visible {
     outline: 2px solid var(--color-accent);
     outline-offset: 2px;

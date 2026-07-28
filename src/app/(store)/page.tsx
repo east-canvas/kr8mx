@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
 import { CountUp } from "@/components/site/CountUp";
 import { MarqueeStrip } from "@/components/site/MarqueeStrip";
+import { CtaBand } from "@/components/site/CtaBand";
 import { defaultTabletImage, flavorToSlug } from "@/lib/catalog";
 import type { Flavor } from "@/db/schema";
 
@@ -300,6 +301,9 @@ export default function Home() {
           View All Flavors <Chevron />
         </Link>
       </section>
+
+      {/* ---- Closing CTA ---- */}
+      <CtaBand />
     </>
   );
 }
