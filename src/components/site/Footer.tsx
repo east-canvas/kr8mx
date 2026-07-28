@@ -18,8 +18,7 @@ const LEGAL_LINKS = [
 const FDA_DISCLAIMER =
   "This product has not been evaluated by the FDA. This product is not intended to diagnose, treat, cure, or prevent any disease.";
 
-const OPERATOR_LINE =
-  "Operated under Gel Trading Group LLC, LIC# 2027-R-2248133";
+const OPERATOR_LINE = "Operated under Gel Trading Group LLC";
 
 /**
  * Persistent compliance footer. Carries the FDA disclaimer, the 21+ notice, a

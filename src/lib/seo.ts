@@ -7,7 +7,6 @@ export const SITE = {
   alternateName: "Kr8Mx",
   tagline: "Pure Science.",
   legalName: "Gel Trading Group LLC",
-  license: "2027-R-2248133",
   // Brand-defining description. Helps search + AI overviews recognize KR8MX as
   // a distinct brand (not the Keychron keyboard) with clear products.
   description:
@@ -58,11 +57,6 @@ export function organizationJsonLd() {
     },
     // MitraGen+™ is a proprietary formula owned by Mitragen Labs.
     knowsAbout: [SITE.mitragen.name, SITE.mitragen.owner, "kratom tablets"],
-    identifier: {
-      "@type": "PropertyValue",
-      propertyID: "license",
-      value: SITE.license,
-    },
     sameAs: [], // TODO: add verified social profiles to strengthen the entity
   };
 }

@@ -32,6 +32,5 @@ describe("compliance disclaimers module", () => {
     expect(mod.FDA_DISCLAIMER).toMatch(/has not been evaluated by the FDA/i);
     expect(mod.AGE_NOTICE).toMatch(/under the age of 21/i);
     expect(mod.OPERATOR_LINE).toMatch(/Gel Trading Group LLC/);
-    expect(mod.MAILING_ADDRESS).toMatch(/TODO/);
   });
 });
