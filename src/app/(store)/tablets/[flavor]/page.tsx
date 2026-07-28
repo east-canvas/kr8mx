@@ -7,6 +7,7 @@ import { HairlineRule } from "@/components/ui/HairlineRule";
 import { Badge } from "@/components/ui/Badge";
 import { NotifyForm } from "@/components/site/NotifyForm";
 import { CtaBand } from "@/components/site/CtaBand";
+import { ProgressTheme } from "@/components/site/ProgressTheme";
 import { PdpStickyBar } from "@/components/product/PdpStickyBar";
 import { MitraGenStandard } from "@/components/product/MitraGenStandard";
 import { ChevronDownIcon, ExternalIcon } from "@/components/icons/Icons";
@@ -98,6 +99,7 @@ export default async function TabletPdpPage({
 
   return (
     <>
+      <ProgressTheme color={c.hex} />
       <div className="mx-auto max-w-6xl px-6 py-14">
       <script
         type="application/ld+json"

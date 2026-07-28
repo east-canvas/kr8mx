@@ -64,7 +64,9 @@ export function ScrollProgress() {
       <div
         ref={barRef}
         className="scroll-progress h-full w-full"
-        style={{ background: `linear-gradient(90deg, ${PURPLE}, #9b5fd6)` }}
+        style={{
+          background: `linear-gradient(90deg, var(--kr8-progress, ${PURPLE}), var(--kr8-progress-light, #9b5fd6))`,
+        }}
       />
     </div>
   );

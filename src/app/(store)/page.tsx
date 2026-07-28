@@ -5,6 +5,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { CountUp } from "@/components/site/CountUp";
 import { MarqueeStrip } from "@/components/site/MarqueeStrip";
 import { CtaBand } from "@/components/site/CtaBand";
+import { SectionDivider } from "@/components/ui/SectionDivider";
 import { defaultTabletImage, flavorToSlug } from "@/lib/catalog";
 import type { Flavor } from "@/db/schema";
 
@@ -227,8 +228,11 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ---- Divider ---- */}
+      <SectionDivider className="pt-16 sm:pt-24" />
+
       {/* ---- The lineup ---- */}
-      <section className="px-6 py-16 text-center sm:py-24">
+      <section className="px-6 pb-16 pt-12 text-center sm:pb-24 sm:pt-16">
         <Reveal className="mx-auto max-w-6xl">
           <span className="type-kicker" style={{ color: PURPLE }}>
             The KR8MX&trade; Lineup
