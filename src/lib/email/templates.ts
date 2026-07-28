@@ -3,12 +3,7 @@ import type { RenderedEmail } from "./types";
 import type { Order, OrderItem } from "@/db/schema";
 import { formatCents } from "@/db/money";
 import { resolveBaseUrl } from "@/lib/seo";
-import {
-  FDA_DISCLAIMER,
-  AGE_NOTICE,
-  OPERATOR_LINE,
-  MAILING_ADDRESS,
-} from "@/lib/compliance/disclaimers";
+import { FDA_DISCLAIMER, AGE_NOTICE } from "@/lib/compliance/disclaimers";
 
 /* HTML-string email templates (email clients strip <style>/classes, so styling
    is inline). Two brand themes from the token palette. Compliance strings are
@@ -55,7 +50,7 @@ function layout(theme: Theme, inner: string, unsubscribeUrl?: string): string {
     inner +
     `<div style="border-top:1px solid ${t.hairline};margin:28px 0 16px"></div>` +
     `<p style="font-size:11px;line-height:1.6;color:${t.muted};margin:0">` +
-    `${AGE_NOTICE}<br/>${FDA_DISCLAIMER}<br/>${OPERATOR_LINE}<br/>${MAILING_ADDRESS}${unsub}</p>` +
+    `${AGE_NOTICE}<br/>${FDA_DISCLAIMER}${unsub}</p>` +
     `</div></div></body></html>`
   );
 }
