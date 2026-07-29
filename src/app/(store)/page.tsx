@@ -17,6 +17,8 @@ export const metadata: Metadata = {
 const PURPLE = "#6C2FB0";
 const HERO_DESKTOP = "/brand/tablets/hero-desktop.jpg";
 const HERO_MOBILE = "/brand/tablets/hero-mobile.jpg";
+const BLISTER_DESKTOP = "/brand/tablets/blister-lineup.webp";
+const BLISTER_MOBILE = "/brand/tablets/blister-lineup-mobile.webp";
 
 type Card = { flavor: Flavor; name: string; color: string; tagline: string };
 const FLAVOR_CARDS: Card[] = [
@@ -164,6 +166,26 @@ export default function Home() {
       {/* ---- Trust ticker ---- */}
       <div className="mt-14 sm:mt-20">
         <MarqueeStrip />
+      </div>
+
+      {/* ---- Blister-pack lineup image (cosmetic; leads into Pure Science) ---- */}
+      <div className="mt-14 w-full overflow-hidden sm:mt-20">
+        <Image
+          src={BLISTER_DESKTOP}
+          alt="KR8MX Tablets in blister packs: Grape, Blue Razz, and Peach, 5 tablets with 100 mg MitraGen+ per tablet"
+          width={1600}
+          height={700}
+          sizes="100vw"
+          className="hidden w-full sm:block"
+        />
+        <Image
+          src={BLISTER_MOBILE}
+          alt="KR8MX Tablets in blister packs: Grape, Blue Razz, and Peach, 5 tablets with 100 mg MitraGen+ per tablet"
+          width={900}
+          height={672}
+          sizes="100vw"
+          className="w-full sm:hidden"
+        />
       </div>
 
       {/* ---- Beyond 7-OH: the new standard ---- */}
