@@ -168,8 +168,8 @@ export default function Home() {
         <MarqueeStrip />
       </div>
 
-      {/* ---- Blister-pack lineup image (cosmetic; leads into Pure Science) ---- */}
-      <div className="mt-14 w-full overflow-hidden sm:mt-20">
+      {/* ---- Blister-pack lineup image (cosmetic; fades flush into Pure Science) ---- */}
+      <div className="relative mt-14 w-full overflow-hidden sm:mt-20">
         <Image
           src={BLISTER_DESKTOP}
           alt="KR8MX Tablets in blister packs: Grape, Blue Razz, and Peach, 5 tablets with 100 mg MitraGen+ per tablet"
@@ -186,10 +186,29 @@ export default function Home() {
           sizes="100vw"
           className="w-full sm:hidden"
         />
+        {/* dark-to-purple fade blending the image seamlessly into the section below */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-[64%]"
+          style={{
+            background:
+              "linear-gradient(to top, #0b0b0d 0%, #0b0b0d 14%, rgba(108,47,176,0.85) 50%, transparent 100%)",
+          }}
+        />
+        {/* coming soon */}
+        <div className="absolute inset-x-0 bottom-0 flex flex-col items-center gap-1.5 px-6 pb-6 text-center sm:pb-10">
+          <span className="type-kicker text-white/75">The Precision Line</span>
+          <span
+            className="type-display text-white text-3xl sm:text-5xl"
+            style={{ fontWeight: 900 }}
+          >
+            Coming Soon
+          </span>
+        </div>
       </div>
 
       {/* ---- Beyond 7-OH: the new standard ---- */}
-      <section className="relative mt-16 overflow-hidden bg-[#0b0b0d] text-white sm:mt-24">
+      <section className="relative overflow-hidden bg-[#0b0b0d] text-white">
         <div
           aria-hidden
           className="animate-glow pointer-events-none absolute -right-24 -top-40 h-[560px] w-[560px] rounded-full blur-3xl"
