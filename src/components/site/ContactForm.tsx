@@ -20,12 +20,13 @@ const BUSINESS_TYPES = [
 ] as const;
 
 const VOLUMES = [
-  "Just exploring",
   "Under 100 / mo",
   "100 to 500 / mo",
   "500 to 2,000 / mo",
   "2,000+ / mo",
 ] as const;
+
+const MAX_BUSINESS = 3;
 
 const STATES = [
   "Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut",
@@ -82,13 +83,59 @@ function Choice({
   );
 }
 
+function MultiChoice({
+  options,
+  values,
+  onToggle,
+  max,
+  className,
+}: {
+  options: readonly string[];
+  values: string[];
+  onToggle: (v: string) => void;
+  max: number;
+  className: string;
+}) {
+  return (
+    <div className={className}>
+      {options.map((o) => {
+        const active = values.includes(o);
+        const locked = !active && values.length >= max;
+        return (
+          <button
+            key={o}
+            type="button"
+            onClick={() => onToggle(o)}
+            aria-pressed={active}
+            disabled={locked}
+            style={
+              active
+                ? { background: PURPLE, borderColor: PURPLE, color: "#fff" }
+                : undefined
+            }
+            className={`w-full rounded-lg border px-3 py-2.5 text-center text-sm transition-all duration-base ease-out-brand ${
+              active
+                ? "shadow-[0_6px_16px_rgba(108,47,176,0.28)]"
+                : locked
+                  ? "cursor-not-allowed border-hairline text-muted opacity-50"
+                  : "border-hairline text-secondary hover:border-[#6C2FB0]/50 hover:text-primary"
+            }`}
+          >
+            {o}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 export function ContactForm() {
   const [type, setType] = useState("wholesale");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [company, setCompany] = useState("");
   const [phone, setPhone] = useState("");
-  const [businessType, setBusinessType] = useState("");
+  const [businessTypes, setBusinessTypes] = useState<string[]>([]);
   const [volume, setVolume] = useState("");
   const [location, setLocation] = useState("");
   const [message, setMessage] = useState("");
@@ -107,7 +154,7 @@ export function ContactForm() {
       email,
       company,
       phone,
-      businessType: showSegments ? businessType : "",
+      businessType: showSegments ? businessTypes.join(", ") : "",
       volume: showSegments ? volume : "",
       location,
       message,
@@ -172,11 +219,22 @@ export function ContactForm() {
       {showSegments ? (
         <>
           <div>
-            <span className={labelCls}>My business</span>
-            <Choice
+            <span className={labelCls}>
+              My business <span className="text-muted">(select up to 3)</span>
+            </span>
+            <MultiChoice
               options={BUSINESS_TYPES}
-              value={businessType}
-              onChange={setBusinessType}
+              values={businessTypes}
+              max={MAX_BUSINESS}
+              onToggle={(o) =>
+                setBusinessTypes((prev) =>
+                  prev.includes(o)
+                    ? prev.filter((x) => x !== o)
+                    : prev.length >= MAX_BUSINESS
+                      ? prev
+                      : [...prev, o],
+                )
+              }
               className="grid grid-cols-2 gap-2.5 sm:grid-cols-3"
             />
           </div>

@@ -8,7 +8,7 @@ import { ExternalIcon } from "@/components/icons/Icons";
 import { getPublishedCoas } from "@/db/queries";
 import type { ProductCategory } from "@/db/schema";
 
-const CATEGORIES: ProductCategory[] = ["drinks", "tablets"];
+const CATEGORIES: ProductCategory[] = ["tablets"];
 
 export function generateStaticParams() {
   return CATEGORIES.map((category) => ({ category }));

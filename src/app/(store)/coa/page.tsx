@@ -12,11 +12,6 @@ export const metadata: Metadata = {
 
 const CATEGORIES = [
   {
-    href: "/coa/drinks",
-    label: "Drinks",
-    note: "Energy Drink line, per-lot certificates.",
-  },
-  {
     href: "/coa/tablets",
     label: "Tablets",
     note: "Tablet line, per-lot certificates.",
