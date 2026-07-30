@@ -7,7 +7,7 @@ import { and, eq } from "drizzle-orm";
 import { del } from "@vercel/blob";
 import { getDb } from "@/db/client";
 import { productContent, productVariants } from "@/db/schema";
-import type { Flavor, ProductCategory } from "@/db/schema";
+import type { Flavor, ProductCategory, VariantStatus } from "@/db/schema";
 import { FLAVORS } from "@/db/seed-data";
 import { ADMIN_COOKIE, isAuthed } from "@/lib/admin/auth";
 import { logAudit } from "@/lib/admin/audit";
@@ -183,6 +183,43 @@ export async function removeProductImageAction(formData: FormData) {
   }
   revalidateStorefront(category, flavor.replace("_", "-"));
   redirect(`/admin/products?folder=${category}&ok=image#${flavor}`);
+}
+
+/** Toggle a variant between active and coming_soon. Audit-logged. */
+export async function updateVariantStatusAction(formData: FormData) {
+  await assertAuthed();
+  const category = normCategory(str(formData.get("category")));
+  const variantId = Number(str(formData.get("variantId")));
+  const status: VariantStatus =
+    str(formData.get("status")) === "active" ? "active" : "coming_soon";
+  if (!variantId) {
+    redirect(`/admin/products?folder=${category}&error=fields`);
+  }
+  try {
+    const db = getDb();
+    const [before] = await db
+      .select()
+      .from(productVariants)
+      .where(eq(productVariants.id, variantId))
+      .limit(1);
+    const [after] = await db
+      .update(productVariants)
+      .set({ status })
+      .where(eq(productVariants.id, variantId))
+      .returning();
+    await logAudit({
+      entity: "product_variant",
+      entityId: variantId,
+      action: "status_update",
+      before,
+      after,
+    });
+  } catch {
+    redirect(`/admin/products?folder=${category}&error=db`);
+  }
+  revalidatePath("/admin/products");
+  revalidatePath(category === "drinks" ? "/drinks" : "/tablets");
+  redirect(`/admin/products?folder=${category}&ok=status`);
 }
 
 /** Set a variant's price. Input is dollars; stored as integer cents. Audit-logged. */
