@@ -16,16 +16,50 @@ const ERRORS: Record<string, string> = {
   db: "Database unavailable. Set DATABASE_URL and apply the sales migration.",
 };
 
+// Full state name -> USPS code, to map a lead's location onto the ship-state field.
+const STATE_ABBR: Record<string, string> = {
+  Alabama: "AL", Alaska: "AK", Arizona: "AZ", Arkansas: "AR", California: "CA",
+  Colorado: "CO", Connecticut: "CT", Delaware: "DE", Florida: "FL", Georgia: "GA",
+  Hawaii: "HI", Idaho: "ID", Illinois: "IL", Indiana: "IN", Iowa: "IA",
+  Kansas: "KS", Kentucky: "KY", Louisiana: "LA", Maine: "ME", Maryland: "MD",
+  Massachusetts: "MA", Michigan: "MI", Minnesota: "MN", Mississippi: "MS",
+  Missouri: "MO", Montana: "MT", Nebraska: "NE", Nevada: "NV",
+  "New Hampshire": "NH", "New Jersey": "NJ", "New Mexico": "NM", "New York": "NY",
+  "North Carolina": "NC", "North Dakota": "ND", Ohio: "OH", Oklahoma: "OK",
+  Oregon: "OR", Pennsylvania: "PA", "Rhode Island": "RI", "South Carolina": "SC",
+  "South Dakota": "SD", Tennessee: "TN", Texas: "TX", Utah: "UT", Vermont: "VT",
+  Virginia: "VA", Washington: "WA", "West Virginia": "WV", Wisconsin: "WI",
+  Wyoming: "WY",
+};
+
 export default async function NewSalesOrderPage({
   searchParams,
 }: {
-  searchParams: Promise<{ error?: string }>;
+  searchParams: Promise<{
+    error?: string;
+    company?: string;
+    contact?: string;
+    email?: string;
+    phone?: string;
+    location?: string;
+  }>;
 }) {
   const store = await cookies();
   if (!isAuthed(store.get(ADMIN_COOKIE)?.value)) return null;
   const sp = await searchParams;
   const reps = await listSalesReps({ activeOnly: true });
   const catalog = salesCatalog();
+
+  const prefill = {
+    company: sp.company ?? "",
+    contact: sp.contact ?? "",
+    email: sp.email ?? "",
+    phone: sp.phone ?? "",
+  };
+  const prefillState = sp.location ? (STATE_ABBR[sp.location] ?? "") : "";
+  const fromLead = Boolean(
+    prefill.company || prefill.contact || prefill.email || prefill.phone,
+  );
 
   return (
     <div className="flex flex-col gap-6">
@@ -49,6 +83,12 @@ export default async function NewSalesOrderPage({
         </p>
       ) : null}
 
+      {fromLead ? (
+        <p className="rounded-md border border-[#6C2FB0]/40 bg-[#6C2FB0]/10 px-4 py-2.5 text-sm font-medium text-primary">
+          Prefilled from a lead. Review the account details, then set quantities.
+        </p>
+      ) : null}
+
       <form action={createSalesOrderAction} className="flex flex-col gap-6">
         {/* account */}
         <fieldset className="flex flex-col gap-3 rounded-xl border border-hairline bg-surface p-5">
@@ -56,7 +96,12 @@ export default async function NewSalesOrderPage({
           <div className="grid gap-3 sm:grid-cols-2">
             <label className="flex flex-col gap-1">
               <span className={labelCls}>Company *</span>
-              <input name="company" required className={inputCls} />
+              <input
+                name="company"
+                required
+                defaultValue={prefill.company}
+                className={inputCls}
+              />
             </label>
             <label className="flex flex-col gap-1">
               <span className={labelCls}>Sales rep</span>
@@ -72,15 +117,24 @@ export default async function NewSalesOrderPage({
             </label>
             <label className="flex flex-col gap-1">
               <span className={labelCls}>Contact name</span>
-              <input name="contactName" className={inputCls} />
+              <input
+                name="contactName"
+                defaultValue={prefill.contact}
+                className={inputCls}
+              />
             </label>
             <label className="flex flex-col gap-1">
               <span className={labelCls}>Email</span>
-              <input name="email" type="email" className={inputCls} />
+              <input
+                name="email"
+                type="email"
+                defaultValue={prefill.email}
+                className={inputCls}
+              />
             </label>
             <label className="flex flex-col gap-1">
               <span className={labelCls}>Phone</span>
-              <input name="phone" className={inputCls} />
+              <input name="phone" defaultValue={prefill.phone} className={inputCls} />
             </label>
             <label className="flex flex-col gap-1">
               <span className={labelCls}>Ship address</span>
@@ -93,7 +147,13 @@ export default async function NewSalesOrderPage({
             <div className="grid grid-cols-2 gap-3">
               <label className="flex flex-col gap-1">
                 <span className={labelCls}>State</span>
-                <input name="shipState" maxLength={2} className={inputCls} placeholder="FL" />
+                <input
+                  name="shipState"
+                  maxLength={2}
+                  defaultValue={prefillState}
+                  className={inputCls}
+                  placeholder="FL"
+                />
               </label>
               <label className="flex flex-col gap-1">
                 <span className={labelCls}>ZIP</span>

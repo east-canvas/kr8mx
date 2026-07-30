@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { cookies } from "next/headers";
 import { ADMIN_COOKIE, isAuthed } from "@/lib/admin/auth";
 import { getLeadsOverview } from "@/lib/admin/data";
@@ -129,16 +130,30 @@ export default async function AdminLeadsPage() {
                     <Badge variant={STATUS_VARIANT[r.status]}>{r.status}</Badge>
                   </td>
                   <td className="py-3">
-                    <div className="flex flex-wrap gap-1.5">
-                      {NEXT[r.status].map((s) => (
-                        <form key={s} action={updateLeadStatusAction}>
-                          <input type="hidden" name="id" value={r.id} />
-                          <input type="hidden" name="status" value={s} />
-                          <button className="rounded-sm border border-hairline px-2.5 py-1 text-2xs uppercase tracking-wide text-secondary transition-colors hover:border-primary hover:text-primary">
-                            {s}
-                          </button>
-                        </form>
-                      ))}
+                    <div className="flex flex-col items-start gap-2">
+                      <div className="flex flex-wrap gap-1.5">
+                        {NEXT[r.status].map((s) => (
+                          <form key={s} action={updateLeadStatusAction}>
+                            <input type="hidden" name="id" value={r.id} />
+                            <input type="hidden" name="status" value={s} />
+                            <button className="rounded-sm border border-hairline px-2.5 py-1 text-2xs uppercase tracking-wide text-secondary transition-colors hover:border-primary hover:text-primary">
+                              {s}
+                            </button>
+                          </form>
+                        ))}
+                      </div>
+                      <Link
+                        href={`/admin/sales/new?${new URLSearchParams({
+                          company: r.company ?? "",
+                          contact: r.name,
+                          email: r.email,
+                          phone: r.phone ?? "",
+                          location: r.location ?? "",
+                        }).toString()}`}
+                        className="text-2xs font-semibold uppercase tracking-wide text-primary underline-offset-4 hover:underline"
+                      >
+                        Create order &rarr;
+                      </Link>
                     </div>
                   </td>
                 </tr>
