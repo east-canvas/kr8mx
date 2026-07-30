@@ -6,8 +6,9 @@ import { createSalesOrderAction } from "../../sales-actions";
 import { salesCatalog, SALES_BRANDS, CASE_BOTTLES } from "@/lib/sales/catalog";
 
 const inputCls =
-  "w-full rounded-md border border-hairline bg-surface px-3 py-2 text-sm text-primary outline-none focus-visible:border-accent";
-const labelCls = "text-2xs uppercase tracking-wide text-muted";
+  "w-full rounded-md border border-hairline bg-bg px-3 py-2 text-sm text-primary outline-none transition-colors focus-visible:border-accent";
+const labelCls = "text-2xs font-medium uppercase tracking-wide text-secondary";
+const legendCls = "px-2 text-2xs font-medium uppercase tracking-wide text-secondary";
 
 const ERRORS: Record<string, string> = {
   company: "Company name is required.",
@@ -35,25 +36,23 @@ export default async function NewSalesOrderPage({
         >
           &larr; Sales
         </Link>
-        <h2 className="type-display mt-2 text-primary text-xl">New order</h2>
-        <p className="mt-1 text-sm text-secondary">
+        <h2 className="type-display mt-2 text-primary text-2xl">New order</h2>
+        <p className="mt-1.5 text-sm text-secondary">
           Enter the account, pick a rep, and set case quantities per flavor. A
           case is {CASE_BOTTLES} bottles. Price is optional while pricing is TBD.
         </p>
       </div>
 
       {sp.error ? (
-        <p className="rounded-md border border-strawberry/40 px-4 py-2 text-sm text-strawberry">
+        <p className="rounded-md border border-strawberry/50 bg-strawberry/10 px-4 py-2.5 text-sm font-medium text-strawberry">
           {ERRORS[sp.error] ?? "Please check the form."}
         </p>
       ) : null}
 
       <form action={createSalesOrderAction} className="flex flex-col gap-6">
         {/* account */}
-        <fieldset className="flex flex-col gap-3 rounded-lg border border-hairline p-5">
-          <legend className="px-2 text-2xs uppercase tracking-wide text-muted">
-            Account
-          </legend>
+        <fieldset className="flex flex-col gap-3 rounded-xl border border-hairline bg-surface p-5">
+          <legend className={legendCls}>Account</legend>
           <div className="grid gap-3 sm:grid-cols-2">
             <label className="flex flex-col gap-1">
               <span className={labelCls}>Company *</span>
@@ -106,13 +105,11 @@ export default async function NewSalesOrderPage({
 
         {/* products */}
         {SALES_BRANDS.map((brand) => (
-          <fieldset key={brand} className="rounded-lg border border-hairline p-5">
-            <legend className="px-2 text-2xs uppercase tracking-wide text-muted">
-              {brand}
-            </legend>
+          <fieldset key={brand} className="rounded-xl border border-hairline bg-surface p-5">
+            <legend className={legendCls}>{brand}</legend>
             <div className="overflow-x-auto">
               <table className="w-full text-left text-sm">
-                <thead className="text-2xs uppercase tracking-wide text-muted">
+                <thead className="text-2xs font-medium uppercase tracking-wide text-secondary">
                   <tr className="border-b border-hairline">
                     <th className="py-2 pr-4">Flavor</th>
                     <th className="py-2 pr-4">Qty</th>
@@ -132,14 +129,14 @@ export default async function NewSalesOrderPage({
                             type="number"
                             min={0}
                             placeholder="0"
-                            className="w-20 rounded-md border border-hairline bg-surface px-3 py-1.5 text-sm text-primary outline-none focus-visible:border-accent"
+                            className="w-20 rounded-md border border-hairline bg-bg px-3 py-1.5 text-sm text-primary outline-none focus-visible:border-accent"
                           />
                         </td>
                         <td className="py-2 pr-4">
                           <select
                             name={`unit_${p.sku}`}
                             defaultValue="case"
-                            className="rounded-md border border-hairline bg-surface px-3 py-1.5 text-sm text-primary"
+                            className="rounded-md border border-hairline bg-bg px-3 py-1.5 text-sm text-primary"
                           >
                             <option value="case">Case ({CASE_BOTTLES})</option>
                             <option value="bottle">Bottle</option>
@@ -152,7 +149,7 @@ export default async function NewSalesOrderPage({
                             step="0.01"
                             min={0}
                             placeholder="optional"
-                            className="w-28 rounded-md border border-hairline bg-surface px-3 py-1.5 text-sm text-primary outline-none focus-visible:border-accent"
+                            className="w-28 rounded-md border border-hairline bg-bg px-3 py-1.5 text-sm text-primary outline-none focus-visible:border-accent"
                           />
                         </td>
                       </tr>
