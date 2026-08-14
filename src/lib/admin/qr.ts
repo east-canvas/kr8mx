@@ -7,15 +7,18 @@ import QRCode from "qrcode";
  * corrupt the QR again), and fall back to the production domain.
  */
 export function siteOrigin(): string {
+  let origin = "https://kr8mx.com";
   const raw = process.env.NEXT_PUBLIC_SITE_URL;
   if (raw) {
     try {
-      return new URL(raw).origin;
+      origin = new URL(raw).origin;
     } catch {
       /* ignore malformed env */
     }
   }
-  return "https://www.kr8mx.com";
+  // Encode the apex host (drop any "www.") so the scan URL, and therefore the
+  // QR, stays as short and low-density as possible.
+  return origin.replace(/:\/\/www\./, "://");
 }
 
 /**
@@ -27,25 +30,33 @@ export function scanUrl(code: string): string {
   return `${siteOrigin()}/q/${code}`;
 }
 
+/*
+ * The scan URL is short and always generated crisp (vector / high-res), so we
+ * use error-correction level L. That keeps the module count low (a short link
+ * lands on QR version 2, 25x25) which makes the code far easier to scan at small
+ * sizes. Raise to "M"/"Q" only if these get printed on rough or curved surfaces
+ * where damage tolerance matters more than density.
+ */
+const EC_LEVEL = "L" as const;
+
 /** Render a QR code as an inline SVG string (transparent, for the admin preview). */
 export async function generateQrSvg(text: string): Promise<string> {
   return QRCode.toString(text, {
     type: "svg",
     margin: 1,
-    errorCorrectionLevel: "M",
+    errorCorrectionLevel: EC_LEVEL,
     color: { dark: "#0b0b0d", light: "#00000000" },
   });
 }
 
 /**
- * Print-ready SVG: opaque white background, obsidian modules, a full quiet zone,
- * and higher error correction so it scans reliably at any size / on any surface.
+ * Print-ready SVG: opaque white background, obsidian modules, a full quiet zone.
  */
 export async function generateQrDownloadSvg(text: string): Promise<string> {
   return QRCode.toString(text, {
     type: "svg",
     margin: 4,
-    errorCorrectionLevel: "Q",
+    errorCorrectionLevel: EC_LEVEL,
     color: { dark: "#0b0b0d", light: "#ffffff" },
   });
 }
@@ -60,7 +71,7 @@ export async function generateQrPng(
     type: "png",
     width,
     margin: 4,
-    errorCorrectionLevel: "Q",
+    errorCorrectionLevel: EC_LEVEL,
     color: { dark: "#0b0b0d", light: "#ffffff" },
   });
 }
