@@ -55,6 +55,19 @@ export async function generateMetadata({
   };
 }
 
+/* One unique tasting note per flavor so each PDP carries distinct copy (taste
+   descriptors only, no effect claims). Keyed by flavor slug. */
+const FLAVOR_NOTES: Record<string, string> = {
+  strawberry:
+    "Ripe summer strawberry up front, a little jammy, finishing clean.",
+  grape:
+    "Deep purple grape, candy-sweet on the top note and mellow through the swallow.",
+  peach: "Soft orchard peach, nectar-sweet and rounded, never sharp.",
+  "blue-razz":
+    "Blue raspberry, tart and electric, with a bright candied edge.",
+  lemon: "Bright Sicilian lemon, zesty and crisp, with a soft citrus tail.",
+};
+
 function AccordionRow({
   title,
   children,
@@ -165,7 +178,7 @@ export default async function TabletPdpPage({
           <Tilt>
             <ProductVisual
               imageUrl={c.imageUrl ?? defaultTabletImage(flavor)}
-              alt={`KR8MX Tablets, ${c.name}`}
+              alt={`KR8MX ${c.name} kratom leaf extract tablets`}
               accent={c.hex}
               height={420}
               idKey={`tab-pdp-${flavor}`}
@@ -195,6 +208,11 @@ export default async function TabletPdpPage({
               {c.description ??
                 "Lighter format. Higher standards. Built with MitraGen+™. 21+ adult use only."}
             </p>
+            {FLAVOR_NOTES[flavorToSlug(flavor)] && (
+              <p className="max-w-prose text-sm italic text-muted">
+                {FLAVOR_NOTES[flavorToSlug(flavor)]}
+              </p>
+            )}
           </div>
 
           {/* format */}

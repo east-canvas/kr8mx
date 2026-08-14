@@ -7,6 +7,7 @@ import { NotifyForm } from "@/components/site/NotifyForm";
 export const metadata: Metadata = {
   title: "Access",
   description: "KR8MX Access, members-first drops and early availability.",
+  alternates: { canonical: "/access" },
 };
 
 export default function AccessPage() {

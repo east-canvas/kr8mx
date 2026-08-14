@@ -57,7 +57,7 @@ export function organizationJsonLd() {
     },
     // MitraGen+™ is a proprietary formula owned by Mitragen Labs.
     knowsAbout: [SITE.mitragen.name, SITE.mitragen.owner, "kratom tablets"],
-    sameAs: [], // TODO: add verified social profiles to strengthen the entity
+    sameAs: ["https://www.instagram.com/kr8mxofficial/"],
   };
 }
 

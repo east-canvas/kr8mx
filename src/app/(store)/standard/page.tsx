@@ -7,6 +7,7 @@ export const metadata: Metadata = {
   title: "The Standard",
   description:
     "The KR8MX standard, one standard across every format. Premium materials, precision manufacturing, verified lots.",
+  alternates: { canonical: "/standard" },
 };
 
 const POINTS = [

@@ -60,7 +60,7 @@ export default async function TabletsCollectionPage() {
         <div className="relative aspect-[16/10] w-full sm:aspect-[16/7]">
           <Image
             src={TABLETS_LINEUP_IMAGE}
-            alt="KR8MX Tablets, five flavors: Strawberry, Grape, Peach, Blue Razz, Lemon"
+            alt="KR8MX kratom leaf extract tablets, five flavors: Strawberry, Grape, Peach, Blue Razz, Lemon"
             fill
             priority
             sizes="100vw"
@@ -125,7 +125,7 @@ export default async function TabletsCollectionPage() {
                 <Reveal className={`relative ${flip ? "md:order-2" : ""}`}>
                   <ProductVisual
                     imageUrl={c.imageUrl ?? defaultTabletImage(item.flavor)}
-                    alt={`KR8MX Tablets, ${c.name}`}
+                    alt={`KR8MX ${c.name} kratom leaf extract tablets`}
                     accent={c.hex}
                     height={300}
                     idKey={`tab-${item.flavor}`}
