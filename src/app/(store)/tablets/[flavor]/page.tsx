@@ -198,7 +198,7 @@ export default async function TabletPdpPage({
                       {tabletPackLabel(v)}
                     </span>
                     <span className="text-2xs text-muted">
-                      100 mg MitraGen+™ per tablet · 300 mg total
+                      100 mg MitraGen+™ per tablet · 300 mg total per tablet
                     </span>
                   </div>
                   <Badge variant="outline">Coming soon</Badge>

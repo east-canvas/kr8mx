@@ -1,7 +1,16 @@
 import type { MetadataRoute } from "next";
 import { resolveBaseUrl } from "@/lib/seo";
 
-const DISALLOW = ["/checkout", "/cart", "/account", "/order", "/admin", "/api"];
+const DISALLOW = [
+  "/checkout",
+  "/cart",
+  "/account",
+  "/order",
+  "/admin",
+  "/api",
+  "/drinks", // unlaunched line; kept out of crawl until it is rebranded/compliant
+  "/styleguide",
+];
 
 /**
  * Allow general + AI crawlers (KR8MX opts INTO AI indexing); keep transactional

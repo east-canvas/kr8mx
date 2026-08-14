@@ -31,7 +31,7 @@ const COMPOSITION = [
 const PILLARS = [
   {
     title: "Cutting-edge formulation",
-    body: "MitraGen+™ is a proprietary formulation technology centered on isolation, standardization, and bioavailability. Innovation in every batch.",
+    body: "MitraGen+™ is a proprietary formulation technology centered on isolation and standardization. Innovation in every batch.",
   },
   {
     title: "Solvent-free isolation",
