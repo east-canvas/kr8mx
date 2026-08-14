@@ -10,6 +10,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/about",
     // "/drinks" hidden until the Energy Drink line is market-ready.
     "/tablets",
+    "/science",
     "/contact",
     "/standard",
     "/access",

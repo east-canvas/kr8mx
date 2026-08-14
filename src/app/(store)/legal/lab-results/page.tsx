@@ -2,7 +2,13 @@ import type { Metadata } from "next";
 import { LegalDoc } from "@/components/site/LegalDoc";
 import { Badge } from "@/components/ui/Badge";
 
-export const metadata: Metadata = { title: "Lab Results" };
+export const metadata: Metadata = {
+  title: "Lab Results",
+  description:
+    "KR8MX third-party lab results and Certificates of Analysis. See /coa for published COAs.",
+  robots: { index: false, follow: true },
+  alternates: { canonical: "/coa" },
+};
 
 export default function LabResultsPage() {
   return (

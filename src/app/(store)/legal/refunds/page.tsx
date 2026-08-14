@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import { LegalDoc } from "@/components/site/LegalDoc";
 
-export const metadata: Metadata = { title: "Refund Policy" };
+export const metadata: Metadata = {
+  title: "Refund Policy",
+  description: "KR8MX refund and return policy. 21+ adult use only.",
+  robots: { index: false, follow: true },
+  alternates: { canonical: "/legal/refunds" },
+};
 
 export default function RefundsPage() {
   return (

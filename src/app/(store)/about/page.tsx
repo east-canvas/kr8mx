@@ -76,6 +76,9 @@ export default function AboutPage() {
           <Button href="/tablets" variant="solid" size="md">
             Explore Tablets
           </Button>
+          <Button href="/science" variant="outline" size="md">
+            The Science
+          </Button>
           <Button href="/coa" variant="outline" size="md">
             Lab Results
           </Button>

@@ -25,6 +25,7 @@ import {
 import { getProductContentMap } from "@/db/queries";
 import { restrictedStatesFor } from "@/lib/compliance/shipping-restrictions";
 import { breadcrumbJsonLd } from "@/lib/seo";
+import { buildTabletProductJsonLd } from "@/lib/jsonld";
 import { cn } from "@/lib/cn";
 
 export function generateStaticParams() {
@@ -42,12 +43,12 @@ export async function generateMetadata({
   const meta = FLAVOR_META[flavor];
   const path = `/tablets/${flavorToSlug(flavor)}`;
   return {
-    title: `${meta.name} Tablets`,
-    description: `KR8MX ${meta.name} Tablets, 100 mg MitraGen+™ per tablet, in bottle and blister-pack formats. Built with the proprietary MitraGen+™ formula by Mitragen Labs. 21+.`,
+    title: `${meta.name} Kratom Leaf Extract Tablets`,
+    description: `KR8MX ${meta.name} kratom leaf extract tablets, led by Speciociliatine (150 mg) with Mitragynine (50 mg) via MitraGen+™, 300 mg total kratom alkaloids per tablet. No added 7-OH, lab-tested every lot. 21+.`,
     alternates: { canonical: path },
     openGraph: {
-      title: `KR8MX ${meta.name} Tablets`,
-      description: `KR8MX ${meta.name} Tablets, 100 mg MitraGen+™ per tablet. Bottle and blister pack. 21+.`,
+      title: `KR8MX ${meta.name} Kratom Leaf Extract Tablets`,
+      description: `${meta.name} kratom leaf extract tablets, Speciociliatine-forward, 300 mg total alkaloids per tablet, no added 7-OH. 21+.`,
       url: path,
       images: [{ url: "/brand/og-tablets.png", width: 1200, height: 630 }],
     },
@@ -105,6 +106,18 @@ export default async function TabletPdpPage({
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(
+            buildTabletProductJsonLd(flavor, {
+              name: c.name,
+              description: c.description ?? undefined,
+              imageUrl: c.imageUrl ?? defaultTabletImage(flavor),
+            }),
+          ),
+        }}
       />
 
       {/* breadcrumb + flavor selector */}

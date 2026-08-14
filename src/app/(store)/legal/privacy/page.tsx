@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import { LegalDoc } from "@/components/site/LegalDoc";
 
-export const metadata: Metadata = { title: "Privacy Policy" };
+export const metadata: Metadata = {
+  title: "Privacy Policy",
+  description: "How KR8MX handles your information. 21+ adult use only.",
+  robots: { index: false, follow: true },
+  alternates: { canonical: "/legal/privacy" },
+};
 
 export default function PrivacyPage() {
   return (

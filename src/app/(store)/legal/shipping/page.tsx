@@ -2,7 +2,12 @@ import type { Metadata } from "next";
 import { LegalDoc } from "@/components/site/LegalDoc";
 import { allRestrictedStates } from "@/lib/compliance/shipping-restrictions";
 
-export const metadata: Metadata = { title: "Shipping Policy" };
+export const metadata: Metadata = {
+  title: "Shipping Policy",
+  description: "KR8MX shipping and state-availability policy. 21+ adult use only.",
+  robots: { index: false, follow: true },
+  alternates: { canonical: "/legal/shipping" },
+};
 
 export default function ShippingPage() {
   const restricted = allRestrictedStates();

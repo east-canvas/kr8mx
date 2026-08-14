@@ -7,7 +7,15 @@ import { HairlineRule } from "@/components/ui/HairlineRule";
 export const metadata: Metadata = {
   title: "Certificates of Analysis",
   description:
-    "KR8MX Certificates of Analysis, by category. Third-party lab testing for every lot.",
+    "KR8MX Certificates of Analysis. Every lot of our kratom leaf extract tablets is third-party tested, including 7-hydroxymitragynine (7-OH) under 400 ppm on a dry weight basis.",
+  alternates: { canonical: "/coa" },
+  openGraph: {
+    title: "KR8MX Certificates of Analysis",
+    description:
+      "Third-party lab results for KR8MX kratom leaf extract tablets, published per lot. 21+.",
+    url: "/coa",
+    images: [{ url: "/brand/og-default.png", width: 1200, height: 630 }],
+  },
 };
 
 const CATEGORIES = [

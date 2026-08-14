@@ -19,16 +19,17 @@ import {
 } from "@/lib/catalog";
 import { getProductContentMap } from "@/db/queries";
 import { breadcrumbJsonLd } from "@/lib/seo";
+import { buildTabletsItemListJsonLd } from "@/lib/jsonld";
 
 export const metadata: Metadata = {
-  title: "Tablets",
+  title: "Kratom Leaf Extract Tablets",
   description:
-    "KR8MX Tablets in bottle and blister-pack formats. 100 mg MitraGen+™ per tablet, five flavors, built with the proprietary MitraGen+™ formula by Mitragen Labs. 21+.",
+    "KR8MX kratom leaf extract tablets, led by Speciociliatine (150 mg) with Mitragynine (50 mg) via MitraGen+™, 300 mg total kratom alkaloids per tablet. No added 7-OH, lab-tested every lot. Five flavors, made in the USA. 21+.",
   alternates: { canonical: "/tablets" },
   openGraph: {
-    title: "KR8MX Tablets",
+    title: "KR8MX Kratom Leaf Extract Tablets",
     description:
-      "Bottle and blister pack. 100 mg MitraGen+™ per tablet, five flavors. Built with the proprietary MitraGen+™ formula by Mitragen Labs. 21+.",
+      "Speciociliatine-forward kratom leaf extract tablets built with MitraGen+™. 300 mg total kratom alkaloids per tablet, no added 7-OH, five flavors. 21+.",
     url: "/tablets",
     images: [{ url: "/brand/og-tablets.png", width: 1200, height: 630 }],
   },
@@ -47,6 +48,12 @@ export default async function TabletsCollectionPage() {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(buildTabletsItemListJsonLd()),
+        }}
       />
       {/* cinematic hero */}
       <section className="relative overflow-hidden">

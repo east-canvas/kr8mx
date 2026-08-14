@@ -1,7 +1,12 @@
 import type { Metadata } from "next";
 import { LegalDoc } from "@/components/site/LegalDoc";
 
-export const metadata: Metadata = { title: "Terms of Service" };
+export const metadata: Metadata = {
+  title: "Terms of Service",
+  description: "KR8MX Terms of Service. 21+ adult use only.",
+  robots: { index: false, follow: true },
+  alternates: { canonical: "/legal/terms" },
+};
 
 export default function TermsPage() {
   return (
