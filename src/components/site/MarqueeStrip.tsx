@@ -11,7 +11,7 @@ import { SlashX } from "@/components/brand/SlashX";
 const DEFAULT_ITEMS = [
   "Made in the USA",
   "Lab-Tested Every Lot",
-  "0 PPM 7-Hydroxymitragynine",
+  "No Added 7-OH",
   "Solvent-Free Isolation",
   "U.S.-Grown Kratom",
   "Standardized Minor Alkaloids",

@@ -16,7 +16,7 @@ function Chevron() {
 export function CtaBand({
   kicker = "Wholesale & Retail",
   heading = "Built to lead.",
-  body = "KR8MX is the new standard for kratom tablets: 0 PPM 7-hydroxymitragynine, standardized minor alkaloids, and lab-tested every lot. Now open for premarket preview and wholesale.",
+  body = "KR8MX is the new standard for kratom tablets: no added 7-hydroxymitragynine, standardized minor alkaloids led by Speciociliatine, and lab-tested every lot. Now open for premarket preview and wholesale.",
 }: {
   kicker?: string;
   heading?: string;

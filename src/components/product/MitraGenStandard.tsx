@@ -49,7 +49,7 @@ const STANDARDS = [
   "Florida Compliant",
   "Federally Compliant",
   "Isolated, standardized alkaloids",
-  "No 7-hydroxymitragynine",
+  "No added 7-hydroxymitragynine",
   "No MGM",
   "No masking agents",
   "No DCM",

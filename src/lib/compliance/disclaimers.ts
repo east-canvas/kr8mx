@@ -11,4 +11,4 @@ export const AGE_NOTICE = "Not for sale to persons under the age of 21.";
 export const OPERATOR_LINE = "Operated under Gel Trading Group LLC";
 
 export const LAB_NOTICE =
-  "Contains 0 PPM 7-hydroxymitragynine on a dry weight basis. 21+ adult use only.";
+  "Contains under 400 ppm 7-hydroxymitragynine on a dry weight basis, with no added 7-OH. 21+ adult use only.";

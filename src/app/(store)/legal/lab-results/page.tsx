@@ -15,8 +15,9 @@ export default function LabResultsPage() {
         <Badge variant="outline">Coming Soon</Badge>
       </div>
       <p>
-        Each production lot is tested to confirm it contains 0 PPM
-        7-hydroxymitragynine on a dry weight basis. COA links to be added.
+        Each production lot is tested to confirm it contains under 400 ppm
+        7-hydroxymitragynine on a dry weight basis, with no added 7-OH. COA links
+        to be added.
       </p>
     </LegalDoc>
   );

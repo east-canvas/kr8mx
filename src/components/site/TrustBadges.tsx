@@ -8,8 +8,8 @@ const BADGES = [
     d: "M9 3v6l-5 8a2 2 0 0 0 1.7 3h12.6a2 2 0 0 0 1.7-3l-5-8V3M7.5 3h9M8 14h8",
   },
   {
-    title: "0 PPM 7-OH",
-    sub: "Verified",
+    title: "No Added 7-OH",
+    sub: "Lab-verified",
     d: "M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6zM9 12l2 2 4-4",
   },
   {

@@ -10,7 +10,7 @@ import { aboutPageJsonLd, breadcrumbJsonLd, SITE } from "@/lib/seo";
 export const metadata: Metadata = {
   title: "About",
   description:
-    "KR8MX is a premium 21+ kratom-derived brand. KR8MX Tablets are built with MitraGen+™, a proprietary formula by Mitragen Labs, in bottle and blister-pack formats across five flavors.",
+    "KR8MX is a premium 21+ kratom leaf extract brand. Each tablet is built with MitraGen+™ and led by Speciociliatine (150 mg) with Mitragynine (50 mg), 300 mg total kratom alkaloids per tablet, no added 7-hydroxymitragynine (7-OH), lab-tested every lot.",
   alternates: { canonical: "/about" },
   openGraph: {
     title: "About KR8MX",
@@ -66,8 +66,11 @@ export default function AboutPage() {
         <p className="max-w-2xl text-sm leading-relaxed text-secondary">
           KR8MX Tablets come in bottle and blister-pack formats, with 100 mg
           MitraGen+™ per tablet, across five flavors: Grape, Lemon, Peach,
-          Strawberry, and Blue Razz. Each lot is third-party tested to 0 PPM
-          7-hydroxymitragynine on a dry weight basis.
+          Strawberry, and Blue Razz. Made from Mitragyna speciosa (kratom) leaf,
+          led by Speciociliatine at 150 mg per tablet with Mitragynine at 50 mg,
+          300 mg total kratom alkaloids per tablet. No added 7-OH. Each lot is
+          third-party tested to under 400 ppm 7-hydroxymitragynine on a dry
+          weight basis.
         </p>
         <div className="mt-2 flex flex-wrap gap-3">
           <Button href="/tablets" variant="solid" size="md">

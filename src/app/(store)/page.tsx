@@ -11,7 +11,7 @@ import type { Flavor } from "@/db/schema";
 
 export const metadata: Metadata = {
   description:
-    "KR8MX Tablets deliver 100 mg MitraGen+™ per tablet, in bottle and blister-pack formats. Five flavors: Grape, Lemon, Peach, Strawberry, and Blue Razz. Built with the proprietary MitraGen+™ formula by Mitragen Labs. 21+.",
+    "KR8MX kratom leaf extract tablets: 100 mg MitraGen+™ per tablet, led by Speciociliatine, 300 mg total kratom alkaloids per tablet. No added 7-hydroxymitragynine (7-OH), lab-tested every lot. Five flavors, made in the USA. 21+.",
 };
 
 const PURPLE = "#6C2FB0";
@@ -30,16 +30,16 @@ const FLAVOR_CARDS: Card[] = [
 ];
 
 const STATS = [
-  { to: 0, suffix: "", label: "PPM 7-OH" },
-  { to: 100, suffix: "mg", label: "MitraGen+™ per tab" },
-  { to: 200, suffix: "mg", label: "Minor alkaloids" },
-  { to: 300, suffix: "mg", label: "Total per tab" },
+  { to: 100, suffix: "mg", label: "MitraGen+™ per tablet" },
+  { to: 150, suffix: "mg", label: "Speciociliatine per tablet" },
+  { to: 50, suffix: "mg", label: "Mitragynine per tablet" },
+  { to: 300, suffix: "mg", label: "Total alkaloids per tablet" },
 ];
 
 const VALUE_POINTS = [
   { title: "MitraGen+™ Formula", body: "100 mg per tablet, solvent-free.", d: "M9 3v6l-5 8a2 2 0 0 0 1.7 3h12.6a2 2 0 0 0 1.7-3l-5-8V3M7.5 3h9M8 14h8" },
   { title: "Isolated & Standardized", body: "Minor alkaloids. No synthetics.", d: "M12 3l8 3v6c0 5-4 8-8 9-4-1-8-4-8-9V6zM9 12l2 2 4-4" },
-  { title: "Lab-Tested Every Lot", body: "0 PPM 7-hydroxymitragynine.", d: "M8 3h8M10 3v6l-4 9a2 2 0 0 0 1.8 3h8.4a2 2 0 0 0 1.8-3l-4-9V3" },
+  { title: "Lab-Tested Every Lot", body: "No added 7-hydroxymitragynine.", d: "M8 3h8M10 3v6l-4 9a2 2 0 0 0 1.8 3h8.4a2 2 0 0 0 1.8-3l-4-9V3" },
   { title: "Made in the USA", body: "U.S.-grown kratom.", d: "M12 3a9 9 0 100 18 9 9 0 000-18zM3 12h18M12 3c2.5 2.5 2.5 15 0 18M12 3c-2.5 2.5-2.5 15 0 18" },
 ];
 
@@ -88,7 +88,7 @@ export default function Home() {
                 The market is moving beyond 7-OH.
               </span>{" "}
               KR8MX is the replacement, and the new standard for kratom tablets:
-              0 PPM 7-hydroxymitragynine, standardized minor alkaloids, and
+              no added 7-hydroxymitragynine, standardized minor alkaloids, and
               lab-tested every lot. Compliant, precise, and built to lead.
             </p>
             <div
@@ -235,9 +235,10 @@ export default function Home() {
             </h2>
             <p className="mt-5 max-w-prose text-sm leading-relaxed text-white/70 sm:text-base">
               Every KR8MX tablet is built with MitraGen+&trade;, a proprietary,
-              solvent-free formulation of isolated, standardized alkaloids.
-              U.S.-grown kratom, made in the USA, and lab-tested every lot.
-              Precision engineered into every tablet.
+              solvent-free formulation of isolated, standardized alkaloids, led
+              by Speciociliatine. U.S.-grown Mitragyna speciosa, made in the USA,
+              and lab-tested every lot. No added 7-OH, under 400 ppm
+              7-hydroxymitragynine on a dry weight basis.
             </p>
           </Reveal>
 
@@ -280,8 +281,9 @@ export default function Home() {
           </h2>
           <p className="mx-auto mt-4 max-w-[64ch] text-sm leading-relaxed text-secondary sm:text-base">
             Each tablet delivers 100 mg MitraGen+&trade; plus 200 mg
-            standardized minor alkaloids, 300 mg total, in a solvent-free
-            formula crafted for consistency, purity, and precision.
+            standardized minor alkaloids led by Speciociliatine, 300 mg total
+            per tablet, in a solvent-free formula crafted for consistency,
+            purity, and precision.
           </p>
         </Reveal>
 
