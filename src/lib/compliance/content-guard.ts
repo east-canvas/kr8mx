@@ -18,6 +18,7 @@ import { join, relative } from "node:path";
    ============================================================================= */
 
 export const DENYLIST = [
+  // Structure / function + effect words (original set).
   "energy",
   "focus",
   "boost",
@@ -29,6 +30,32 @@ export const DENYLIST = [
   "cure",
   "dose",
   "wellness",
+  // Therapeutic / disease language (Label Compliance Spec Rev 1.1, §7).
+  "pain",
+  "analgesic",
+  "anti-inflammatory",
+  "anxiety",
+  "depression",
+  "opioid",
+  "narcotic",
+  "withdrawal",
+  "detox",
+  "addiction",
+  "sedative",
+  "sedation",
+  "insomnia",
+  "nootropic",
+  "cognition",
+  "immune",
+  // Potency / recreational / comparative language (§7).
+  "potent",
+  "euphoria",
+  "amplified",
+  "extra strength",
+  "fast-acting",
+  "long-lasting",
+  "opioid-like",
+  "morphine-like",
 ] as const;
 
 /**

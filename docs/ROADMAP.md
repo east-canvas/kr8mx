@@ -42,6 +42,36 @@ can be pushed. The button will require this and flag any missing prices.
 Can start now (no keys needed): the connection + mapping schema, the SKU to Item
 mapping screen, and the order's invoice status/button (inert until connected).
 
+### Label compliance + SEO alignment (Label Compliance Spec Rev 1.1)
+
+From the label copy/spec docs. Some are decisions for AJ + counsel.
+
+- DECISION NEEDED — 7-OH framing. The spec says never claim absolute zero; use
+  "No added 7-OH" (or a measured "<X ppm, dry weight basis"). The site currently
+  says "0 PPM 7-OH" in several places (hero, marquee, footer, metadata). Reframe
+  sitewide once confirmed.
+- DECISION NEEDED — positioning. "Replacement" / "the new standard" may read as
+  comparative under §7; confirm with counsel or soften.
+- SEO + compliant composition content: add a Product Facts style breakdown
+  (per tablet): MitraGen+ 100 mg, Speciociliatine 150 mg, Mitragynine 50 mg,
+  total kratom alkaloids 300 mg. KR8MX is Speciociliatine-forward — a
+  distinctive, ownable SEO angle. Add the compliant composition statement:
+  "Made from Mitragyna speciosa (kratom) leaf. No added 7-OH. No synthetic or
+  semi-synthetic kratom alkaloids. Every lot tested by an accredited independent
+  lab."
+- Per-unit basis: ensure every mg number on the site carries "per tablet".
+- E-commerce pre-purchase warning (Prop 65 for CA) + assumption-of-risk +
+  jurisdiction restrictions surfaced pre-purchase (Tier 3 duties).
+- LABEL FINDING (for the label team, not the site): the physical bottle art
+  reads "STRONG EXTENDED-RELEASE" — "strong" is potency language prohibited by
+  the brand's own §7. Flag for artwork revision.
+
+Done from this pass:
+- Content guard extended with the §7 prohibited-claims list (therapeutic,
+  potency, comparative terms) so non-compliant copy fails the build.
+- Project audit agents added (`.claude/agents/`): compliance-auditor,
+  seo-auditor, security-reviewer.
+
 ---
 
 ## Backlog — Admin / Ops
