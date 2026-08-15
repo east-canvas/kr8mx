@@ -5,6 +5,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { CountUp } from "@/components/site/CountUp";
 import { MarqueeStrip } from "@/components/site/MarqueeStrip";
 import { CtaBand } from "@/components/site/CtaBand";
+import { TrustBadges } from "@/components/site/TrustBadges";
 import { SectionDivider } from "@/components/ui/SectionDivider";
 import { defaultTabletImage, flavorToSlug } from "@/lib/catalog";
 import type { Flavor } from "@/db/schema";
@@ -345,6 +346,30 @@ export default function Home() {
           View All Flavors <Chevron />
         </Link>
       </section>
+
+      {/* ---- Verified / trust module ---- */}
+      <Reveal className="mx-auto max-w-6xl px-6 pb-16 sm:pb-24">
+        <div className="flex flex-col items-center gap-3 text-center">
+          <span className="type-kicker text-muted">Verified, every lot</span>
+          <h2 className="type-display text-primary text-2xl sm:text-3xl">
+            Proof, not promises
+          </h2>
+          <p className="max-w-xl text-sm text-secondary">
+            Every lot is third-party tested, with no added 7-OH, no synthetics,
+            and no masking agents. Read the certificates for yourself.
+          </p>
+        </div>
+        <TrustBadges className="mt-8" />
+        <div className="mt-8 flex justify-center">
+          <Link
+            href="/coa"
+            className="inline-flex items-center justify-center gap-2 rounded-lg border-[1.5px] bg-white px-6 py-3.5 text-sm font-semibold transition-colors hover:bg-surface-raised"
+            style={{ color: PURPLE, borderColor: PURPLE }}
+          >
+            View Lab Results <Chevron />
+          </Link>
+        </div>
+      </Reveal>
 
       {/* ---- Divider ---- */}
       <SectionDivider className="pb-16 sm:pb-20" />

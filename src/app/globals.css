@@ -174,12 +174,28 @@
     animation: kr8-glow 7s var(--ease-standard) infinite;
   }
 
+  /* Route-change fade. Applied by the (store) template, which React remounts on
+     every navigation, so this replays per page. Opacity only, no transform, so
+     it never establishes a containing block for sticky/fixed descendants. */
+  @keyframes kr8-page {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .animate-page {
+    animation: kr8-page 0.4s var(--ease-out) both;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .reveal,
     .reveal-hidden,
     .animate-rise,
     .animate-glow,
-    .animate-marquee {
+    .animate-marquee,
+    .animate-page {
       animation: none !important;
       transition: none !important;
       opacity: 1 !important;
