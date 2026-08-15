@@ -42,35 +42,41 @@ can be pushed. The button will require this and flag any missing prices.
 Can start now (no keys needed): the connection + mapping schema, the SKU to Item
 mapping screen, and the order's invoice status/button (inert until connected).
 
-### Label compliance + SEO alignment (Label Compliance Spec Rev 1.1)
+### Tablet label spec sync — BLOCKED on new web art
 
-From the label copy/spec docs. Some are decisions for AJ + counsel.
+New Blue Razz artwork changed the formula. Full spec captured in
+`docs/Label-Spec-Tablets-Latest.md`. The site is intentionally left on the OLD
+spec until the new web art is ready (owner direction: avoid two live specs).
 
-- DECISION NEEDED — 7-OH framing. The spec says never claim absolute zero; use
-  "No added 7-OH" (or a measured "<X ppm, dry weight basis"). The site currently
-  says "0 PPM 7-OH" in several places (hero, marquee, footer, metadata). Reframe
-  sitewide once confirmed.
+- Per tablet now: Speciociliatine 150→**100 mg**, Mitragynine 50→**25 mg**,
+  total kratom alkaloids 300→**250 mg**; MitraGen+ 100 mg unchanged; NEW actives
+  Mitragyna Speciosa Extract 125 mg, Piperine 2 mg, Paraxanthine 50 mg.
+- BLOCKER (artwork): the 7-OH figure disagrees between panels ("<400 ppm" on the
+  bottle/fronts vs "0.001 ppm" on the blister back). Reconcile before the site
+  quotes it.
+- When cleared: one-pass update per the checklist in the spec doc; centralize the
+  numbers into a single `TABLET_COMPOSITION` constant first so they never drift
+  across ~30 spots again. Note: the added stimulant (Paraxanthine) does NOT open
+  stimulant/energy/"bioavailability" claims — §7 rules stay as-is.
+
+### Compliance — still open
+
 - DECISION NEEDED — positioning. "Replacement" / "the new standard" may read as
   comparative under §7; confirm with counsel or soften.
-- SEO + compliant composition content: add a Product Facts style breakdown
-  (per tablet): MitraGen+ 100 mg, Speciociliatine 150 mg, Mitragynine 50 mg,
-  total kratom alkaloids 300 mg. KR8MX is Speciociliatine-forward — a
-  distinctive, ownable SEO angle. Add the compliant composition statement:
-  "Made from Mitragyna speciosa (kratom) leaf. No added 7-OH. No synthetic or
-  semi-synthetic kratom alkaloids. Every lot tested by an accredited independent
-  lab."
-- Per-unit basis: ensure every mg number on the site carries "per tablet".
 - E-commerce pre-purchase warning (Prop 65 for CA) + assumption-of-risk +
-  jurisdiction restrictions surfaced pre-purchase (Tier 3 duties).
-- LABEL FINDING (for the label team, not the site): the physical bottle art
-  reads "STRONG EXTENDED-RELEASE" — "strong" is potency language prohibited by
-  the brand's own §7. Flag for artwork revision.
+  jurisdiction restrictions surfaced pre-purchase (Tier 3 duties). Buildable now.
 
 Done from this pass:
-- Content guard extended with the §7 prohibited-claims list (therapeutic,
-  potency, comparative terms) so non-compliant copy fails the build.
-- Project audit agents added (`.claude/agents/`): compliance-auditor,
-  seo-auditor, security-reviewer.
+- 7-OH reframed sitewide to "No added 7-OH" + measured "<400 ppm on a dry weight
+  basis"; every site mg number now carries "per tablet".
+- SEO batch: tablet Product/ItemList structured data, distinctive-term metadata,
+  noindex + canonicals on placeholders, `/science` Speciociliatine/MitraGen+/7-OH
+  page with FAQ schema, sitemap fixes, Instagram `sameAs`, PDP alt text + unique
+  per-flavor copy. SEO auditor fully cleared.
+- Content guard extended with the §7 prohibited-claims list so non-compliant copy
+  fails the build; audit agents added (compliance-auditor, seo-auditor,
+  security-reviewer).
+- RESOLVED on new art: "STRONG EXTENDED-RELEASE" is gone from the latest labels.
 
 ---
 
@@ -99,7 +105,6 @@ Done from this pass:
   that inbox is live. Currently redirects to `aj@gelhq.com`.
 - CAN-SPAM: add a real physical mailing address to marketing emails (launch +
   alerts) when one is available. Transactional emails do not need it.
-- Add `sameAs` verified social profile URLs to the Organization JSON-LD.
 
 ---
 
