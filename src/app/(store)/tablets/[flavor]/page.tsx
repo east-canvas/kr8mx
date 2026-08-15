@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { notFound } from "next/navigation";
 import { ProductVisual } from "@/components/brand/ProductVisual";
 import { Tilt } from "@/components/brand/Tilt";
@@ -173,6 +173,8 @@ export default async function TabletPdpPage({
           style={{
             background: `radial-gradient(90% 90% at 50% 25%, ${c.hex}26, transparent 65%)`,
             animationDelay: "60ms",
+            // Shared element: morphs between flavors during a View Transition.
+            viewTransitionName: "kr8-pdp-visual",
           }}
         >
           <Tilt>

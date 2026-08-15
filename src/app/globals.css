@@ -202,4 +202,34 @@
       transform: none !important;
     }
   }
+
+  /* View Transitions take over where supported (Chromium): the browser
+     cross-fades routes and morphs the shared product visual. The CSS route fade
+     and on-mount rise would otherwise be captured mid-animation (at opacity 0)
+     in the transition snapshot, so we disable them here and let the transition
+     own the motion. Non-supporting browsers keep the CSS fade/rise fallback. */
+  @supports (view-transition-name: none) {
+    .animate-page,
+    .animate-rise {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+  }
+}
+
+/* Route-transition timing (Chromium View Transitions). Kept snappy to match the
+   brand's motion; fully suppressed under reduced-motion. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.32s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
 }

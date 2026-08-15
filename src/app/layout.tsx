@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { ViewTransitions } from "next-view-transitions";
 import { fontVariables } from "@/lib/fonts";
 import { CartProvider } from "@/lib/cart/CartProvider";
 import { resolveBaseUrl, SITE, organizationJsonLd, websiteJsonLd } from "@/lib/seo";
@@ -57,22 +58,24 @@ export default function RootLayout({
 }) {
   return (
     // The site shell is the precision (light) theme by default.
-    <html lang="en" data-theme="precision" className={fontVariables}>
-      <body>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationJsonLd()),
-          }}
-        />
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(websiteJsonLd()),
-          }}
-        />
-        <CartProvider>{children}</CartProvider>
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang="en" data-theme="precision" className={fontVariables}>
+        <body>
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(organizationJsonLd()),
+            }}
+          />
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(websiteJsonLd()),
+            }}
+          />
+          <CartProvider>{children}</CartProvider>
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

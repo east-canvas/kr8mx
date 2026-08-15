@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { Reveal } from "@/components/ui/Reveal";
 import { CountUp } from "@/components/site/CountUp";
 import { MarqueeStrip } from "@/components/site/MarqueeStrip";

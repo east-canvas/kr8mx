@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
-import Link from "next/link";
+import { Link } from "next-view-transitions";
 import { SlashX } from "@/components/brand/SlashX";
 import { ProductVisual } from "@/components/brand/ProductVisual";
 import { HairlineRule } from "@/components/ui/HairlineRule";
