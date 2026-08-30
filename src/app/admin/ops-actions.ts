@@ -17,7 +17,7 @@ import { ADMIN_COOKIE, isAuthed } from "@/lib/admin/auth";
 import { canTransition } from "@/db/order-state";
 import { logAudit } from "@/lib/admin/audit";
 import { sendOrderEmail } from "@/lib/email/send";
-import { sendLaunchAnnouncement } from "@/lib/email/send";
+import { sendLaunchAnnouncement, sendLeadReply } from "@/lib/email/send";
 import { getEmailProvider } from "@/lib/email/providers";
 import { tabletsLaunchEmail } from "@/lib/email/templates";
 import { resolveBaseUrl } from "@/lib/seo";
@@ -65,6 +65,22 @@ export async function updateLeadStatusAction(formData: FormData) {
     }
   }
   revalidatePath("/admin/leads");
+}
+
+/** Send a branded reply to a lead from the console. Goes out from
+ *  info@kr8mx.com (reply-to the monitored inbox), is logged to lead_replies,
+ *  and flips a new lead to "contacted". */
+export async function sendLeadReplyAction(formData: FormData) {
+  await assertAuthed();
+  const id = Number(str(formData.get("id")));
+  const subject = str(formData.get("subject"));
+  const body = str(formData.get("body"));
+  if (!Number.isFinite(id) || !subject || body.length < 2) {
+    redirect("/admin/leads?error=reply_fields");
+  }
+  const res = await sendLeadReply(id, subject, body);
+  revalidatePath("/admin/leads");
+  redirect(`/admin/leads?${res.ok ? "ok=reply" : "error=reply_send"}`);
 }
 
 /** Manual order transition via the state machine. Illegal edges are rejected

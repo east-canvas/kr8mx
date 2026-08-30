@@ -1,14 +1,27 @@
 import "server-only";
 import { and, eq, isNull } from "drizzle-orm";
 import { getDb } from "@/db/client";
-import { orders, orderItems, sentEmails, notifyList } from "@/db/schema";
+import {
+  orders,
+  orderItems,
+  sentEmails,
+  notifyList,
+  leads,
+  leadReplies,
+} from "@/db/schema";
 import { getEmailProvider } from "./providers";
 import {
   orderConfirmationEmail,
   shippingNotificationEmail,
   tabletsLaunchEmail,
+  leadReplyEmail,
 } from "./templates";
 import { resolveBaseUrl } from "@/lib/seo";
+
+/** Branded sender + reply-to for 1:1 lead replies. Env-overridable so the
+ *  monitored inbox can change without a deploy. */
+const LEAD_REPLY_FROM = process.env.LEADS_REPLY_FROM || "KR8MX <info@kr8mx.com>";
+const LEAD_REPLY_TO = process.env.LEADS_REPLY_TO || "info@kr8mx.com";
 
 export type OrderEmailTemplate = "order_confirmation" | "shipping_notification";
 
@@ -90,6 +103,70 @@ export async function sendOrderEmail(
       /* ignore */
     }
     return { sent: false, failed: true };
+  }
+}
+
+/**
+ * Send a branded 1:1 reply to a lead from the admin console. Sends from
+ * info@kr8mx.com with reply-to set to the monitored inbox (so the lead's reply
+ * never lands in a personal Gmail), logs the reply to lead_replies, and moves
+ * the lead to "contacted" on success. Never throws.
+ */
+export async function sendLeadReply(
+  leadId: number,
+  subject: string,
+  body: string,
+): Promise<{ ok: boolean; error?: string }> {
+  let db;
+  try {
+    db = getDb();
+  } catch {
+    return { ok: false, error: "db_unavailable" };
+  }
+
+  try {
+    const [lead] = await db
+      .select()
+      .from(leads)
+      .where(eq(leads.id, leadId))
+      .limit(1);
+    if (!lead) return { ok: false, error: "lead_not_found" };
+
+    const rendered = leadReplyEmail({ name: lead.name, subject, body });
+    const provider = getEmailProvider();
+    const result = await provider.sendTransactional({
+      to: lead.email,
+      template: "lead_reply",
+      subject: rendered.subject,
+      html: rendered.html,
+      from: LEAD_REPLY_FROM,
+      replyTo: LEAD_REPLY_TO,
+    });
+
+    // The email send is the source of truth for success. Logging + status are
+    // best-effort so a not-yet-migrated table can't report a sent mail as failed.
+    try {
+      await db.insert(leadReplies).values({
+        leadId,
+        toEmail: lead.email,
+        subject,
+        body,
+        status: result.ok ? "sent" : "failed",
+        providerMessageId: result.providerMessageId ?? null,
+      });
+      if (result.ok && lead.status === "new") {
+        await db
+          .update(leads)
+          .set({ status: "contacted" })
+          .where(eq(leads.id, leadId));
+      }
+    } catch {
+      /* best-effort log; don't fail a sent email on a logging error */
+    }
+
+    return result.ok ? { ok: true } : { ok: false, error: result.error };
+  } catch (err) {
+    return { ok: false, error: (err as Error).message };
   }
 }
 

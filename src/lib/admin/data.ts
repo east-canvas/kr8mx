@@ -1,5 +1,5 @@
 import "server-only";
-import { and, desc, eq, ilike, or, sql } from "drizzle-orm";
+import { and, desc, eq, ilike, inArray, or, sql } from "drizzle-orm";
 import { getDb } from "@/db/client";
 import {
   orders,
@@ -8,6 +8,7 @@ import {
   sentEmails,
   notifyList,
   leads,
+  leadReplies,
   shippingRestrictions,
   inventory,
   productVariants,
@@ -18,6 +19,7 @@ import {
 import type {
   Flavor,
   LeadStatus,
+  LeadReply,
   Order,
   OrderStatus,
   ProductCategory,
@@ -109,8 +111,28 @@ export async function getLeadsOverview() {
       .select({ type: leads.type, count: sql<number>`count(*)::int` })
       .from(leads)
       .groupBy(leads.type);
+
+    // Reply history for the visible leads, grouped by lead id (oldest first).
+    // Isolated so a missing lead_replies table (pre-migration) can't blank the
+    // whole leads list, it just yields no history.
+    const replies: Record<number, LeadReply[]> = {};
+    const ids = rows.map((r) => r.id);
+    if (ids.length > 0) {
+      try {
+        const rr = await db
+          .select()
+          .from(leadReplies)
+          .where(inArray(leadReplies.leadId, ids))
+          .orderBy(leadReplies.createdAt);
+        for (const r of rr) (replies[r.leadId] ??= []).push(r);
+      } catch {
+        /* table not migrated yet, degrade to no history */
+      }
+    }
+
     return {
       rows,
+      replies,
       total: rows.length,
       newCount: count("new"),
       contacted: count("contacted"),
@@ -120,6 +142,7 @@ export async function getLeadsOverview() {
   } catch {
     return {
       rows: [],
+      replies: {} as Record<number, LeadReply[]>,
       total: 0,
       newCount: 0,
       contacted: 0,

@@ -331,6 +331,30 @@ export const leads = pgTable(
   }),
 );
 
+/**
+ * Outbound replies sent to a lead from the admin console, via the branded
+ * sender (info@kr8mx.com). One row per sent reply, so the console shows the
+ * conversation history and nothing is lost to a personal inbox.
+ */
+export const leadReplies = pgTable(
+  "lead_replies",
+  {
+    id: serial("id").primaryKey(),
+    leadId: integer("lead_id")
+      .notNull()
+      .references(() => leads.id, { onDelete: "cascade" }),
+    toEmail: text("to_email").notNull(),
+    subject: text("subject").notNull(),
+    body: text("body").notNull(),
+    status: text("status").notNull().default("sent"),
+    providerMessageId: text("provider_message_id"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => ({ leadIdx: index("lead_replies_lead_idx").on(t.leadId) }),
+);
+
 /* ------------------------------------------------- shipping restrictions -- */
 
 /**
@@ -627,6 +651,7 @@ export type CartItem = typeof cartItems.$inferSelect;
 export type NotifyListEntry = typeof notifyList.$inferSelect;
 export type ShippingRestriction = typeof shippingRestrictions.$inferSelect;
 export type Lead = typeof leads.$inferSelect;
+export type LeadReply = typeof leadReplies.$inferSelect;
 
 export type ProductContent = typeof productContent.$inferSelect;
 export type SalesRep = typeof salesReps.$inferSelect;

@@ -10,6 +10,10 @@ export type SendArgs = {
   subject: string;
   html: string;
   data?: Record<string, unknown>;
+  /** Override the default sender, e.g. "KR8MX <info@kr8mx.com>". */
+  from?: string;
+  /** Where recipient replies should land, e.g. "info@kr8mx.com". */
+  replyTo?: string;
 };
 
 export type SendResult = {

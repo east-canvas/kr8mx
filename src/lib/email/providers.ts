@@ -62,10 +62,11 @@ export class ResendProvider implements EmailProvider {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          from: this.from,
+          from: args.from || this.from,
           to: args.to,
           subject: args.subject,
           html: args.html,
+          ...(args.replyTo ? { reply_to: args.replyTo } : {}),
         }),
       });
       if (!res.ok) return { ok: false, error: `Resend ${res.status}` };

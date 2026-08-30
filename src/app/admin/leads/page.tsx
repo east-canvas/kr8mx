@@ -2,7 +2,7 @@ import Link from "next/link";
 import { cookies } from "next/headers";
 import { ADMIN_COOKIE, isAuthed } from "@/lib/admin/auth";
 import { getLeadsOverview } from "@/lib/admin/data";
-import { updateLeadStatusAction } from "../ops-actions";
+import { updateLeadStatusAction, sendLeadReplyAction } from "../ops-actions";
 import { HairlineRule } from "@/components/ui/HairlineRule";
 import { Badge } from "@/components/ui/Badge";
 import type { LeadStatus } from "@/db/schema";
@@ -27,15 +27,36 @@ function fmt(d: Date | string) {
   });
 }
 
-export default async function AdminLeadsPage() {
+export default async function AdminLeadsPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | undefined>>;
+}) {
   const store = await cookies();
   if (!isAuthed(store.get(ADMIN_COOKIE)?.value)) return null;
-  const { rows, total, newCount, contacted, closed, byType } =
+  const sp = await searchParams;
+  const { rows, replies, total, newCount, contacted, closed, byType } =
     await getLeadsOverview();
 
   return (
     <div className="flex flex-col gap-8">
       <h2 className="type-display text-primary text-xl">Leads</h2>
+
+      {sp.ok === "reply" ? (
+        <p className="rounded-md border border-hairline bg-surface px-4 py-2 text-sm text-primary">
+          Reply sent from info@kr8mx.com.
+        </p>
+      ) : null}
+      {sp.error === "reply_send" ? (
+        <p className="rounded-md border border-hairline bg-surface px-4 py-2 text-sm" style={{ color: "#b4232a" }}>
+          Reply failed to send. Check the email provider / sending domain.
+        </p>
+      ) : null}
+      {sp.error === "reply_fields" ? (
+        <p className="rounded-md border border-hairline bg-surface px-4 py-2 text-sm" style={{ color: "#b4232a" }}>
+          Enter a subject and a message before sending.
+        </p>
+      ) : null}
 
       <div className="flex flex-wrap gap-6 text-sm">
         <span className="text-secondary">
@@ -154,6 +175,59 @@ export default async function AdminLeadsPage() {
                       >
                         Create order &rarr;
                       </Link>
+
+                      <details className="w-64 max-w-full">
+                        <summary className="cursor-pointer text-2xs font-semibold uppercase tracking-wide text-primary">
+                          Reply
+                          {replies[r.id]?.length
+                            ? ` · ${replies[r.id].length} sent`
+                            : ""}
+                        </summary>
+                        <div className="mt-2 flex flex-col gap-2">
+                          {replies[r.id]?.length ? (
+                            <ul className="flex flex-col gap-1.5">
+                              {replies[r.id].map((rep) => (
+                                <li
+                                  key={rep.id}
+                                  className="rounded-sm border border-hairline p-2 text-2xs text-secondary"
+                                >
+                                  <div className="text-muted">
+                                    {fmt(rep.createdAt)} · {rep.status}
+                                  </div>
+                                  <div className="text-primary">{rep.subject}</div>
+                                  <div className="mt-0.5 whitespace-pre-wrap text-muted">
+                                    {rep.body}
+                                  </div>
+                                </li>
+                              ))}
+                            </ul>
+                          ) : null}
+                          <form
+                            action={sendLeadReplyAction}
+                            className="flex flex-col gap-1.5"
+                          >
+                            <input type="hidden" name="id" value={r.id} />
+                            <input
+                              name="subject"
+                              defaultValue="Re: your KR8MX inquiry"
+                              className="rounded-sm border border-hairline bg-transparent px-2 py-1 text-2xs text-primary"
+                            />
+                            <textarea
+                              name="body"
+                              rows={4}
+                              required
+                              placeholder={`Hi ${r.name.split(/\s+/)[0]}, thanks for reaching out…`}
+                              className="rounded-sm border border-hairline bg-transparent px-2 py-1 text-2xs text-primary"
+                            />
+                            <button className="self-start rounded-sm border border-primary px-3 py-1 text-2xs font-semibold uppercase tracking-wide text-primary transition-colors hover:bg-surface-raised">
+                              Send reply
+                            </button>
+                            <span className="text-2xs text-muted">
+                              Sends from info@kr8mx.com
+                            </span>
+                          </form>
+                        </div>
+                      </details>
                     </div>
                   </td>
                 </tr>

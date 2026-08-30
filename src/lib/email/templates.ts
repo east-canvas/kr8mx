@@ -215,6 +215,37 @@ export function leadAutoReplyEmail(lead: {
   };
 }
 
+/**
+ * Branded 1:1 reply to a lead, composed in the admin console and sent from the
+ * KR8MX sender (info@kr8mx.com). The body is the admin's typed message, split on
+ * blank lines into paragraphs and escaped, then dropped into the brand shell so
+ * it reads as coming from the KR8MX team, never a personal inbox.
+ */
+export function leadReplyEmail(args: {
+  name: string;
+  subject: string;
+  body: string;
+}): RenderedEmail {
+  const th: Theme = "precision";
+  const t = THEME[th];
+  const first = args.name.split(/\s+/)[0] || "there";
+  const paras = args.body
+    .trim()
+    .split(/\n{2,}/)
+    .filter(Boolean)
+    .map(
+      (p) =>
+        `<p style="font-size:14px;line-height:1.6;color:${t.text};margin:0 0 14px">${esc(p).replace(/\n/g, "<br/>")}</p>`,
+    )
+    .join("");
+  const inner =
+    kicker(th, "A note from KR8MX") +
+    `<p style="font-size:15px;color:${t.text};margin:0 0 14px">Hi ${esc(first)},</p>` +
+    paras +
+    `<p style="font-size:14px;line-height:1.6;color:${t.muted};margin:0">Best,<br/>The KR8MX Team</p>`;
+  return { subject: args.subject, html: layout(th, inner) };
+}
+
 export function drinksCampaignEmail(args: {
   heading: string;
   body: string;
