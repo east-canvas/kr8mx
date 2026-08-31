@@ -90,26 +90,33 @@ Done from this pass:
 
 ## Backlog — Storefront / UX
 
-- PDP flavor quick-switch (cross-fade the product image + accent in place
-  instead of a full reload).
-- Animated spec spotlight (the 100 / 200 / 300 mg breakdown filling on scroll).
-- Page-transition fades between routes.
-- COA / "0 PPM verified" trust module on the homepage and PDPs.
+- Animated spec spotlight (per-tablet mg breakdown filling on scroll). Hold until
+  the new label spec is synced (the numbers are changing).
 - Carry the blister "Coming Soon" band treatment onto the tablets collection
   page.
 - Accessibility + performance pass; optional dark theme.
 
 ## Backlog — Content / Compliance / Config
 
-- Flip lead notifications to `info@kr8mx.com` (set `LEADS_NOTIFY_EMAIL`) once
-  that inbox is live. Currently redirects to `aj@gelhq.com`.
 - CAN-SPAM: add a real physical mailing address to marketing emails (launch +
   alerts) when one is available. Transactional emails do not need it.
+- `info@kr8mx.com` inbox is live (ImprovMX forward → `aj@gelhq.com`). Optional:
+  point lead notifications at it via `LEADS_NOTIFY_EMAIL` (currently `aj@gelhq.com`,
+  which the forward reaches anyway).
 
 ---
 
 ## Done (recent)
 
+- Branded in-app lead replies: reply to a lead from `/admin/leads` and it sends
+  from `info@kr8mx.com` (reply-to the monitored inbox), logs to `lead_replies`,
+  and moves the lead to "contacted". Personal inbox never appears to the lead.
+- Email deliverability + inbound: `info@`/`orders@` forward to `aj@gelhq.com`
+  via ImprovMX (MX + apex SPF); Resend SPF/DKIM on the `send` subdomain; DMARC
+  (`p=none`, rua to aj) added. Sending authenticated, inbound forwarding live.
+- Storefront UX: homepage "verified / lab results" trust module; route-transition
+  fades; View Transitions flavor quick-switch (Chromium) with per-flavor URLs
+  preserved. All respect prefers-reduced-motion.
 - Contact / wholesale lead capture: segmented form, DB pipeline, internal
   notification + branded auto-reply, marketing opt-in, `/admin/leads` console
   with status + CSV export.
