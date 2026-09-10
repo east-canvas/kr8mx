@@ -16,8 +16,8 @@ export const metadata: Metadata = {
 };
 
 const PURPLE = "#6C2FB0";
-const HERO_DESKTOP = "/brand/tablets/hero-desktop.jpg";
-const HERO_MOBILE = "/brand/tablets/hero-mobile.jpg";
+const HERO_DESKTOP = "/brand/tablets/hero-desktop.webp";
+const HERO_MOBILE = "/brand/tablets/hero-mobile.webp";
 const BLISTER_DESKTOP = "/brand/tablets/blister-lineup.webp";
 const BLISTER_MOBILE = "/brand/tablets/blister-lineup-mobile.webp";
 
@@ -117,9 +117,9 @@ export default function Home() {
           <div className="mt-7 overflow-hidden rounded-xl md:hidden">
             <Image
               src={HERO_MOBILE}
-              alt="KR8MX Tablets, five flavors"
-              width={1200}
-              height={800}
+              alt="KR8MX Speciociliatine kratom leaf extract tablets, five flavors"
+              width={1100}
+              height={785}
               priority
               sizes="100vw"
               className="w-full"
