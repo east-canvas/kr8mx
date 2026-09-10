@@ -57,6 +57,13 @@
       "when": 1788105766124,
       "tag": "0007_common_boomer",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1789074144822,
+      "tag": "0008_lush_jack_flag",
+      "breakpoints": true
     }
   ]
 }

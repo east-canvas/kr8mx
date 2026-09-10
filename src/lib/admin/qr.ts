@@ -22,12 +22,28 @@ export function siteOrigin(): string {
 }
 
 /**
+ * Normalize a user-entered brand domain to an origin, e.g. "sigma7.com" or
+ * "https://go.sigma7.com/x" -> "https://sigma7.com" / "https://go.sigma7.com".
+ * Returns null if it can't be parsed, so callers fall back to the site origin.
+ */
+export function normalizeScanOrigin(domain: string): string | null {
+  const raw = /^https?:\/\//i.test(domain) ? domain : `https://${domain}`;
+  try {
+    return new URL(raw).origin.replace(/:\/\/www\./, "://");
+  } catch {
+    return null;
+  }
+}
+
+/**
  * Permanent scan URL a barcode encodes: {origin}/q/{code}. The code never
  * changes, so a printed QR is re-pointable, the /q resolver 302s to the link's
- * current target.
+ * current target. Pass a brand `scanDomain` to build the QR on that domain
+ * instead of the default site (it must be pointed at this app to resolve).
  */
-export function scanUrl(code: string): string {
-  return `${siteOrigin()}/q/${code}`;
+export function scanUrl(code: string, scanDomain?: string | null): string {
+  const origin = (scanDomain && normalizeScanOrigin(scanDomain)) || siteOrigin();
+  return `${origin}/q/${code}`;
 }
 
 /*

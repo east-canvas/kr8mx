@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { ADMIN_COOKIE, isAuthed } from "@/lib/admin/auth";
 import { scanUrl, generateQrDownloadSvg, generateQrPng } from "@/lib/admin/qr";
+import { getDynamicLink } from "@/db/queries";
 
 /**
  * Downloadable QR for a barcode. Admin-only. The QR encodes the permanent
@@ -19,7 +20,10 @@ export async function GET(
   }
 
   const { code } = await params;
-  const target = scanUrl(code);
+  // Build the QR on the link's brand domain when set, so a scan shows that
+  // domain and never kr8mx.com (still dynamic via the /q resolver there).
+  const link = await getDynamicLink(code);
+  const target = scanUrl(code, link?.scanDomain);
 
   const { searchParams } = new URL(req.url);
   const fmt = (searchParams.get("fmt") ?? "png").toLowerCase();

@@ -1,0 +1,1 @@
+ALTER TABLE "dynamic_links" ADD COLUMN "scan_domain" text;

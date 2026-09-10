@@ -129,6 +129,7 @@ export async function createLinkAction(formData: FormData) {
   const targetUrl = str(formData.get("targetUrl"));
   const categoryRaw = str(formData.get("category"));
   const customCode = str(formData.get("code"));
+  const scanDomain = str(formData.get("scanDomain")) || null;
 
   if (!label || !targetUrl) {
     redirect("/admin?error=link_fields");
@@ -142,6 +143,7 @@ export async function createLinkAction(formData: FormData) {
       code,
       label,
       targetUrl,
+      scanDomain,
       category: categoryRaw ? (categoryRaw as ProductCategory) : null,
       active: true,
     });
@@ -156,12 +158,13 @@ export async function updateLinkTargetAction(formData: FormData) {
   await assertAuthed();
   const id = Number(str(formData.get("id")));
   const targetUrl = str(formData.get("targetUrl"));
+  const scanDomain = str(formData.get("scanDomain")) || null;
   if (!id || !targetUrl) redirect("/admin?error=link_fields");
   try {
     const db = getDb();
     await db
       .update(dynamicLinks)
-      .set({ targetUrl, updatedAt: new Date() })
+      .set({ targetUrl, scanDomain, updatedAt: new Date() })
       .where(eq(dynamicLinks.id, id));
   } catch {
     redirect("/admin?error=db");

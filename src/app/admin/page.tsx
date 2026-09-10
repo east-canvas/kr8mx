@@ -52,7 +52,7 @@ export default async function AdminDashboard({
   const { ok, error, provider, result } = await searchParams;
   const links = await getAllDynamicLinks();
   const linkQrs = await Promise.all(
-    links.map((l) => generateQrSvg(scanUrl(l.code))),
+    links.map((l) => generateQrSvg(scanUrl(l.code, l.scanDomain))),
   );
 
   return (
@@ -102,9 +102,11 @@ export default async function AdminDashboard({
           <h2 className="type-display text-primary text-xl">Dynamic Barcodes</h2>
           <p className="mt-1 text-sm text-secondary">
             QR codes for packaging. Each QR encodes a permanent scan link
-            (kr8mx.com/q/&hellip;) and redirects to the destination below -
-            change the destination anytime and printed packaging follows, no
-            reprint.
+            (&hellip;/q/&hellip;) and redirects to the destination below - change
+            the destination anytime and printed packaging follows, no reprint.
+            Set a <span className="text-primary">Scan domain</span> to build the QR
+            on a brand&rsquo;s own domain (e.g. sigma7.com) so the scan never
+            shows kr8mx.com. That domain must be pointed at this app first.
           </p>
         </div>
 
@@ -137,6 +139,18 @@ export default async function AdminDashboard({
             <span className={labelCls}>Custom code (optional)</span>
             <input name="code" className={inputCls} placeholder="auto-generated" />
           </label>
+          <label className="flex flex-col gap-1.5 sm:col-span-2">
+            <span className={labelCls}>Scan domain (optional)</span>
+            <input
+              name="scanDomain"
+              className={inputCls}
+              placeholder="sigma7.com — leave blank for kr8mx.com"
+            />
+            <span className="text-2xs text-muted">
+              Must be pointed at this app (add it in Vercel). Blank uses the
+              default site.
+            </span>
+          </label>
           <div className="sm:col-span-2">
             <button className="rounded-sm border border-accent bg-accent px-5 py-2.5 text-xs font-medium uppercase tracking-wide text-accent-contrast transition-opacity hover:opacity-90">
               Create barcode
@@ -167,12 +181,12 @@ export default async function AdminDashboard({
                     </Badge>
                   </div>
                   <a
-                    href={scanUrl(l.code)}
+                    href={scanUrl(l.code, l.scanDomain)}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="block truncate text-2xs text-muted hover:text-primary"
                   >
-                    {scanUrl(l.code)}
+                    {scanUrl(l.code, l.scanDomain)}
                   </a>
                   <p className="block truncate text-2xs text-secondary">
                     &rarr; {l.targetUrl}
@@ -211,6 +225,13 @@ export default async function AdminDashboard({
                     <input
                       name="targetUrl"
                       defaultValue={l.targetUrl}
+                      placeholder="Destination URL"
+                      className={`${inputCls} min-w-0 flex-1 basis-full py-1.5 text-2xs sm:basis-40`}
+                    />
+                    <input
+                      name="scanDomain"
+                      defaultValue={l.scanDomain ?? ""}
+                      placeholder="Scan domain (blank = kr8mx.com)"
                       className={`${inputCls} min-w-0 flex-1 basis-full py-1.5 text-2xs sm:basis-40`}
                     />
                     <button className="rounded-sm border border-hairline px-3 py-1.5 text-2xs uppercase tracking-wide text-primary hover:border-secondary">

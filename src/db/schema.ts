@@ -624,6 +624,11 @@ export const dynamicLinks = pgTable(
     label: text("label").notNull(),
     targetUrl: text("target_url").notNull(),
     category: productCategoryEnum("category"),
+    // Optional brand domain the QR is built on, e.g. "sigma7.com" or
+    // "go.sigma7.com". The QR encodes {scanDomain}/q/{code} so the scan shows
+    // that brand (not kr8mx.com), while staying dynamic/re-pointable. The domain
+    // must be pointed at this app for /q to resolve. Null = default site origin.
+    scanDomain: text("scan_domain"),
     active: boolean("active").notNull().default(true),
     scanCount: integer("scan_count").notNull().default(0),
     createdAt: timestamp("created_at", { withTimezone: true })
