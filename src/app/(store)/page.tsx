@@ -48,6 +48,30 @@ function Chevron() {
   return <span className="font-normal">&rsaquo;</span>;
 }
 
+/** Hero call-to-action pair. Rendered in the copy block on desktop and again
+ *  below the product image on mobile, so the layout wrapper controls placement
+ *  while the buttons themselves stay defined once. */
+function HeroCtas() {
+  return (
+    <>
+      <Link
+        href="/tablets"
+        className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
+        style={{ background: PURPLE }}
+      >
+        Explore Tablets <Chevron />
+      </Link>
+      <Link
+        href="/contact"
+        className="inline-flex items-center justify-center gap-2 rounded-lg border-[1.5px] bg-white px-6 py-3.5 text-sm font-semibold transition-colors hover:bg-surface-raised"
+        style={{ color: PURPLE, borderColor: PURPLE }}
+      >
+        Wholesale <Chevron />
+      </Link>
+    </>
+  );
+}
+
 export default function Home() {
   return (
     <>
@@ -92,24 +116,12 @@ export default function Home() {
               no added 7-hydroxymitragynine, standardized minor alkaloids, and
               lab-tested every lot. Compliant, precise, and built to lead.
             </p>
+            {/* desktop CTAs (overlaid on the banner) */}
             <div
-              className="animate-rise mt-8 flex flex-col gap-3 sm:flex-row"
+              className="animate-rise mt-8 hidden gap-3 md:flex"
               style={{ animationDelay: "400ms" }}
             >
-              <Link
-                href="/tablets"
-                className="inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3.5 text-sm font-semibold text-white transition-opacity hover:opacity-90"
-                style={{ background: PURPLE }}
-              >
-                Explore Tablets <Chevron />
-              </Link>
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center gap-2 rounded-lg border-[1.5px] bg-white px-6 py-3.5 text-sm font-semibold transition-colors hover:bg-surface-raised"
-                style={{ color: PURPLE, borderColor: PURPLE }}
-              >
-                Wholesale <Chevron />
-              </Link>
+              <HeroCtas />
             </div>
           </div>
 
@@ -124,6 +136,11 @@ export default function Home() {
               sizes="100vw"
               className="w-full"
             />
+          </div>
+
+          {/* mobile CTAs, below the image */}
+          <div className="animate-rise mt-6 flex flex-col gap-3 sm:flex-row md:hidden">
+            <HeroCtas />
           </div>
         </div>
       </section>
