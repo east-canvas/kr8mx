@@ -64,6 +64,13 @@
       "when": 1789074144822,
       "tag": "0008_lush_jack_flag",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1790029170026,
+      "tag": "0009_daffy_magma",
+      "breakpoints": true
     }
   ]
 }

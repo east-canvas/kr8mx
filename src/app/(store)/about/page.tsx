@@ -69,7 +69,7 @@ export default function AboutPage() {
           Strawberry, and Blue Razz. Made from Mitragyna speciosa (kratom) leaf,
           led by Speciociliatine at 150 mg per tablet with Mitragynine at 50 mg,
           300 mg total kratom alkaloids per tablet. No added 7-OH. Each lot is
-          third-party tested to under 400 ppm 7-hydroxymitragynine on a dry
+          third-party tested to under 100 ppm 7-hydroxymitragynine on a dry
           weight basis.
         </p>
         <div className="mt-2 flex flex-wrap gap-3">

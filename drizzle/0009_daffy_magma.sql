@@ -1,0 +1,1 @@
+ALTER TABLE "coa_documents" ALTER COLUMN "result_line" SET DEFAULT 'Under 100 ppm 7-hydroxymitragynine (dry weight basis)';

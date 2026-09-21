@@ -7,7 +7,7 @@ import { HairlineRule } from "@/components/ui/HairlineRule";
 export const metadata: Metadata = {
   title: "Certificates of Analysis",
   description:
-    "KR8MX Certificates of Analysis. Every lot of our kratom leaf extract tablets is third-party tested, including 7-hydroxymitragynine (7-OH) under 400 ppm on a dry weight basis.",
+    "KR8MX Certificates of Analysis. Every lot of our kratom leaf extract tablets is third-party tested, including 7-hydroxymitragynine (7-OH) under 100 ppm on a dry weight basis.",
   alternates: { canonical: "/coa" },
   openGraph: {
     title: "KR8MX Certificates of Analysis",

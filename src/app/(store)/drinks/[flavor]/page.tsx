@@ -201,7 +201,7 @@ export default async function DrinkPdpPage({
                 <ExternalIcon width={15} height={15} className="text-muted" />
               </Link>
               <p className="mt-2 text-muted">
-                Each lot is tested to under 400 ppm 7-hydroxymitragynine (dry
+                Each lot is tested to under 100 ppm 7-hydroxymitragynine (dry
                 weight basis), with no added 7-OH.
               </p>
             </AccordionRow>

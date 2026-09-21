@@ -59,7 +59,7 @@ export function Footer() {
           <p className="max-w-3xl">{FDA_DISCLAIMER}</p>
           <p>{availability}</p>
           <p>
-            Contains under 400 ppm 7-hydroxymitragynine on a dry weight basis,
+            Contains under 100 ppm 7-hydroxymitragynine on a dry weight basis,
             with no added 7-OH. 21+ adult use only.
           </p>
           <p className="pt-2 text-muted">

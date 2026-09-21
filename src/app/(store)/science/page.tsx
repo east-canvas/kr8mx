@@ -44,7 +44,7 @@ const FAQ = [
   },
   {
     q: "What is 7-hydroxymitragynine (7-OH)?",
-    a: "7-hydroxymitragynine (7-OH) is a minor alkaloid that occurs naturally in Mitragyna speciosa leaf at trace levels. KR8MX adds none. Every lot is third-party tested to confirm under 400 ppm 7-OH on a dry weight basis.",
+    a: "7-hydroxymitragynine (7-OH) is a minor alkaloid that occurs naturally in Mitragyna speciosa leaf at trace levels. KR8MX adds none. Every lot is third-party tested to confirm under 100 ppm 7-OH on a dry weight basis.",
   },
   {
     q: "What is Mitragyna speciosa?",
@@ -118,7 +118,7 @@ export default function SciencePage() {
         </div>
         <p className="mt-4 text-2xs text-muted">
           300 mg total kratom alkaloids per tablet. No added 7-OH. Every lot is
-          third-party tested to under 400 ppm 7-hydroxymitragynine on a dry
+          third-party tested to under 100 ppm 7-hydroxymitragynine on a dry
           weight basis.
         </p>
       </section>

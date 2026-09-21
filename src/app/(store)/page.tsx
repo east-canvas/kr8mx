@@ -255,7 +255,7 @@ export default function Home() {
               Every KR8MX tablet is built with MitraGen+&trade;, a proprietary,
               solvent-free formulation of isolated, standardized alkaloids, led
               by Speciociliatine. U.S.-grown Mitragyna speciosa, made in the USA,
-              and lab-tested every lot. No added 7-OH, under 400 ppm
+              and lab-tested every lot. No added 7-OH, under 100 ppm
               7-hydroxymitragynine on a dry weight basis.
             </p>
           </Reveal>

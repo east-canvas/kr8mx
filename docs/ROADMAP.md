@@ -67,7 +67,7 @@ spec until the new web art is ready (owner direction: avoid two live specs).
   jurisdiction restrictions surfaced pre-purchase (Tier 3 duties). Buildable now.
 
 Done from this pass:
-- 7-OH reframed sitewide to "No added 7-OH" + measured "<400 ppm on a dry weight
+- 7-OH reframed sitewide to "No added 7-OH" + measured "<100 ppm on a dry weight
   basis"; every site mg number now carries "per tablet".
 - SEO batch: tablet Product/ItemList structured data, distinctive-term metadata,
   noindex + canonicals on placeholders, `/science` Speciociliatine/MitraGen+/7-OH

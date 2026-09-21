@@ -592,7 +592,7 @@ export const coaDocuments = pgTable(
     summary: text("summary"),
     // headline analyte result surfaced on the COA card
     resultLine: text("result_line").default(
-      "Under 400 ppm 7-hydroxymitragynine (dry weight basis)",
+      "Under 100 ppm 7-hydroxymitragynine (dry weight basis)",
     ),
     issuedBy: text("issued_by").notNull().default("KR8MX"),
     issuedDate: timestamp("issued_date", { withTimezone: true }),
